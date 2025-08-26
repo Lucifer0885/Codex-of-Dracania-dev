@@ -1,0 +1,23 @@
+{
+    "appId": "com.lucifer0885.dso-utils",
+    "artifactName": "Dso Utils-${version}.${ext}",
+    "electronLanguages": [
+        "en"
+    ],
+    "executableName" : "DsoUtils",
+    "files": [
+        "dist-react/**/*",
+        "dist-electron/**/*"
+    ],
+    "win": {
+        "icon": "assets/dso.ico",
+        "target": [
+            {
+                "target": "portable",
+                "arch": [
+                    "x64"
+                ]
+            }
+        ]
+    }
+}

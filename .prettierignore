@@ -1,0 +1,10 @@
+dist
+dist/**
+dist-react
+dist-react/**
+dist-electron
+dist-electron/**
+node_modules
+node_modules/**
+
+!src/**
