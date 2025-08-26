@@ -1,4 +1,4 @@
-import Nav from "@components/Nav";
+import Header from "@components/Header";
 import MaxWidthWrapper from "@layouts/MaxWidthWrapper";
 
 type MainLayoutProps = {
@@ -8,10 +8,8 @@ type MainLayoutProps = {
 function MainLayout({ children }: MainLayoutProps) {
   return (
     <div>
-      <Nav />
-      <MaxWidthWrapper>
-        {children}
-      </MaxWidthWrapper>
+      <Header />
+      <MaxWidthWrapper>{children}</MaxWidthWrapper>
     </div>
   );
 }

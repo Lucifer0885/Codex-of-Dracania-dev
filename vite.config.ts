@@ -12,7 +12,9 @@ export default defineConfig({
       '@pages': '/src/react/pages/',
       '@components': '/src/react/components/',
       '@layouts': '/src/react/layouts/',
-      '@assets': '/src/react/assets/'
+      '@assets': '/src/react/assets/',
+      '@utils': '/src/react/utils/',
+      '@interfaces': '/src/react/interfaces/',
     },
   },
   build: {
