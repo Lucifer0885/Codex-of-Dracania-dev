@@ -2,6 +2,8 @@ import { NavLinks } from "@utils/links";
 import { Link } from "react-router";
 import * as Icons from "lucide-react";
 import { useEffect } from "react";
+import { usePinnedLinkContext } from "@hooks/usePinnedLinkContext";
+import type { NavLink } from "@interfaces/general";
 
 type SideNavProps = {
   isOpen: boolean;
@@ -9,7 +11,17 @@ type SideNavProps = {
 };
 
 function SideNav({ isOpen, onClose }: SideNavProps) {
+  const { pinnedLinks, addPinnedLink } = usePinnedLinkContext();
   // Close on escape key
+
+  const checkIfMoreThanThreePinnedLinks = (link: NavLink) => {
+    if (pinnedLinks.length >= 3) {
+      return;
+    }
+
+    addPinnedLink(link);
+  };
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -70,20 +82,23 @@ function SideNav({ isOpen, onClose }: SideNavProps) {
                       <span>{link.label}</span>
                     </Link>
                     <div>
-                      <Icons.Pin className="cursor-pointer hover:text-yellow-400 transform rotate-45 text-red-600" />
+                      <Icons.Pin
+                        className="cursor-pointer hover:text-yellow-400 transform rotate-45 text-red-600"
+                        onClick={() => checkIfMoreThanThreePinnedLinks(link)}
+                      />
                     </div>
                   </li>
                 );
               })}
             </ul>
           </div>
-          <div className="px-4 py-2 flex bottom-0 gap-4">
+          <div className="px-4 py-4 flex bottom-0 gap-4">
             <div className="avatar">
-              <div className="w-16 rounded-full ring-primary ring-offset-base-100 ring-2 ring-offset-2">
+              <div className="w-14 rounded-full ring-primary ring-offset-base-100 ring-2 ring-offset-2">
                 <img src="/src/react/assets/discord-pfp.png" />
               </div>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col self-end">
               <span className="text-white">lucifer0885,</span>
               <span className="text-gray-400">Developer</span>
             </div>

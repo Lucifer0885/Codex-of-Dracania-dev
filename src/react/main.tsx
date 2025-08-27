@@ -8,19 +8,22 @@ import Inventory from "@pages/Inventory";
 import Services from "@pages/Services";
 import Macros from "@pages/Macros";
 import ThankYou from "@pages/ThankYou";
+import { PinnedLinkProvider } from "@context/PinnedLinkContext";
 
 createRoot(document.getElementById("root")!).render(
   <HashRouter>
-    <MainLayout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/general" element={<General />} />
-        <Route path="/inventory" element={<Inventory />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/macros" element={<Macros />} />
-        <Route path="/thank-you" element={<ThankYou />} />
-      </Routes>
-    </MainLayout>
+    <PinnedLinkProvider>
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/general" element={<General />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/macros" element={<Macros />} />
+          <Route path="/thank-you" element={<ThankYou />} />
+        </Routes>
+      </MainLayout>
+    </PinnedLinkProvider>
   </HashRouter>
 );
 

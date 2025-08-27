@@ -15,6 +15,8 @@ export default defineConfig({
       '@assets': '/src/react/assets/',
       '@utils': '/src/react/utils/',
       '@interfaces': '/src/react/interfaces/',
+      '@context': '/src/react/context/',
+      '@hooks': '/src/react/hooks/'
     },
   },
   build: {

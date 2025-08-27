@@ -9,7 +9,9 @@ function MainLayout({ children }: MainLayoutProps) {
   return (
     <div>
       <Header />
-      <MaxWidthWrapper>{children}</MaxWidthWrapper>
+      <MaxWidthWrapper>
+        <div className="py-4">{children}</div>
+      </MaxWidthWrapper>
     </div>
   );
 }
