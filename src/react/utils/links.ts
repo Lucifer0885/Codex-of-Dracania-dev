@@ -1,39 +1,39 @@
-import type { NavLink } from "@interfaces/general";
+import type { NavLink } from "@interfaces/Igeneral";
 
 export const NavLinks: NavLink[] = [
   {
     to: "/",
     label: "Home",
-    icon: 'Home'
+    icon: "Home",
   },
   {
     to: "/general",
     label: "General",
-    icon: 'Book'
+    icon: "Book",
   },
   {
     to: "/inventory",
     label: "Inventory",
-    icon: 'Package'
+    icon: "Package",
   },
   {
     to: "/calculators",
     label: "Calculators",
-    icon: 'Layers'
+    icon: "Layers",
   },
   {
     to: "/services",
     label: "Services",
-    icon: 'Settings'
+    icon: "Settings",
   },
   {
     to: "/macros",
     label: "Macros",
-    icon: 'FileText'
+    icon: "FileText",
   },
   {
     to: "/thank-you",
     label: "Thank You",
-    icon: 'CheckCircle'
-  }
-]
+    icon: "CheckCircle",
+  },
+];

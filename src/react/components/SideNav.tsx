@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import * as Icons from "lucide-react";
 import { useEffect } from "react";
 import { usePinnedLinkContext } from "@hooks/usePinnedLinkContext";
-import type { NavLink } from "@interfaces/general";
+import type { NavLink } from "@interfaces/Igeneral";
 
 type SideNavProps = {
   isOpen: boolean;

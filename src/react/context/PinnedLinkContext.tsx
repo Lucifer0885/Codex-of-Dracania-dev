@@ -1,5 +1,5 @@
 import { createContext, useState, type ReactNode } from "react";
-import type { NavLink } from "@interfaces/general";
+import type { NavLink } from "@interfaces/Igeneral";
 
 interface PinnedLinkContext {
   pinnedLinks: NavLink[];
