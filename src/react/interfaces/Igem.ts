@@ -55,15 +55,22 @@ export interface Gem {
   type: GemType;
 }
 
-export type OpalType =
-  | "offensive-defensive-0-3"
-  | "offensive-defensive-1-2"
-  | "offensive-defensive-2-1"
-  | "offensive-defensive-3-0";
+export type OpalTier =
+  | { name: "royal"; cost: number }
+  | { name: "trapezoid"; cost: number }
+  | { name: "refined trapezoid"; cost: number }
+  | { name: "brilliant trapezoid"; cost: number }
+  | { name: "exquisite trapezoid"; cost: number }
+  | { name: "imperial"; cost: number }
+  | { name: "refined imperial"; cost: number }
+  | { name: "brilliant imperial"; cost: number }
+  | { name: "exquisite imperial"; cost: number };
+
+export type OpalType = "opal-upgrade" | "opal-create";
 
 export interface Opal {
   id: string;
   name: string;
-  tier: GemTier;
+  tier: OpalTier;
   type: OpalType;
 }

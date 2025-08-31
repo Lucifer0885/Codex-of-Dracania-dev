@@ -10,6 +10,7 @@ import Services from "@pages/Services";
 import Macros from "@pages/Macros";
 import ThankYou from "@pages/ThankYou";
 import { PinnedLinkProvider } from "@context/PinnedLinkContext";
+import GemCalculator from "@pages/calculators/GemCalculator";
 
 createRoot(document.getElementById("root")!).render(
   <HashRouter>
@@ -23,9 +24,9 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/services" element={<Services />} />
           <Route path="/macros" element={<Macros />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/calculators/gem" element={<GemCalculator />} />
         </Routes>
       </MainLayout>
     </PinnedLinkProvider>
   </HashRouter>
 );
-

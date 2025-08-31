@@ -3,7 +3,7 @@ import {} from "lucide-react";
 
 function ThankYou() {
   return (
-    <div className="grid grid-cols-2 gap-4 p-4 min-h-screen place-items-center">
+    <div className="grid grid-cols-2 gap-4 p-4 min-h-[85vh] place-items-center">
       <div className="flex flex-col items-center gap-6">
         <h2 className="text-4xl font-bold text-yellow-600">Thank You!</h2>
         <div className="max-w-[400px] text-center flex flex-col gap-4">
@@ -13,7 +13,7 @@ function ThankYou() {
           </p>
         </div>
         <div className="text-center text-gray-400 max-w-[400px]">
-          If you have any questions, feedback, or need assistance, feel free to reach out to us on our social media
+          If you have any questions, feedback, or need assistance, feel free to reach out to us on our social media.
         </div>
         <div className="flex gap-4">
           <div className="flex items-center gap-2 text-gray-400 hover:text-yellow-600 btn btn-outline w-[150px]">
@@ -45,7 +45,7 @@ function ThankYou() {
         </div>
       </div>
       <div className="flex justify-center">
-        <img src="./src/react/assets/dragon-thank-you-2.png" alt="Thank You" className="w-[300px] h-auto" />
+        <img src="./src/react/assets/dragon-thank-you-2.png" alt="Thank You" className="w-[350px] h-auto" />
       </div>
     </div>
   );

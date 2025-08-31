@@ -1,4 +1,4 @@
-import type { GemTier, JewelTier, RuneTier } from "@interfaces/Igem";
+import type { GemTier, JewelTier, OpalTier, RuneTier } from "@interfaces/Igem";
 
 export const OffensiveGemTiers: GemTier[] = [
   { name: "flawed", cost: 2 },
@@ -62,4 +62,28 @@ export const JewelTiers: JewelTier[] = [
   { name: "magic", cost: 16500 },
   { name: "rare", cost: 27750 },
   { name: "epic", cost: 0 },
+];
+
+export const OpalTiersUpgrade: OpalTier[] = [
+  { name: "royal", cost: 4500 },
+  { name: "trapezoid", cost: 7875 },
+  { name: "refined trapezoid", cost: 12375 },
+  { name: "brilliant trapezoid", cost: 18000 },
+  { name: "exquisite trapezoid", cost: 25700 },
+  { name: "imperial", cost: 32625 },
+  { name: "refined imperial", cost: 41625 },
+  { name: "brilliant imperial", cost: 51750 },
+  { name: "exquisite imperial", cost: 0 },
+];
+
+export const OpalTiersCreate: OpalTier[] = [
+  { name: "royal", cost: 4500 },
+  { name: "trapezoid", cost: 7875 },
+  { name: "refined trapezoid", cost: 12375 },
+  { name: "brilliant trapezoid", cost: 18000 },
+  { name: "exquisite trapezoid", cost: 24750 },
+  { name: "imperial", cost: 32625 },
+  { name: "refined imperial", cost: 41625 },
+  { name: "brilliant imperial", cost: 51750 },
+  { name: "exquisite imperial", cost: 63000 },
 ];

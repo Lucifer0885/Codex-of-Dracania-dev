@@ -11,7 +11,10 @@ function Calculators() {
       <div>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {calculators.map((calculator) => (
-            <li key={calculator.id} className="card card-border border-gray-300 bg-base-200 hover:bg-base-300 ">
+            <li
+              key={calculator.id}
+              className="card card-border border-gray-300 bg-base-200 hover:transform hover:scale-105 transition-transform"
+            >
               <div className="card-body">
                 <div className="flex justify-between">
                   <h2 className="card-title">{calculator.name}</h2>
@@ -21,7 +24,7 @@ function Calculators() {
                 <div className="card-actions flex justify-end">
                   <Link
                     to={`/calculators/${calculator.id}`}
-                    className="btn bg-yellow-600 hover:bg-yellow-700 text-base-300"
+                    className="btn btn-outline btn-primary hover:bg-yellow-700"
                   >
                     Open Calculator
                   </Link>

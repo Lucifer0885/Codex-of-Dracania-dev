@@ -1,4 +1,4 @@
-import Header from "@components/Header";
+import SideNav from "@components/SideNav";
 import MaxWidthWrapper from "@layouts/MaxWidthWrapper";
 
 type MainLayoutProps = {
@@ -7,8 +7,8 @@ type MainLayoutProps = {
 
 function MainLayout({ children }: MainLayoutProps) {
   return (
-    <div>
-      <Header />
+    <div className="flex min-h-screen bg-base-200 text-base-content">
+      <SideNav />
       <MaxWidthWrapper>
         <div className="py-4">{children}</div>
       </MaxWidthWrapper>
