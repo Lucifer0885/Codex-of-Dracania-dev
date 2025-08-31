@@ -28,11 +28,11 @@ function ResultCard({ upgradeCost, error, title, titleImage, desc, descImage, lo
 
   return (
     <div className="card card-border bg-base-300 text-neutral-content w-96 border-gray-400">
-      <div className="card-body">
+      <div className="card-body flex flex-col justify-between">
         <h2 className="card-title self-center">{title}</h2>
         <div className="flex flex-col my-2 items-center">
           {typeof titleImage === "string" ? (
-            <img src={titleImage} alt={formatImageAlt(titleImage)} className="opacity-40 w-14 h-14 mb-2" />
+            <img src={titleImage} alt={formatImageAlt(titleImage)} className=" w-20 h-20 mb-2" />
           ) : (
             titleImage
           )}
@@ -58,8 +58,8 @@ function ResultCard({ upgradeCost, error, title, titleImage, desc, descImage, lo
             ) : loading ? (
               <span className="loading loading-infinity loading-xl"></span>
             ) : (
-              <div className="flex flex-col items-center gap-4">
-                <div className="flex gap-2 items-center">
+              <div className="flex flex-col items-center gap-4 mt-[-50px]">
+                <div className="flex gap-2 items-center ">
                   <span className="text-3xl text-info">Upgrade Cost</span>
                   <BadgeCheck className="text-info animate-pulse duration-300 " />
                 </div>
