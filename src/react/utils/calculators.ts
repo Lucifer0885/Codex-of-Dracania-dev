@@ -8,6 +8,7 @@ import {
   OffensiveRuneTier,
   OpalTiersCreate,
   OpalTiersUpgrade,
+  UtilityRuneTier,
 } from "@utils/gem";
 
 export const calculators: Calculator[] = [
@@ -15,18 +16,6 @@ export const calculators: Calculator[] = [
     id: "gem",
     name: "Gem Calculator",
     description: "Calculate the shiny dust needed to upgrade gems",
-    image: "/src/react/assets/gem.png",
-  },
-  {
-    id: "opal-create",
-    name: "Opal Creation Calculator",
-    description: "Calculate the shiny dust needed to create opal gems",
-    image: "/src/react/assets/gem.png",
-  },
-  {
-    id: "opal-upgrade",
-    name: "Opal Upgrade Calculator",
-    description: "Calculate the shiny dust needed to upgrade opal gems",
     image: "/src/react/assets/gem.png",
   },
   {
@@ -40,6 +29,18 @@ export const calculators: Calculator[] = [
     name: "Jewel Calculator",
     description: "Calculate the shiny dust needed to upgrade jewels",
     image: "/src/react/assets/jewel.png",
+  },
+  {
+    id: "opal-create",
+    name: "Opal Creation Calculator",
+    description: "Calculate the shiny dust needed to create opal gems",
+    image: "/src/react/assets/gem.png",
+  },
+  {
+    id: "opal-upgrade",
+    name: "Opal Upgrade Calculator",
+    description: "Calculate the shiny dust needed to upgrade opal gems",
+    image: "/src/react/assets/gem.png",
   },
 ];
 
@@ -67,7 +68,8 @@ export function getRuneCost(
   runeTierEnd: RuneTier,
   runeType: RuneType
 ): number {
-  const runeTiers = runeType === "offensive" ? OffensiveRuneTier : DefensiveRuneTier;
+  const runeTiers =
+    runeType === "offensive" ? OffensiveRuneTier : runeType === "defensive" ? DefensiveRuneTier : UtilityRuneTier;
 
   const startIndex = runeTiers.findIndex((tier) => tier.name === runeTierStart.name);
   const endIndex = runeTiers.findIndex((tier) => tier.name === runeTierEnd.name);

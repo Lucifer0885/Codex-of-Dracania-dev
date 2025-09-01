@@ -36,7 +36,7 @@ function SideNav() {
                   to={link.to}
                   className={({ isActive }: { isActive: boolean }) =>
                     [
-                      "flex items-center gap-3 px-1 py-3 text-white hover:text-yellow-400 rounded-lg transition-all duration-200 min-h-[44px]",
+                      "flex items-center gap-3 px-1 py-3 text-white hover:text-primary rounded-lg transition-all duration-200 min-h-[44px]",
                       isExpanded ? "" : "",
                       isActive ? "" : "",
                     ].join(" ")

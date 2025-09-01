@@ -56,6 +56,14 @@ export const DefensiveRuneTier: RuneTier[] = [
   { name: "epic", cost: 0 },
 ];
 
+export const UtilityRuneTier: RuneTier[] = [
+  { name: "common", cost: 2500 },
+  { name: "uncommon", cost: 6876 },
+  { name: "magic", cost: 13750 },
+  { name: "rare", cost: 23126 },
+  { name: "epic", cost: 0 },
+];
+
 export const JewelTiers: JewelTier[] = [
   { name: "common", cost: 3000 },
   { name: "uncommon", cost: 8250 },

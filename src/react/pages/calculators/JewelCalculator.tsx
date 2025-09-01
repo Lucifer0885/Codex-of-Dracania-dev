@@ -1,13 +1,12 @@
 import ResultCard from "@components/ResultCard";
-import type { GemTier, GemType } from "@interfaces/Igem";
-import { getGemCost } from "@utils/calculators";
-import { OffensiveGemTiers } from "@utils/gem";
+import type { JewelTier } from "@interfaces/Igem";
+import { getJewelCost } from "@utils/calculators";
+import { JewelTiers } from "@utils/gem";
 import React, { useState } from "react";
 
-function GemCalculator() {
-  const [startingTier, setStartingTier] = useState<null | GemTier>(null);
-  const [targetTier, setTargetTier] = useState<null | GemTier>(null);
-  const [gemType, setGemType] = useState<null | GemType>(null);
+function JewelCalculator() {
+  const [startingTier, setStartingTier] = useState<null | JewelTier>(null);
+  const [targetTier, setTargetTier] = useState<null | JewelTier>(null);
   const [upgradeCost, setUpgradeCost] = useState<null | number>(null);
   const [amount, setAmount] = useState<string | number>("");
   const [error, setError] = useState<null | string>(null);
@@ -20,12 +19,11 @@ function GemCalculator() {
   function handleReset() {
     setStartingTier(null);
     setTargetTier(null);
-    setGemType(null);
     setAmount("");
   }
 
   function handleCalculate() {
-    if (!(startingTier && targetTier && gemType && amount)) {
+    if (!(startingTier && targetTier && amount)) {
       setError("Please select a value for all fields");
       setUpgradeCost(null);
       return;
@@ -38,7 +36,7 @@ function GemCalculator() {
     }, 2000);
 
     try {
-      const cost = getGemCost(+amount, startingTier, targetTier, gemType);
+      const cost = getJewelCost(+amount, startingTier, targetTier);
       setUpgradeCost(cost);
     } catch (error) {
       setError((error as Error).message);
@@ -49,8 +47,8 @@ function GemCalculator() {
   return (
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
-        <img src="/src/react/assets/gem.png" alt="Gem Calculator" width={100} height={100} />
-        <h1 className="text-4xl text-primary">Gem Calculator</h1>
+        <img src="/src/react/assets/gem.png" alt="Jewel Calculator" width={100} height={100} />
+        <h1 className="text-4xl text-primary">Jewel Calculator</h1>
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="card card-border bg-base-300 text-neutral-content w-96 border-gray-400">
@@ -60,13 +58,13 @@ function GemCalculator() {
               <div>
                 <div className="dropdown">
                   <div tabIndex={0} role="button" className="btn m-1">
-                    Select Starting Gem Tier
+                    Select Starting Jewel Tier
                   </div>
                   <ul
                     tabIndex={0}
                     className="dropdown-content menu bg-base-300 rounded-box border border-gray-400 z-1 w-52 p-2 shadow-sm max-h-56 overflow-y-auto overflow-x-hidden flex-nowrap"
                   >
-                    {OffensiveGemTiers.map((tier, index) => (
+                    {JewelTiers.map((tier, index) => (
                       <React.Fragment key={tier.name}>
                         <li>
                           <a
@@ -81,7 +79,7 @@ function GemCalculator() {
                             {formatName(tier.name)}
                           </a>
                         </li>
-                        {index < OffensiveGemTiers.length - 1 && <li className="divider h-[1px]" />}
+                        {index < JewelTiers.length - 1 && <li className="divider h-[1px]" />}
                       </React.Fragment>
                     ))}
                   </ul>
@@ -93,13 +91,13 @@ function GemCalculator() {
               <div>
                 <div className="dropdown">
                   <div tabIndex={0} role="button" className="btn m-1">
-                    Select Target Gem Tier
+                    Select Target Jewel Tier
                   </div>
                   <ul
                     tabIndex={0}
                     className="dropdown-content menu bg-base-300 rounded-box border border-gray-400 z-1 w-52 p-2 shadow-sm max-h-56 overflow-y-auto overflow-x-hidden flex-nowrap"
                   >
-                    {OffensiveGemTiers.map((tier, index) => (
+                    {JewelTiers.map((tier, index) => (
                       <React.Fragment key={tier.name}>
                         <li>
                           <a
@@ -114,7 +112,7 @@ function GemCalculator() {
                             {formatName(tier.name)}
                           </a>
                         </li>
-                        {index < OffensiveGemTiers.length - 1 && <li className="divider h-[1px]" />}
+                        {index < JewelTiers.length - 1 && <li className="divider h-[1px]" />}
                       </React.Fragment>
                     ))}
                   </ul>
@@ -122,46 +120,6 @@ function GemCalculator() {
                 <div className="text-gray-400 ps-2">
                   Target Tier: {targetTier ? formatName(targetTier.name) : "None"}
                 </div>
-              </div>
-              <div>
-                <div className="dropdown">
-                  <div tabIndex={0} role="button" className="btn m-1">
-                    Select Gem Type
-                  </div>
-                  <ul
-                    tabIndex={0}
-                    className="dropdown-content menu bg-base-300 rounded-box border border-gray-400 z-1 w-52 p-2 shadow-sm max-h-56 overflow-y-auto overflow-x-hidden flex-nowrap"
-                  >
-                    <li>
-                      <a
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          setGemType("offensive");
-                          setTimeout(() => {
-                            (document.activeElement as HTMLElement)?.blur();
-                          }, 0);
-                        }}
-                      >
-                        Offensive
-                      </a>
-                    </li>
-                    <div className="divider h-[1px]" />
-                    <li>
-                      <a
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          setGemType("defensive");
-                          setTimeout(() => {
-                            (document.activeElement as HTMLElement)?.blur();
-                          }, 0);
-                        }}
-                      >
-                        Defensive
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="text-gray-400 ps-2">Gem Type: {gemType ? formatName(gemType) : "None"}</div>
               </div>
               <label className="input input-ghost border-gray-400">
                 Amount
@@ -186,9 +144,9 @@ function GemCalculator() {
         <ResultCard
           upgradeCost={upgradeCost}
           error={error}
-          title="Gem Upgrade Cost"
-          titleImage="/src/react/assets/gem.png"
-          desc="Select gem tiers and type, enter an amount"
+          title="Jewel Upgrade Cost"
+          titleImage="/src/react/assets/jewel.png"
+          desc="Select jewel tiers and type, enter an amount"
           descImage="/src/react/assets/shiny-dust.png"
           loading={loading}
         />
@@ -197,4 +155,4 @@ function GemCalculator() {
   );
 }
 
-export default GemCalculator;
+export default JewelCalculator;

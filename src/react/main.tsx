@@ -10,6 +10,9 @@ import Services from "@pages/Services";
 import Macros from "@pages/Macros";
 import ThankYou from "@pages/ThankYou";
 import GemCalculator from "@pages/calculators/GemCalculator";
+import RuneCalculator from "@pages/calculators/RuneCalculator";
+import JewelCalculator from "@pages/calculators/JewelCalculator";
+import OpalCalculator from "@pages/calculators/OpalCalculator";
 
 createRoot(document.getElementById("root")!).render(
   <HashRouter>
@@ -23,6 +26,9 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/macros" element={<Macros />} />
         <Route path="/thank-you" element={<ThankYou />} />
         <Route path="/calculators/gem" element={<GemCalculator />} />
+        <Route path="/calculators/rune" element={<RuneCalculator />} />
+        <Route path="/calculators/jewel" element={<JewelCalculator />} />
+        <Route path="/calculators/opal" element={<OpalCalculator />} />
       </Routes>
     </MainLayout>
   </HashRouter>

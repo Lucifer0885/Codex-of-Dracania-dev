@@ -1,13 +1,13 @@
 import ResultCard from "@components/ResultCard";
-import type { GemTier, GemType } from "@interfaces/Igem";
-import { getGemCost } from "@utils/calculators";
-import { OffensiveGemTiers } from "@utils/gem";
+import type { RuneTier, RuneType } from "@interfaces/Igem";
+import { getRuneCost } from "@utils/calculators";
+import { OffensiveRuneTier } from "@utils/gem";
 import React, { useState } from "react";
 
-function GemCalculator() {
-  const [startingTier, setStartingTier] = useState<null | GemTier>(null);
-  const [targetTier, setTargetTier] = useState<null | GemTier>(null);
-  const [gemType, setGemType] = useState<null | GemType>(null);
+function RuneCalculator() {
+  const [startingTier, setStartingTier] = useState<null | RuneTier>(null);
+  const [targetTier, setTargetTier] = useState<null | RuneTier>(null);
+  const [runeType, setRuneType] = useState<null | RuneType>(null);
   const [upgradeCost, setUpgradeCost] = useState<null | number>(null);
   const [amount, setAmount] = useState<string | number>("");
   const [error, setError] = useState<null | string>(null);
@@ -20,12 +20,12 @@ function GemCalculator() {
   function handleReset() {
     setStartingTier(null);
     setTargetTier(null);
-    setGemType(null);
+    setRuneType(null);
     setAmount("");
   }
 
   function handleCalculate() {
-    if (!(startingTier && targetTier && gemType && amount)) {
+    if (!(startingTier && targetTier && runeType && amount)) {
       setError("Please select a value for all fields");
       setUpgradeCost(null);
       return;
@@ -38,7 +38,7 @@ function GemCalculator() {
     }, 2000);
 
     try {
-      const cost = getGemCost(+amount, startingTier, targetTier, gemType);
+      const cost = getRuneCost(+amount, startingTier, targetTier, runeType);
       setUpgradeCost(cost);
     } catch (error) {
       setError((error as Error).message);
@@ -49,8 +49,8 @@ function GemCalculator() {
   return (
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
-        <img src="/src/react/assets/gem.png" alt="Gem Calculator" width={100} height={100} />
-        <h1 className="text-4xl text-primary">Gem Calculator</h1>
+        <img src="/src/react/assets/rune.png" alt="Rune Calculator" width={100} height={100} />
+        <h1 className="text-4xl text-primary">Rune Calculator</h1>
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="card card-border bg-base-300 text-neutral-content w-96 border-gray-400">
@@ -60,13 +60,13 @@ function GemCalculator() {
               <div>
                 <div className="dropdown">
                   <div tabIndex={0} role="button" className="btn m-1">
-                    Select Starting Gem Tier
+                    Select Starting Rune Tier
                   </div>
                   <ul
                     tabIndex={0}
                     className="dropdown-content menu bg-base-300 rounded-box border border-gray-400 z-1 w-52 p-2 shadow-sm max-h-56 overflow-y-auto overflow-x-hidden flex-nowrap"
                   >
-                    {OffensiveGemTiers.map((tier, index) => (
+                    {OffensiveRuneTier.map((tier, index) => (
                       <React.Fragment key={tier.name}>
                         <li>
                           <a
@@ -81,7 +81,7 @@ function GemCalculator() {
                             {formatName(tier.name)}
                           </a>
                         </li>
-                        {index < OffensiveGemTiers.length - 1 && <li className="divider h-[1px]" />}
+                        {index < OffensiveRuneTier.length - 1 && <li className="divider h-[1px]" />}
                       </React.Fragment>
                     ))}
                   </ul>
@@ -93,13 +93,13 @@ function GemCalculator() {
               <div>
                 <div className="dropdown">
                   <div tabIndex={0} role="button" className="btn m-1">
-                    Select Target Gem Tier
+                    Select Target Rune Tier
                   </div>
                   <ul
                     tabIndex={0}
                     className="dropdown-content menu bg-base-300 rounded-box border border-gray-400 z-1 w-52 p-2 shadow-sm max-h-56 overflow-y-auto overflow-x-hidden flex-nowrap"
                   >
-                    {OffensiveGemTiers.map((tier, index) => (
+                    {OffensiveRuneTier.map((tier, index) => (
                       <React.Fragment key={tier.name}>
                         <li>
                           <a
@@ -114,7 +114,7 @@ function GemCalculator() {
                             {formatName(tier.name)}
                           </a>
                         </li>
-                        {index < OffensiveGemTiers.length - 1 && <li className="divider h-[1px]" />}
+                        {index < OffensiveRuneTier.length - 1 && <li className="divider h-[1px]" />}
                       </React.Fragment>
                     ))}
                   </ul>
@@ -126,7 +126,7 @@ function GemCalculator() {
               <div>
                 <div className="dropdown">
                   <div tabIndex={0} role="button" className="btn m-1">
-                    Select Gem Type
+                    Select Rune Type
                   </div>
                   <ul
                     tabIndex={0}
@@ -136,7 +136,7 @@ function GemCalculator() {
                       <a
                         onMouseDown={(e) => {
                           e.preventDefault();
-                          setGemType("offensive");
+                          setRuneType("offensive");
                           setTimeout(() => {
                             (document.activeElement as HTMLElement)?.blur();
                           }, 0);
@@ -150,7 +150,7 @@ function GemCalculator() {
                       <a
                         onMouseDown={(e) => {
                           e.preventDefault();
-                          setGemType("defensive");
+                          setRuneType("defensive");
                           setTimeout(() => {
                             (document.activeElement as HTMLElement)?.blur();
                           }, 0);
@@ -159,9 +159,23 @@ function GemCalculator() {
                         Defensive
                       </a>
                     </li>
+                    <div className="divider h-[1px]" />
+                    <li>
+                      <a
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          setRuneType("utility");
+                          setTimeout(() => {
+                            (document.activeElement as HTMLElement)?.blur();
+                          }, 0);
+                        }}
+                      >
+                        Utility
+                      </a>
+                    </li>
                   </ul>
                 </div>
-                <div className="text-gray-400 ps-2">Gem Type: {gemType ? formatName(gemType) : "None"}</div>
+                <div className="text-gray-400 ps-2">Rune Type: {runeType ? formatName(runeType) : "None"}</div>
               </div>
               <label className="input input-ghost border-gray-400">
                 Amount
@@ -186,10 +200,10 @@ function GemCalculator() {
         <ResultCard
           upgradeCost={upgradeCost}
           error={error}
-          title="Gem Upgrade Cost"
-          titleImage="/src/react/assets/gem.png"
-          desc="Select gem tiers and type, enter an amount"
-          descImage="/src/react/assets/shiny-dust.png"
+          title="Rune Upgrade Cost"
+          titleImage="/src/react/assets/rune.png"
+          desc="Select rune tiers and type, enter an amount"
+          descImage="/src/react/assets/rune-dust.png"
           loading={loading}
         />
       </div>
@@ -197,4 +211,4 @@ function GemCalculator() {
   );
 }
 
-export default GemCalculator;
+export default RuneCalculator;

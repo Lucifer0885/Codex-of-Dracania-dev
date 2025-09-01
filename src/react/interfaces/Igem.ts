@@ -5,7 +5,7 @@ export type RuneTier =
   | { name: "rare"; cost: number }
   | { name: "epic"; cost: number };
 
-export type RuneType = "offensive" | "defensive";
+export type RuneType = "offensive" | "defensive" | "utility";
 
 export interface Rune {
   id: string;
