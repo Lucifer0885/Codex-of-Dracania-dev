@@ -1,3 +1,4 @@
+import { Package } from "lucide-react";
 import InventoryTab from "../components/InventoryTab";
 import { InventoryProvider } from "../context/InventoryContext";
 import { useInventory } from "../hooks/useInventory";
@@ -24,53 +25,60 @@ function LockedSlotsCounter() {
 
 function InventoryContent() {
   return (
-    <div className="max-w-2xl">
-      <LockedSlotsCounter />
+    <div className="mt-10 flex flex-col items-center gap-6">
+      <div className="flex gap-4 items-center">
+        <Package className="h-8 w-8 text-primary" />
+        <h1 className="text-4xl text-primary font-bold">Inventory Management</h1>
+      </div>
 
-      <div className="tabs tabs-lift">
-        <input type="radio" name="my_tabs_9" className="tab " aria-label="I" />
-        <div className="tab-content bg-base-100 border-base-300 p-6">
-          <InventoryTab tabIndex={0} />
-        </div>
+      <div className="max-w-2xl">
+        <LockedSlotsCounter />
 
-        <input type="radio" name="my_tabs_9" className="tab" aria-label="II" defaultChecked />
-        <div className="tab-content bg-base-100 border-base-300 p-6">
-          <InventoryTab tabIndex={1} />
-        </div>
+        <div className="tabs tabs-lift">
+          <input type="radio" name="my_tabs_9" className="tab " aria-label="I" />
+          <div className="tab-content bg-base-100 border-base-300 p-6">
+            <InventoryTab tabIndex={0} />
+          </div>
 
-        <input type="radio" name="my_tabs_9" className="tab" aria-label="III" />
-        <div className="tab-content bg-base-100 border-base-300 p-6">
-          <InventoryTab tabIndex={2} />
-        </div>
+          <input type="radio" name="my_tabs_9" className="tab" aria-label="II" defaultChecked />
+          <div className="tab-content bg-base-100 border-base-300 p-6">
+            <InventoryTab tabIndex={1} />
+          </div>
 
-        <input type="radio" name="my_tabs_9" className="tab" aria-label="IV" />
-        <div className="tab-content bg-base-100 border-base-300 p-6">
-          <InventoryTab tabIndex={3} />
-        </div>
+          <input type="radio" name="my_tabs_9" className="tab" aria-label="III" />
+          <div className="tab-content bg-base-100 border-base-300 p-6">
+            <InventoryTab tabIndex={2} />
+          </div>
 
-        <input type="radio" name="my_tabs_9" className="tab" aria-label="V" />
-        <div className="tab-content bg-base-100 border-base-300 p-6">
-          <InventoryTab tabIndex={4} />
-        </div>
+          <input type="radio" name="my_tabs_9" className="tab" aria-label="IV" />
+          <div className="tab-content bg-base-100 border-base-300 p-6">
+            <InventoryTab tabIndex={3} />
+          </div>
 
-        <input type="radio" name="my_tabs_9" className="tab" aria-label="VI" />
-        <div className="tab-content bg-base-100 border-base-300 p-6">
-          <InventoryTab tabIndex={5} />
-        </div>
+          <input type="radio" name="my_tabs_9" className="tab" aria-label="V" />
+          <div className="tab-content bg-base-100 border-base-300 p-6">
+            <InventoryTab tabIndex={4} />
+          </div>
 
-        <input type="radio" name="my_tabs_9" className="tab" aria-label="VII" />
-        <div className="tab-content bg-base-100 border-base-300 p-6">
-          <InventoryTab tabIndex={6} />
-        </div>
+          <input type="radio" name="my_tabs_9" className="tab" aria-label="VI" />
+          <div className="tab-content bg-base-100 border-base-300 p-6">
+            <InventoryTab tabIndex={5} />
+          </div>
 
-        <input type="radio" name="my_tabs_9" className="tab" aria-label="VIII" />
-        <div className="tab-content bg-base-100 border-base-300 p-6">
-          <InventoryTab tabIndex={7} />
-        </div>
+          <input type="radio" name="my_tabs_9" className="tab" aria-label="VII" />
+          <div className="tab-content bg-base-100 border-base-300 p-6">
+            <InventoryTab tabIndex={6} />
+          </div>
 
-        <input type="radio" name="my_tabs_9" className="tab" aria-label="Premium" />
-        <div className="tab-content bg-base-100 border-base-300 p-6">
-          <InventoryTab tabIndex={8} />
+          <input type="radio" name="my_tabs_9" className="tab" aria-label="VIII" />
+          <div className="tab-content bg-base-100 border-base-300 p-6">
+            <InventoryTab tabIndex={7} />
+          </div>
+
+          <input type="radio" name="my_tabs_9" className="tab" aria-label="Premium" />
+          <div className="tab-content bg-base-100 border-base-300 p-6">
+            <InventoryTab tabIndex={8} />
+          </div>
         </div>
       </div>
     </div>

@@ -22,8 +22,8 @@ export const NavLinks: NavLink[] = [
     icon: "Layers",
   },
   {
-    to: "/services",
-    label: "Services",
+    to: "/settings",
+    label: "Settings",
     icon: "Settings",
   },
   {

@@ -6,7 +6,7 @@ import Home from "@pages/Home";
 import General from "@pages/General";
 import Inventory from "@pages/Inventory";
 import Calculators from "@pages/Calculators";
-import Services from "@pages/Services";
+import Settings from "@pages/Settings";
 import Macros from "@pages/Macros";
 import ThankYou from "@pages/ThankYou";
 import { calculatorRouteConfig } from "@routes/calculatorRouteConfig";
@@ -19,7 +19,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/general" element={<General />} />
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/calculators" element={<Calculators />} />
-        <Route path="/settings" element={<Services />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/macros" element={<Macros />} />
         <Route path="/thank-you" element={<ThankYou />} />
         {calculatorRouteConfig.map((route) => (

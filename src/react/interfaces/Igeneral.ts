@@ -31,5 +31,4 @@ export interface InventorySlotData {
   row: number;
   column: number;
   isLocked: boolean;
-  item?: InventoryItem;
 }
