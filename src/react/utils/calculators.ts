@@ -31,15 +31,9 @@ export const calculators: Calculator[] = [
     image: "/src/react/assets/jewel.png",
   },
   {
-    id: "opal-create",
-    name: "Opal Creation Calculator",
-    description: "Calculate the shiny dust needed to create opal gems",
-    image: "/src/react/assets/gem.png",
-  },
-  {
-    id: "opal-upgrade",
-    name: "Opal Upgrade Calculator",
-    description: "Calculate the shiny dust needed to upgrade opal gems",
+    id: "opal",
+    name: "Opal Calculator",
+    description: "Calculate the shiny dust needed to create or upgrade opal gems",
     image: "/src/react/assets/gem.png",
   },
 ];

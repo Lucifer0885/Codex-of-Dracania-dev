@@ -33,7 +33,8 @@
       "@utils/*": ["src/react/utils/*"],
       "@interfaces/*": ["src/react/interfaces/*"],
       "@context/*": ["src/react/context/*"],
-      "@hooks/*": ["src/react/hooks/*"]
+      "@hooks/*": ["src/react/hooks/*"],
+      "@routes/*": ["src/react/routes/*"]
     }
   },
   "include": ["src"],
