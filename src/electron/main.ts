@@ -1,14 +1,9 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
-<<<<<<< Updated upstream
 import { isDev, loadConfig } from "./utils/util.js";
 import { findWindow } from "./utils/findWindow.js";
 import { getPreloadPath, getUIPath } from "./utils/pathResolver.js";
 import { ipcMainHandle } from "./utils/ipc.js";
-=======
-import { isDev } from "./utils/util.js";
-import { getPreloadPath } from "./utils/pathResolver.js";
->>>>>>> Stashed changes
 
 let mainWindow: BrowserWindow;
 
