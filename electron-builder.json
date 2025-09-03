@@ -1,6 +1,7 @@
 {
     "appId": "com.lucifer0885.dso-utils",
     "artifactName": "Dso Utils-${version}.${ext}",
+    "extraResources": ["dist-electron/preload.cjs"],
     "electronLanguages": [
         "en"
     ],
@@ -9,6 +10,13 @@
         "dist-react/**/*",
         "dist-electron/**/*"
     ],
+    "asarUnpack": [
+        "**/node_modules/@emnapi/**/*",
+        "**/node_modules/tailwindcss/**/*.wasm"
+    ],
+    "buildDependenciesFromSource": false,
+    "nodeGypRebuild": false,
+    "npmRebuild": false,
     "win": {
         "icon": "assets/dso.ico",
         "target": [

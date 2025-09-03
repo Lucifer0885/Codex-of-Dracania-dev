@@ -35,7 +35,9 @@
       "@context/*": ["src/react/context/*"],
       "@hooks/*": ["src/react/hooks/*"],
       "@routes/*": ["src/react/routes/*"]
-    }
+    },
+
+    "types": ["./types"]
   },
   "include": ["src"],
   "exclude": ["src/electron"]
