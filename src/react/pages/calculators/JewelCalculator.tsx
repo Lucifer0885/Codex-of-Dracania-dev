@@ -33,7 +33,7 @@ function JewelCalculator() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
 
     try {
       const cost = getJewelCost(+amount, startingTier, targetTier);

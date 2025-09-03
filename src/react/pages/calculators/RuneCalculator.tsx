@@ -35,7 +35,7 @@ function RuneCalculator() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
 
     try {
       const cost = getRuneCost(+amount, startingTier, targetTier, runeType);

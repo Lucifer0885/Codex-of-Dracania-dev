@@ -5,3 +5,5 @@ export interface Macro {
   type: "default" | "custom";
   execute: () => Promise<void>;
 }
+
+export type Role = "player" | "developer" | "contributor";

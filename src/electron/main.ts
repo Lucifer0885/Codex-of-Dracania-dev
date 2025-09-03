@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
-import { isDev } from "./utils/util.js";
+import { isDev, loadConfig } from "./utils/util.js";
 import { findWindow } from "./utils/findWindow.js";
 import { getPreloadPath, getUIPath } from "./utils/pathResolver.js";
 import { ipcMainHandle } from "./utils/ipc.js";
@@ -25,6 +25,8 @@ app.whenReady().then(() => {
   }
 
   mainWindow.maximize();
+
+  loadConfig();
 
   ipcMainHandle("find-target-window", async () => {
     return await findWindow(null, "Nebula3::MainWindow");
