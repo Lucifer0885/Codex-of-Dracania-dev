@@ -16,3 +16,12 @@ function ipcRendererOn<Key extends keyof EventPayloadMapping>(
   electron.ipcRenderer.on(key, cb);
   return () => electron.ipcRenderer.off(key, cb);
 }
+
+function ipcRendererOnce<Key extends keyof EventPayloadMapping>(
+  key: Key,
+  callback: (payload: EventPayloadMapping[Key]) => void
+) {
+  const cb = (_: Electron.IpcRendererEvent, payload: any) => callback(payload);
+  electron.ipcRenderer.once(key, cb);
+  return () => electron.ipcRenderer.off(key, cb);
+}
