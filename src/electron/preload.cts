@@ -3,10 +3,16 @@ const electron = require("electron");
 electron.contextBridge.exposeInMainWorld("electron", {
   findTargetWindow: () => ipcRendererInvoke("find-target-window"),
   getConfig: () => ipcRendererInvoke("get-config"),
+  saveInventoryConfig: (config: InventoryConfig) => ipcRendererInvokeWithData("save-inventory-config", config),
+  updateLockedSlots: (slots: InventorySlotConfig[]) => ipcRendererInvokeWithData("update-locked-slots", slots),
 } satisfies Window["electron"]);
 
 function ipcRendererInvoke<Key extends keyof EventPayloadMapping>(key: Key) {
   return electron.ipcRenderer.invoke(key);
+}
+
+function ipcRendererInvokeWithData<Key extends keyof EventPayloadMapping>(key: Key, data: any) {
+  return electron.ipcRenderer.invoke(key, data);
 }
 
 function ipcRendererOn<Key extends keyof EventPayloadMapping>(

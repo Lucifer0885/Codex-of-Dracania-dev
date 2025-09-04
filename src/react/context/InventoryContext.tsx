@@ -1,20 +1,12 @@
 import { createContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 
-export interface InventorySlot {
-  id: string;
-  tabIndex: number;
-  row: number;
-  column: number;
-  isLocked: boolean;
-}
-
 interface InventoryContextType {
-  inventorySlots: InventorySlot[];
+  inventorySlots: InventorySlotConfig[];
   toggleLock: (slotId: string) => void;
   isSlotLocked: (slotId: string) => boolean;
   clearAllLocks: () => void;
-  getLockedSlots: () => InventorySlot[];
+  getLockedSlots: () => InventorySlotConfig[];
 }
 
 const InventoryContext = createContext<InventoryContextType | undefined>(undefined);
@@ -23,15 +15,15 @@ interface InventoryProviderProps {
   children: ReactNode;
 }
 
-const INVENTORY_STORAGE_KEY = "dso-inventory-locks";
-
 export function InventoryProvider({ children }: InventoryProviderProps) {
-  const [inventorySlots, setInventorySlots] = useState<InventorySlot[]>([]);
+  const [inventorySlots, setInventorySlots] = useState<InventorySlotConfig[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    const initializeInventory = () => {
-      const storedData = loadFromLocalStorage();
-      const slots: InventorySlot[] = [];
+    const initializeInventory = async () => {
+      console.log("Initializing inventory...");
+      const storedData = await loadFromConfig();
+      const slots: InventorySlotConfig[] = [];
 
       for (let tabIndex = 0; tabIndex < 9; tabIndex++) {
         for (let row = 0; row < 4; row++) {
@@ -50,35 +42,42 @@ export function InventoryProvider({ children }: InventoryProviderProps) {
         }
       }
 
+      const lockedCount = slots.filter((slot) => slot.isLocked).length;
+      console.log("Initialized with", lockedCount, "locked slots");
       setInventorySlots(slots);
+      setIsInitialized(true);
     };
 
     initializeInventory();
   }, []);
 
   useEffect(() => {
-    if (inventorySlots.length > 0) {
-      saveToLocalStorage(inventorySlots);
+    // Only save after initialization is complete and we have actual data
+    if (isInitialized && inventorySlots.length > 0) {
+      saveToConfig(inventorySlots);
     }
-  }, [inventorySlots]);
+  }, [inventorySlots, isInitialized]);
 
-  const loadFromLocalStorage = (): InventorySlot[] => {
+  const loadFromConfig = async (): Promise<InventorySlotConfig[]> => {
     try {
-      const stored = localStorage.getItem(INVENTORY_STORAGE_KEY);
-      return stored ? JSON.parse(stored) : [];
+      const config = await window.electron.getConfig();
+      const lockedSlots = config.user.inventory.lockedSlots || [];
+      console.log("Loading from config:", lockedSlots.length, "locked slots");
+      return lockedSlots;
     } catch (error) {
-      console.error("Error loading inventory from localStorage:", error);
+      console.error("Error loading inventory from config:", error);
       return [];
     }
   };
 
-  const saveToLocalStorage = (slots: InventorySlot[]) => {
+  const saveToConfig = async (slots: InventorySlotConfig[]) => {
     try {
       // Only save locked slots to reduce storage size
       const dataToSave = slots.filter((slot) => slot.isLocked);
-      localStorage.setItem(INVENTORY_STORAGE_KEY, JSON.stringify(dataToSave));
+      console.log("Saving to config:", dataToSave.length, "locked slots");
+      await window.electron.updateLockedSlots(dataToSave);
     } catch (error) {
-      console.error("Error saving inventory to localStorage:", error);
+      console.error("Error saving inventory to config:", error);
     }
   };
 
@@ -97,7 +96,7 @@ export function InventoryProvider({ children }: InventoryProviderProps) {
     setInventorySlots((prevSlots) => prevSlots.map((slot) => ({ ...slot, isLocked: false })));
   };
 
-  const getLockedSlots = (): InventorySlot[] => {
+  const getLockedSlots = (): InventorySlotConfig[] => {
     return inventorySlots.filter((slot) => slot.isLocked);
   };
 

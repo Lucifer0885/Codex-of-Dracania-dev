@@ -35,12 +35,12 @@ function InventoryContent() {
         <LockedSlotsCounter />
 
         <div className="tabs tabs-lift">
-          <input type="radio" name="my_tabs_9" className="tab " aria-label="I" />
+          <input type="radio" name="my_tabs_9" className="tab " aria-label="I" defaultChecked />
           <div className="tab-content bg-base-100 border-base-300 p-6">
             <InventoryTab tabIndex={0} />
           </div>
 
-          <input type="radio" name="my_tabs_9" className="tab" aria-label="II" defaultChecked />
+          <input type="radio" name="my_tabs_9" className="tab" aria-label="II" />
           <div className="tab-content bg-base-100 border-base-300 p-6">
             <InventoryTab tabIndex={1} />
           </div>

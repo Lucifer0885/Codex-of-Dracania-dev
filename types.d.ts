@@ -26,7 +26,7 @@ type TargetErrorInfo = {
 
 type Role = "player" | "developer" | "contributor";
 
-interface GlobalConfig {
+type GlobalConfig = {
   user: {
     name: string;
     role: Role;
@@ -34,17 +34,17 @@ interface GlobalConfig {
     inventory: InventoryConfig;
     macros: MacroConfig;
   };
-}
+};
 
-interface InventorySlotConfig {
+type InventorySlotConfig = {
   id: string;
   tabIndex: number;
   row: number;
   column: number;
   isLocked: boolean;
-}
+};
 
-interface InventoryConfig {
+type InventoryConfig = {
   layout: {
     totalTabs: number;
     rowsPerTab: number;
@@ -52,28 +52,26 @@ interface InventoryConfig {
   };
 
   lockedSlots: InventorySlotConfig[];
+};
 
-  autoSave: {
-    enabled: boolean;
-    intervalMs: number;
-    saveOnlyLocked: boolean;
-  };
-}
-
-interface MacroConfig {
+type MacroConfig = {
   // Placeholder for macro configuration
   // This can be expanded based on your macro requirements
   enabled?: boolean;
-}
+};
 
 type EventPayloadMapping = {
   "find-target-window": TargetWindowInfo | TargetErrorInfo | TargetNullInfo;
-  "get-config": import("./src/electron/interfaces/Iconfig.js").GlobalConfig;
+  "get-config": GlobalConfig;
+  "save-inventory-config": GlobalConfig;
+  "update-locked-slots": InventoryConfig;
 };
 
 interface Window {
   electron: {
     findTargetWindow: () => Promise<TargetWindowInfo | TargetErrorInfo | TargetNullInfo>;
-    getConfig();
+    getConfig: () => Promise<GlobalConfig>;
+    saveInventoryConfig: (config: InventoryConfig) => Promise<GlobalConfig>;
+    updateLockedSlots: (slots: InventorySlotConfig[]) => Promise<InventoryConfig>;
   };
 }

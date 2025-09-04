@@ -1,12 +1,21 @@
 # Inventory Management System
 
-This inventory management system provides a complete solution for managing inventory slots with lock/unlock functionality and local storage persistence.
+This inventory management system provides a complete solution for managing inventory slots with lock/unlock functionality and config-based persistence.
+
+## Recent Changes ✨
+
+### Migration from localStorage to Electron Config System
+
+- Inventory data now stored in `~/.dso-utils/config.json`
+- Better cross-platform reliability and structured data storage
+- Single source of truth for all app configuration
+- Maintains same user experience with improved backend
 
 ## Features
 
 - ✅ **Lock/Unlock Slots**: Click on any inventory slot to lock or unlock it
 - ✅ **Visual Feedback**: Locked slots have a red border and lock icon
-- ✅ **Local Storage**: All lock states persist across app restarts
+- ✅ **Config Storage**: All lock states persist in Electron config file
 - ✅ **Multiple Tabs**: Supports 9 inventory tabs (8 regular + 1 premium)
 - ✅ **Grid Layout**: 4 rows × 7 columns per tab (28 slots per tab)
 - ✅ **Lock Counter**: Shows total locked slots with clear all option
@@ -57,9 +66,10 @@ The inventory system is already integrated into your app. Just navigate to the I
 
 ### Data Persistence
 
-- All lock states are automatically saved to localStorage
-- Data persists across app restarts
-- Storage key: `dso-inventory-locks`
+- All lock states are automatically saved to Electron config file
+- Data persists across app restarts and system reboots
+- Config location: `~/.dso-utils/config.json`
+- Structured data with full TypeScript support
 
 ## Interfaces
 
@@ -90,23 +100,37 @@ You can extend this system by:
 4. Exporting/importing inventory states
 5. Adding different lock types or colors
 
-## Local Storage Structure
+## Configuration Structure
 
-The system stores only locked slots and slots with items to minimize storage usage:
+The system now stores inventory data in the main Electron config file with this structure:
 
 ```json
-[
-  {
-    "id": "0-0-0",
-    "tabIndex": 0,
-    "row": 0,
-    "column": 0,
-    "isLocked": true,
-    "item": {
-      "name": "Example Item",
-      "type": "weapon",
-      "rarity": "legendary"
+{
+  "user": {
+    "inventory": {
+      "layout": {
+        "totalTabs": 9,
+        "rowsPerTab": 4,
+        "columnsPerRow": 7
+      },
+      "lockedSlots": [
+        {
+          "id": "0-0-0",
+          "tabIndex": 0,
+          "row": 0,
+          "column": 0,
+          "isLocked": true
+        }
+      ],
     }
   }
-]
+}
 ```
+
+## Electron API
+
+The inventory system uses these Electron APIs internally:
+
+- `window.electron.getConfig()` - Get full application config
+- `window.electron.updateLockedSlots(slots)` - Update locked slots
+- `window.electron.saveInventoryConfig(config)` - Save complete inventory config

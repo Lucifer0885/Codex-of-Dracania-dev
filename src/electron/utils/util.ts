@@ -30,11 +30,6 @@ export function createConfig() {
           columnsPerRow: 7,
         },
         lockedSlots: [],
-        autoSave: {
-          enabled: true,
-          intervalMs: 10000,
-          saveOnlyLocked: false,
-        },
       },
       macros: {
         enabled: true,
