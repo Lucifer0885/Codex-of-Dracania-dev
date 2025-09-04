@@ -26,7 +26,11 @@ app.whenReady().then(() => {
 
   mainWindow.maximize();
 
-  loadConfig();
+  const config = loadConfig();
+
+  ipcMainHandle("get-config", async () => {
+    return config;
+  });
 
   ipcMainHandle("find-target-window", async () => {
     return await findWindow(null, "Nebula3::MainWindow");

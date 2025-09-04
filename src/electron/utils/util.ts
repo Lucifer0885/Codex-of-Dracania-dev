@@ -2,7 +2,6 @@ import { WebFrameMain } from "electron";
 import { getConfigPath, getUIPath } from "./pathResolver.js";
 import { pathToFileURL } from "url";
 import * as fs from "fs";
-import { GlobalConfig } from "../interfaces/Iconfig.js";
 
 export function isDev() {
   return process.env.NODE_ENV === "development";

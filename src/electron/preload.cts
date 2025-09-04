@@ -2,6 +2,7 @@ const electron = require("electron");
 
 electron.contextBridge.exposeInMainWorld("electron", {
   findTargetWindow: () => ipcRendererInvoke("find-target-window"),
+  getConfig: () => ipcRendererInvoke("get-config"),
 } satisfies Window["electron"]);
 
 function ipcRendererInvoke<Key extends keyof EventPayloadMapping>(key: Key) {
