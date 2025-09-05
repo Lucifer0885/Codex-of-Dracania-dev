@@ -133,27 +133,36 @@ export function getOpalUpgradeCost(amount: number, opalTierStart: OpalTier, opal
   return totalCost;
 }
 
-export function getNewMoonRuns(difficulty: BaseDifficulty, haveAttire: boolean): number {
-  const dropPerRun = newMoonTable["dropRates"][difficulty];
-  if (!dropPerRun) throw new Error("Invalid difficulty");
+export function getNewMoonRuns(
+  difficulty: BaseDifficulty,
+  haveAttire: boolean,
+  bossesSpawned: number
+): { runs: number; drop: number } {
+  const dropPerBoss = newMoonTable["dropRates"][difficulty];
+  if (!dropPerBoss) throw new Error("Invalid difficulty");
+
+  if (bossesSpawned < 1 || bossesSpawned > 4) throw new Error("Bosses spawned must be between 1 and 4");
 
   let drop = 0;
 
   if (haveAttire) {
     if (newMoonTable.attirePercentBonus) {
       drop =
-        typeof dropPerRun === "number"
-          ? dropPerRun + dropPerRun * newMoonTable.attirePercentBonus
-          : dropPerRun[0] +
-            dropPerRun[0] * newMoonTable.attirePercentBonus +
-            (dropPerRun[1] + dropPerRun[1] * newMoonTable.attirePercentBonus);
+        typeof dropPerBoss === "number"
+          ? (dropPerBoss + dropPerBoss * newMoonTable.attirePercentBonus) * bossesSpawned
+          : (dropPerBoss[0] +
+              dropPerBoss[0] * newMoonTable.attirePercentBonus +
+              (dropPerBoss[1] + dropPerBoss[1] * newMoonTable.attirePercentBonus)) *
+            bossesSpawned;
     }
+  } else {
+    drop =
+      typeof dropPerBoss === "number"
+        ? dropPerBoss * bossesSpawned
+        : dropPerBoss[0] * bossesSpawned + dropPerBoss[1] * bossesSpawned;
   }
 
   const runs = Math.ceil(newMoonTable.progressBar / drop);
-  console.log(`Runs needed: ${runs}`);
-  console.log(`Drops per run: ${drop}`);
-  console.log(`Difficulty: ${difficulty}`);
 
-  return runs;
+  return { runs, drop };
 }

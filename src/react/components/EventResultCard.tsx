@@ -1,17 +1,30 @@
-import { BadgeCheck, Copy } from "lucide-react";
+import { Copy, Route } from "lucide-react";
 import type React from "react";
+import { useState } from "react";
+import Toast from "@components/Toast";
 
 type EventResultCardProps = {
   runs: number | null;
+  dropsPerRun: number | null;
   error: string | null;
   title: string;
   titleImage: string | React.ReactNode;
   desc: string;
-  descImage: string | React.ReactNode;
+  dropImage: string | React.ReactNode;
   loading: boolean;
 };
 
-function EventResultCard({ runs, error, title, titleImage, desc, descImage, loading }: EventResultCardProps) {
+function EventResultCard({
+  runs,
+  dropsPerRun,
+  error,
+  title,
+  titleImage,
+  desc,
+  dropImage,
+  loading,
+}: EventResultCardProps) {
+  const [showToast, setShowToast] = useState(false);
   function formatImageAlt(image: string) {
     let alt = image
       .split("/")
@@ -24,6 +37,13 @@ function EventResultCard({ runs, error, title, titleImage, desc, descImage, load
 
     alt = `${alt} Icon`;
     return alt;
+  }
+
+  function handleCopy(e: React.MouseEvent, value: number) {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(value.toString());
+    setShowToast(true);
   }
 
   return (
@@ -41,49 +61,61 @@ function EventResultCard({ runs, error, title, titleImage, desc, descImage, load
           <div className="text-gray-400 text-center">
             {runs === null ? (
               <>
-                <p>No calculation yet.</p>
-                <p className="text-sm mt-2">
+                <div>No calculation yet.</div>
+                <div className="text-sm mt-2">
                   {desc}, then click <strong>Calculate</strong>.<br />
-                  <span className="italic">
-                    Example: Upgrade Cost:{" "}
-                    {typeof descImage === "string" ? (
-                      <img src={descImage} className="inline w-4 h-4" alt={formatImageAlt(descImage)} />
-                    ) : (
-                      descImage
-                    )}{" "}
-                    100
-                  </span>
-                </p>
+                  <div className="mt-2 flex flex-col gap-1">
+                    <span className="italic">
+                      Example: Drops Per Run:{" "}
+                      {typeof dropImage === "string" ? (
+                        <img src={dropImage} className="inline w-4 h-4" alt={formatImageAlt(dropImage)} />
+                      ) : (
+                        dropImage
+                      )}{" "}
+                      1000
+                    </span>
+                    <span className="italic">
+                      Example: Runs Needed: <Route className="inline-flex" size={16} /> 10
+                    </span>
+                  </div>
+                </div>
               </>
             ) : loading ? (
               <span className="loading loading-infinity loading-xl"></span>
             ) : (
               <div className="flex flex-col items-center gap-4 mt-[-50px]">
-                <div className="flex gap-2 items-center ">
-                  <span className="text-3xl text-info">Upgrade Cost</span>
-                  <BadgeCheck className="text-info animate-pulse duration-300 " />
-                </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 tooltip" data-tip="Runs Needed">
                   <label className="input input-ghost border-gray-400">
-                    {typeof descImage === "string" ? (
-                      <img src={descImage} alt={formatImageAlt(descImage)} className="w-5 h-5" />
-                    ) : (
-                      descImage
-                    )}
+                    <Route />
                     <input type="text" className="grow text-primary text-lg" disabled readOnly value={runs} />
                     <div
                       className="cursor-pointer border-separator border-s-2 ps-2 flex"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        navigator.clipboard.writeText(runs.toString());
-                      }}
+                      onClick={(e) => handleCopy(e, runs!)}
                     >
                       <div className="tooltip tooltip-bottom" data-tip="Copy to clipboard">
                         <Copy />
                       </div>
                     </div>
                   </label>
+                </div>
+                <div className="flex items-center gap-2 tooltip" data-tip="Drops Per Run">
+                  <label className="input input-ghost border-gray-400">
+                    {typeof dropImage === "string" ? (
+                      <img src={dropImage} alt={formatImageAlt(dropImage)} className="w-5 h-5" />
+                    ) : (
+                      dropImage
+                    )}
+                    <input type="text" className="grow text-primary text-lg" disabled readOnly value={dropsPerRun!} />
+                    <div
+                      className="cursor-pointer border-separator border-s-2 ps-2 flex"
+                      onClick={(e) => handleCopy(e, dropsPerRun!)}
+                    >
+                      <div className="tooltip tooltip-bottom" data-tip="Copy to clipboard">
+                        <Copy />
+                      </div>
+                    </div>
+                  </label>
+                  {showToast && <Toast onClose={() => setShowToast(false)} />}
                 </div>
                 <div>
                   <span className="text-gray-400 text-sm">If you found a mistake, please let us know.</span>

@@ -1,5 +1,7 @@
 import { BadgeCheck, Copy } from "lucide-react";
 import type React from "react";
+import { useState } from "react";
+import Toast from "@components/Toast";
 
 type ResultCardProps = {
   upgradeCost: number | null;
@@ -12,6 +14,8 @@ type ResultCardProps = {
 };
 
 function ResultCard({ upgradeCost, error, title, titleImage, desc, descImage, loading }: ResultCardProps) {
+  const [showToast, setShowToast] = useState(false);
+
   function formatImageAlt(image: string) {
     let alt = image
       .split("/")
@@ -24,6 +28,13 @@ function ResultCard({ upgradeCost, error, title, titleImage, desc, descImage, lo
 
     alt = `${alt} Icon`;
     return alt;
+  }
+
+  function handleCopy(e: React.MouseEvent, value: number) {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(value.toString());
+    setShowToast(true);
   }
 
   return (
@@ -73,17 +84,14 @@ function ResultCard({ upgradeCost, error, title, titleImage, desc, descImage, lo
                     <input type="text" className="grow text-primary text-lg" disabled readOnly value={upgradeCost} />
                     <div
                       className="cursor-pointer border-separator border-s-2 ps-2 flex"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        navigator.clipboard.writeText(upgradeCost.toString());
-                      }}
+                      onClick={(e) => handleCopy(e, upgradeCost!)}
                     >
                       <div className="tooltip tooltip-bottom" data-tip="Copy to clipboard">
                         <Copy />
                       </div>
                     </div>
                   </label>
+                  {showToast && <Toast onClose={() => setShowToast(false)} />}
                 </div>
                 <div>
                   <span className="text-gray-400 text-sm">If you found a mistake, please let us know.</span>
