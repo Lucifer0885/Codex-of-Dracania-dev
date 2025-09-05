@@ -1,3 +1,4 @@
+import type { BaseDifficulty } from "@interfaces/Ievent";
 import type { GemTier, GemType, JewelTier, OpalTier, RuneTier, RuneType } from "@interfaces/Igem";
 import type { Calculator } from "@interfaces/Igeneral";
 import {
@@ -10,6 +11,7 @@ import {
   OpalTiersUpgrade,
   UtilityRuneTier,
 } from "@utils/gem";
+import { newMoonTable } from "@utils/event";
 
 export const calculators: Calculator[] = [
   {
@@ -35,6 +37,12 @@ export const calculators: Calculator[] = [
     name: "Opal Calculator",
     description: "Calculate the shiny dust needed to create or upgrade opal gems",
     image: "/src/react/assets/gem.png",
+  },
+  {
+    id: "event-new-moon",
+    name: "New Moon Event Calculator",
+    description: "Calculate the boss kills needed for the New Moon event",
+    image: "/src/react/assets/event.png",
   },
 ];
 
@@ -123,4 +131,29 @@ export function getOpalUpgradeCost(amount: number, opalTierStart: OpalTier, opal
   }
 
   return totalCost;
+}
+
+export function getNewMoonRuns(difficulty: BaseDifficulty, haveAttire: boolean): number {
+  const dropPerRun = newMoonTable["dropRates"][difficulty];
+  if (!dropPerRun) throw new Error("Invalid difficulty");
+
+  let drop = 0;
+
+  if (haveAttire) {
+    if (newMoonTable.attirePercentBonus) {
+      drop =
+        typeof dropPerRun === "number"
+          ? dropPerRun + dropPerRun * newMoonTable.attirePercentBonus
+          : dropPerRun[0] +
+            dropPerRun[0] * newMoonTable.attirePercentBonus +
+            (dropPerRun[1] + dropPerRun[1] * newMoonTable.attirePercentBonus);
+    }
+  }
+
+  const runs = Math.ceil(newMoonTable.progressBar / drop);
+  console.log(`Runs needed: ${runs}`);
+  console.log(`Drops per run: ${drop}`);
+  console.log(`Difficulty: ${difficulty}`);
+
+  return runs;
 }

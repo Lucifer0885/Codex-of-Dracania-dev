@@ -2,6 +2,7 @@ import GemCalculator from "@pages/calculators/GemCalculator";
 import RuneCalculator from "@pages/calculators/RuneCalculator";
 import JewelCalculator from "@pages/calculators/JewelCalculator";
 import OpalCalculator from "@pages/calculators/OpalCalculator";
+import NewMoonCalculator from "@pages/calculators/NewMoonCalculator";
 
 export const calculatorRouteConfig = [
   {
@@ -23,5 +24,10 @@ export const calculatorRouteConfig = [
     path: "/calculators/opal",
     element: OpalCalculator,
     key: "opal",
+  },
+  {
+    path: "/calculators/event-new-moon",
+    element: NewMoonCalculator,
+    key: "event-new-moon",
   },
 ];
