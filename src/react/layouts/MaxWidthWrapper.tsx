@@ -1,7 +1,10 @@
-function MaxWidthWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="max-w-6xl mx-auto px-4">{children}</div>
-  )
+type MaxWidthWrapperProps = {
+  className?: string;
+  children: React.ReactNode;
+};
+
+function MaxWidthWrapper({ className, children }: MaxWidthWrapperProps) {
+  return <div className={`flex-1 min-h-screen max-w-5xl mx-auto px-4 ${className}`}>{children}</div>;
 }
 
-export default MaxWidthWrapper
+export default MaxWidthWrapper;

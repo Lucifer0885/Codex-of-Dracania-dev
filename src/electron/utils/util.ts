@@ -1,7 +1,8 @@
 import { WebFrameMain } from "electron";
-import { getConfigPath, getUIPath } from "./pathResolver.js";
+import { getUIPath } from "./pathResolver.js";
 import { pathToFileURL } from "url";
-import * as fs from "fs";
+import { getTargetWindowSize } from "./targetWindow.js";
+import { updateWindowSizeConfig } from "./config.js";
 
 export function isDev() {
   return process.env.NODE_ENV === "development";
@@ -17,35 +18,25 @@ export function validateEventFrame(frame: WebFrameMain) {
   }
 }
 
-export function createConfig() {
-  const defaultConfig: GlobalConfig = {
-    user: {
-      name: "Player",
-      role: "player",
-      avatarPath: "",
-      inventory: {
-        layout: {
-          totalTabs: 9,
-          rowsPerTab: 4,
-          columnsPerRow: 7,
-        },
-        lockedSlots: [],
-      },
-      macros: {
-        enabled: true,
-      },
-    },
-  };
-
-  fs.writeFileSync(getConfigPath(), JSON.stringify(defaultConfig, null, 2));
+export function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export function loadConfig() {
-  const configPath = getConfigPath();
-  if (!fs.existsSync(configPath)) {
-    createConfig();
+export async function windowSizeListener() {
+  while (true) {
+    try {
+      const size = await getTargetWindowSize();
+      updateWindowSizeConfig(size);
+      console.log("Updated window size:", size);
+      await wait(5000); // Check every 5 seconds when window is found
+    } catch (error) {
+      if (error instanceof Error && error.message.includes("Target window not found")) {
+        console.log("Target window not found, waiting for it to become available...");
+        await wait(10000); // Wait longer when window is not found
+      } else {
+        console.error("Error getting window size:", error);
+        await wait(5000);
+      }
+    }
   }
-
-  const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
-  return config;
 }

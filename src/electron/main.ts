@@ -1,10 +1,11 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
-import { isDev, loadConfig } from "./utils/util.js";
-import { findWindow } from "./utils/findWindow.js";
+import { isDev, windowSizeListener } from "./utils/util.js";
+import { loadConfig } from "./utils/config.js";
+import { findWindow } from "./utils/targetWindow.js";
 import { getConfigPath, getPreloadPath, getUIPath } from "./utils/pathResolver.js";
 import { ipcMainHandle, ipcMainHandleWithData } from "./utils/ipc.js";
-import * as fs from "fs";
+import fs from "fs";
 
 let mainWindow: BrowserWindow;
 
@@ -29,7 +30,6 @@ app.whenReady().then(() => {
 
   ipcMainHandle("get-config", async () => {
     const config = loadConfig();
-    console.log("Main: get-config returning", config.user.inventory.lockedSlots.length, "locked slots");
     return config;
   });
 
@@ -41,15 +41,15 @@ app.whenReady().then(() => {
   });
 
   ipcMainHandleWithData<InventorySlotConfig[], "update-locked-slots">("update-locked-slots", async (lockedSlots) => {
-    console.log("Main: update-locked-slots received", lockedSlots.length, "locked slots");
     const currentConfig = loadConfig();
     currentConfig.user.inventory.lockedSlots = lockedSlots;
     fs.writeFileSync(getConfigPath(), JSON.stringify(currentConfig, null, 2));
-    console.log("Main: saved config with", lockedSlots.length, "locked slots");
     return currentConfig.user.inventory;
   });
 
   ipcMainHandle("find-target-window", async () => {
     return await findWindow(null, "Nebula3::MainWindow");
   });
+
+  windowSizeListener();
 });
