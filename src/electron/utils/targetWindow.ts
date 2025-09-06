@@ -63,12 +63,12 @@ export async function getTargetWindowSize() {
 
     const fullscreenResult = user32.GetWindowRect(Number(hwnd), rect);
     const isVisible = user32.IsWindowVisible(Number(hwnd));
+
     if (!fullscreenResult) {
       throw new Error("Failed to get window rectangle");
     }
 
     if (!isVisible) {
-      console.log("Window is not visible, trying to find the client");
       const window = await findWindow(null, "Qt5QWindowIcon");
       if (!window.found || !window.handle) {
         throw new Error("Client window not found or invalid handle");
@@ -109,7 +109,6 @@ export async function getTargetWindowSize() {
       height: height,
     };
   } catch (error) {
-    console.error("Error getting window size:", error);
     throw new Error(`Failed to get window size: ${error instanceof Error ? error.message : String(error)}`);
   }
 }

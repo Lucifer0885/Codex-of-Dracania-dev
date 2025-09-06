@@ -11,3 +11,8 @@ export interface GameEvent {
   attirePercentBonus?: number;
   dropRates: EventDifficulty<number | number[]>;
 }
+
+export interface EventCalculatorResult {
+  runs: number;
+  drop: number;
+}

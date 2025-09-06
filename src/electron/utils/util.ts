@@ -27,12 +27,10 @@ export async function windowSizeListener() {
     try {
       const size = await getTargetWindowSize();
       updateWindowSizeConfig(size);
-      console.log("Updated window size:", size);
-      await wait(5000); // Check every 5 seconds when window is found
+      await wait(5000);
     } catch (error) {
       if (error instanceof Error && error.message.includes("Target window not found")) {
-        console.log("Target window not found, waiting for it to become available...");
-        await wait(10000); // Wait longer when window is not found
+        await wait(10000);
       } else {
         console.error("Error getting window size:", error);
         await wait(5000);

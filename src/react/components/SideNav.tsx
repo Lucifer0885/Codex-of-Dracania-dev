@@ -38,7 +38,7 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
       <div>
         <div className="flex items-center pb-6 mb-2">
           <div className="flex items-center justify-center w-8 h-8">
-            <img src="/src/react/assets/dso.png" alt="Logo" width={34} height={34} />
+            <img src="/src/react/assets/general/dso.png" alt="Logo" width={34} height={34} />
           </div>
           {isExpanded && (
             <span className="ml-3 text-md font-bold text-primary whitespace-nowrap overflow-hidden">
@@ -79,7 +79,11 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
         <div className="flex items-center gap-3 mb-3">
           <div className="flex items-center justify-center w-8 h-8">
             <div className="rounded-full ring-primary ring-offset-base-100 ring-2 ring-offset-2 w-8 h-8">
-              <img src="/src/react/assets/discord-pfp.png" alt="Profile" className="w-full h-full rounded-full" />
+              <img
+                src="/src/react/assets/general/discord-pfp.png"
+                alt="Profile"
+                className="w-full h-full rounded-full"
+              />
             </div>
           </div>
           {isExpanded && (

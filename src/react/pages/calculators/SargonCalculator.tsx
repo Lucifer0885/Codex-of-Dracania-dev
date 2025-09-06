@@ -1,14 +1,13 @@
 import EventResultCard from "@components/EventResultCard";
 import type { BaseDifficulty } from "@interfaces/Ievent";
-import { getNewMoonRuns } from "@utils/calculators";
-import { eventDifficulties, newMoonTips } from "@utils/event";
+import { getSargonRuns } from "@utils/calculators";
+import { eventDifficulties, sargonTips } from "@utils/event";
 import React, { useState } from "react";
 import EventTips from "@components/EventTips";
 
-function NewMoonCalculator() {
+function SargonCalculator() {
   const [difficulty, setDifficulty] = useState<BaseDifficulty | null>(null);
   const [haveAttire, setHaveAttire] = useState<boolean>(false);
-  const [bossesSpawned, setBossesSpawned] = useState<number>(1);
   const [runs, setRuns] = useState<null | number>(null);
   const [dropsPerRun, setDropsPerRun] = useState<null | number>(null);
   const [error, setError] = useState<null | string>(null);
@@ -38,7 +37,7 @@ function NewMoonCalculator() {
     }, 1000);
 
     try {
-      const runs = getNewMoonRuns(difficulty, haveAttire, bossesSpawned);
+      const runs = getSargonRuns(difficulty, haveAttire);
       setRuns(runs.runs);
       setDropsPerRun(runs.drop);
     } catch (error) {
@@ -52,12 +51,12 @@ function NewMoonCalculator() {
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
         <img
-          src="/src/react/assets/events/newmoon/tabicon_newmoon.png"
-          alt="New Moon Event Calculator"
+          src="/src/react/assets/events/sargon/tabicon_sargon.png"
+          alt="Sargon Event Calculator"
           width={100}
           height={100}
         />
-        <h1 className="text-4xl text-primary">New Moon Event Calculator</h1>
+        <h1 className="text-4xl text-primary">Sargon Event Calculator</h1>
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="card card-border bg-base-300 text-neutral-content w-96 border-gray-400">
@@ -97,15 +96,6 @@ function NewMoonCalculator() {
                   Selected Difficulty: {difficulty ? formatName(difficulty) : "None"}
                 </div>
               </div>
-              <label className="input input-ghost border-gray-400">
-                Boss Spawns
-                <input
-                  type="text"
-                  className="grow"
-                  onChange={(e) => setBossesSpawned(Number(e.target.value.trim()))}
-                  value={bossesSpawned}
-                />
-              </label>
               <div className="flex items-center gap-2 mt-2">
                 <input
                   type="checkbox"
@@ -132,16 +122,16 @@ function NewMoonCalculator() {
           runs={runs}
           dropsPerRun={dropsPerRun}
           error={error}
-          title="New Moon Event Calculator"
-          titleImage="/src/react/assets/events/newmoon/tabicon_newmoon.png"
-          desc="Select the difficulty, the amount of bosses spawned and if you have the attire to see how many runs you need to complete the New Moon event"
-          dropImage="/src/react/assets/events/newmoon/newmoon-prog.png"
+          title="Sargon Event Calculator"
+          titleImage="/src/react/assets/events/sargon/tabicon_sargon.png"
+          desc="Select the difficulty and if you have the attire to see how many runs you need to complete the Sargon event (assuming you will get the drop from all 3 books in first map)"
+          dropImage="/src/react/assets/events/sargon/sargon-prog.png"
           loading={loading}
         />
       </div>
-      <EventTips title="New Moon Event Tips" tips={newMoonTips} />
+      <EventTips title="Sargon Event Tips" tips={sargonTips} />
     </div>
   );
 }
 
-export default NewMoonCalculator;
+export default SargonCalculator;

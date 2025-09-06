@@ -33,3 +33,26 @@ export const newMoonTips: string[] = [
   "This event is like a mini DTU. If you need gems, consider farming this event a lot.",
   "Opening Amphora chests in the first event map is a decent way to get wood and boss entries.",
 ];
+
+export const sargonTable: GameEvent = {
+  progressBar: 50000,
+  attirePercentBonus: 0.5,
+  dropRates: {
+    normal: [10, 103],
+    painful: [15, 189],
+    excruciating: [23, 291],
+    fatal: [34, 501],
+    infernal: [51, 810],
+    merciless: [76, 1360],
+    bloodshed: [114, 2235],
+  },
+};
+
+export const sargonTips: string[] = [
+  "The attire is not worth to purchase, as it does not provide a significant boost.",
+  "This event is best farmed with at least 2 players, as the first map is quite long to solo.",
+  "Each player should try to get at least 1 book drop per run to maximize clear speed.",
+  "Consider using a speedrun strategy to clear the first map quickly.",
+  "You can do bloodchests in the first map, but it is not very efficient.",
+  "If you are struggling to find a group, consider joining the official DSO Discord and looking for a party there.",
+];

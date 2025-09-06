@@ -70,7 +70,7 @@ function OpalCalculator() {
   return (
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
-        <img src="/src/react/assets/gem.png" alt="Opal Calculator" width={100} height={100} />
+        <img src="/src/react/assets/gem/gem.png" alt="Opal Calculator" width={100} height={100} />
         <h1 className="text-4xl text-primary ">
           {uiState === "create" ? "Opal Creation Calculator" : "Opal Upgrade Calculator"}
         </h1>
@@ -240,9 +240,9 @@ function OpalCalculator() {
           upgradeCost={upgradeCost}
           error={error}
           title={uiState === "create" ? "Opal Creation Result" : "Opal Upgrade Result"}
-          titleImage="/src/react/assets/gem.png"
+          titleImage="/src/react/assets/gem/gem.png"
           desc="Select opal tiers, enter an amount"
-          descImage="/src/react/assets/shiny-dust.png"
+          descImage="/src/react/assets/gem/shiny-dust.png"
           loading={loading}
         />
       </div>

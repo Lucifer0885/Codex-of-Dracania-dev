@@ -3,6 +3,7 @@ import RuneCalculator from "@pages/calculators/RuneCalculator";
 import JewelCalculator from "@pages/calculators/JewelCalculator";
 import OpalCalculator from "@pages/calculators/OpalCalculator";
 import NewMoonCalculator from "@pages/calculators/NewMoonCalculator";
+import SargonCalculator from "@pages/calculators/SargonCalculator";
 
 export const calculatorRouteConfig = [
   {
@@ -29,5 +30,10 @@ export const calculatorRouteConfig = [
     path: "/calculators/event-new-moon",
     element: NewMoonCalculator,
     key: "event-new-moon",
+  },
+  {
+    path: "/calculators/event-sargon",
+    element: SargonCalculator,
+    key: "event-sargon",
   },
 ];

@@ -47,8 +47,6 @@ export function loadConfig() {
 
 export function updateWindowSizeConfig(newSize: TargetWindowSize) {
   const config: GlobalConfig = loadConfig();
-  console.log("new size: " + JSON.stringify(newSize));
-  console.log("old size: " + JSON.stringify(config.targetWindow.size));
   config.targetWindow.size = { ...config.targetWindow.size, ...newSize };
   fs.writeFileSync(getConfigPath(), JSON.stringify(config, null, 2));
 }

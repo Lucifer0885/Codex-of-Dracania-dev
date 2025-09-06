@@ -45,7 +45,7 @@ function ThankYou() {
         </div>
       </div>
       <div className="flex justify-center">
-        <img src="./src/react/assets/dragon-thank-you-2.png" alt="Thank You" className="w-[350px] h-auto" />
+        <img src="/src/react/assets/general/dragon-thank-you-2.png" alt="Thank You" className="w-[350px] h-auto" />
       </div>
     </div>
   );

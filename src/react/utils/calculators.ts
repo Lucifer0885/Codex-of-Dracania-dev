@@ -1,4 +1,4 @@
-import type { BaseDifficulty } from "@interfaces/Ievent";
+import type { BaseDifficulty, EventCalculatorResult } from "@interfaces/Ievent";
 import type { GemTier, GemType, JewelTier, OpalTier, RuneTier, RuneType } from "@interfaces/Igem";
 import type { Calculator } from "@interfaces/Igeneral";
 import {
@@ -11,38 +11,44 @@ import {
   OpalTiersUpgrade,
   UtilityRuneTier,
 } from "@utils/gem";
-import { newMoonTable } from "@utils/event";
+import { newMoonTable, sargonTable } from "@utils/event";
 
 export const calculators: Calculator[] = [
   {
     id: "gem",
     name: "Gem Calculator",
     description: "Calculate the shiny dust needed to upgrade gems",
-    image: "/src/react/assets/gem.png",
+    image: "/src/react/assets/gem/gem.png",
   },
   {
     id: "rune",
     name: "Rune Calculator",
     description: "Calculate the shiny dust needed to upgrade runes",
-    image: "/src/react/assets/rune.png",
+    image: "/src/react/assets/gem/rune.png",
   },
   {
     id: "jewel",
     name: "Jewel Calculator",
     description: "Calculate the shiny dust needed to upgrade jewels",
-    image: "/src/react/assets/jewel.png",
+    image: "/src/react/assets/gem/jewel.png",
   },
   {
     id: "opal",
     name: "Opal Calculator",
     description: "Calculate the shiny dust needed to create or upgrade opal gems",
-    image: "/src/react/assets/gem.png",
+    image: "/src/react/assets/gem/gem.png",
   },
   {
     id: "event-new-moon",
     name: "New Moon Event Calculator",
     description: "Calculate the boss kills needed for the New Moon event",
-    image: "/src/react/assets/event.png",
+    image: "/src/react/assets/events/newmoon/tabicon_newmoon.png",
+  },
+  {
+    id: "event-sargon",
+    name: "Sargon Event Calculator",
+    description: "Calculate the runs needed for the Sargon event",
+    image: "/src/react/assets/events/sargon/tabicon_sargon.png",
   },
 ];
 
@@ -137,9 +143,9 @@ export function getNewMoonRuns(
   difficulty: BaseDifficulty,
   haveAttire: boolean,
   bossesSpawned: number
-): { runs: number; drop: number } {
-  const dropPerBoss = newMoonTable["dropRates"][difficulty];
-  if (!dropPerBoss) throw new Error("Invalid difficulty");
+): EventCalculatorResult {
+  const dropPerDiff = newMoonTable["dropRates"][difficulty];
+  if (!dropPerDiff) throw new Error("Invalid difficulty");
 
   if (bossesSpawned < 1 || bossesSpawned > 4) throw new Error("Bosses spawned must be between 1 and 4");
 
@@ -148,21 +154,43 @@ export function getNewMoonRuns(
   if (haveAttire) {
     if (newMoonTable.attirePercentBonus) {
       drop =
-        typeof dropPerBoss === "number"
-          ? (dropPerBoss + dropPerBoss * newMoonTable.attirePercentBonus) * bossesSpawned
-          : (dropPerBoss[0] +
-              dropPerBoss[0] * newMoonTable.attirePercentBonus +
-              (dropPerBoss[1] + dropPerBoss[1] * newMoonTable.attirePercentBonus)) *
+        typeof dropPerDiff === "number"
+          ? (dropPerDiff + dropPerDiff * newMoonTable.attirePercentBonus) * bossesSpawned
+          : (dropPerDiff[0] +
+              dropPerDiff[0] * newMoonTable.attirePercentBonus +
+              (dropPerDiff[1] + dropPerDiff[1] * newMoonTable.attirePercentBonus)) *
             bossesSpawned;
     }
   } else {
     drop =
-      typeof dropPerBoss === "number"
-        ? dropPerBoss * bossesSpawned
-        : dropPerBoss[0] * bossesSpawned + dropPerBoss[1] * bossesSpawned;
+      typeof dropPerDiff === "number"
+        ? dropPerDiff * bossesSpawned
+        : dropPerDiff[0] * bossesSpawned + dropPerDiff[1] * bossesSpawned;
   }
 
   const runs = Math.ceil(newMoonTable.progressBar / drop);
 
-  return { runs, drop };
+  return { runs, drop: Math.floor(drop) };
+}
+
+export function getSargonRuns(difficulty: BaseDifficulty, haveAttire: boolean): EventCalculatorResult {
+  const dropPerDiff = sargonTable["dropRates"][difficulty];
+  if (!dropPerDiff) throw new Error("Invalid difficulty");
+  if (typeof dropPerDiff === "number") throw new Error("Internal error, please report this");
+
+  let drop = 0;
+
+  if (haveAttire) {
+    if (sargonTable.attirePercentBonus) {
+      drop =
+        (dropPerDiff[0] + dropPerDiff[0] * sargonTable.attirePercentBonus) * 3 +
+        (dropPerDiff[1] + dropPerDiff[1] * sargonTable.attirePercentBonus);
+    }
+  } else {
+    drop = dropPerDiff[0] * 3 + dropPerDiff[1];
+  }
+
+  const runs = Math.ceil(sargonTable.progressBar / drop);
+
+  return { runs, drop: Math.floor(drop) };
 }

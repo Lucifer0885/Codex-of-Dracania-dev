@@ -1,7 +1,7 @@
 import { Package } from "lucide-react";
-import InventoryTab from "../components/InventoryTab";
-import { InventoryProvider } from "../context/InventoryContext";
-import { useInventory } from "../hooks/useInventory";
+import InventoryTab from "@components/InventoryTab";
+import { InventoryProvider } from "@context/InventoryContext";
+import { useInventory } from "@hooks/useInventory";
 
 function LockedSlotsCounter() {
   const { getLockedSlots, clearAllLocks } = useInventory();

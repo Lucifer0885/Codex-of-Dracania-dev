@@ -49,7 +49,7 @@ function GemCalculator() {
   return (
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
-        <img src="/src/react/assets/gem.png" alt="Gem Calculator" width={100} height={100} />
+        <img src="/src/react/assets/gem/gem.png" alt="Gem Calculator" width={100} height={100} />
         <h1 className="text-4xl text-primary">Gem Calculator</h1>
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -187,9 +187,9 @@ function GemCalculator() {
           upgradeCost={upgradeCost}
           error={error}
           title="Gem Upgrade Cost"
-          titleImage="/src/react/assets/gem.png"
+          titleImage="/src/react/assets/gem/gem.png"
           desc="Select gem tiers and type, enter an amount"
-          descImage="/src/react/assets/shiny-dust.png"
+          descImage="/src/react/assets/gem/shiny-dust.png"
           loading={loading}
         />
       </div>

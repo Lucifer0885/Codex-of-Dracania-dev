@@ -47,7 +47,7 @@ function JewelCalculator() {
   return (
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
-        <img src="/src/react/assets/gem.png" alt="Jewel Calculator" width={100} height={100} />
+        <img src="/src/react/assets/gem/jewel.png" alt="Jewel Calculator" width={100} height={100} />
         <h1 className="text-4xl text-primary">Jewel Calculator</h1>
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -145,9 +145,9 @@ function JewelCalculator() {
           upgradeCost={upgradeCost}
           error={error}
           title="Jewel Upgrade Cost"
-          titleImage="/src/react/assets/jewel.png"
+          titleImage="/src/react/assets/gem/jewel.png"
           desc="Select jewel tiers and type, enter an amount"
-          descImage="/src/react/assets/shiny-dust.png"
+          descImage="/src/react/assets/gem/shiny-dust.png"
           loading={loading}
         />
       </div>

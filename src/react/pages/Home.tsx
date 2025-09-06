@@ -19,7 +19,7 @@ function Home() {
         </div>
       </div>
       <div>
-        <img src="./src/react/assets/dragon-resting.png" alt="dragon-resting" className="w-[300px] h-auto" />
+        <img src="/src/react/assets/general/dragon-resting.png" alt="dragon-resting" className="w-[300px] h-auto" />
       </div>
       <div className="flex gap-6">
         <Link to="/inventory" className="text-lg btn btn-primary btn-outline w-[200px]">
