@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
 import { isDev, windowSizeListener } from "./utils/util.js";
-import { loadConfig } from "./utils/config.js";
+import { loadConfig, resetConfig } from "./utils/config.js";
 import { findWindow } from "./utils/targetWindow.js";
 import { getConfigPath, getPreloadPath, getUIPath } from "./utils/pathResolver.js";
 import { ipcMainHandle, ipcMainHandleWithData } from "./utils/ipc.js";
@@ -49,6 +49,11 @@ app.whenReady().then(() => {
 
   ipcMainHandle("find-target-window", async () => {
     return await findWindow(null, "Nebula3::MainWindow");
+  });
+
+  ipcMainHandle("reset-config", async () => {
+    console.log("Resetting config...");
+    resetConfig();
   });
 
   windowSizeListener();

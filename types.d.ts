@@ -82,6 +82,7 @@ type EventPayloadMapping = {
   "get-config": GlobalConfig;
   "save-inventory-config": GlobalConfig;
   "update-locked-slots": InventoryConfig;
+  "reset-config": void;
 };
 
 interface Window {
@@ -90,5 +91,6 @@ interface Window {
     getConfig: () => Promise<GlobalConfig>;
     saveInventoryConfig: (config: InventoryConfig) => Promise<GlobalConfig>;
     updateLockedSlots: (slots: InventorySlotConfig[]) => Promise<InventoryConfig>;
+    resetConfig: () => Promise<void>;
   };
 }
