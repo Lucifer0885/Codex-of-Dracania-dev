@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
-import { isDev, windowSizeListener } from "./utils/util.js";
+import { getMimeType, isDev, windowSizeListener } from "./utils/util.js";
 import { loadConfig, resetConfig } from "./utils/config.js";
 import { findWindow } from "./utils/targetWindow.js";
 import { getConfigPath, getPreloadPath, getUIPath } from "./utils/pathResolver.js";
@@ -54,6 +54,37 @@ app.whenReady().then(() => {
   ipcMainHandle("reset-config", async () => {
     console.log("Resetting config...");
     resetConfig();
+  });
+
+  ipcMainHandleWithData<UserInfo, "update-user">("update-user", async (user) => {
+    const currentConfig = loadConfig();
+    currentConfig.user = user;
+    fs.writeFileSync(getConfigPath(), JSON.stringify(currentConfig, null, 2));
+    return currentConfig.user;
+  });
+
+  ipcMainHandleWithData<string, "read-local-file">("read-local-file", async (filePath) => {
+    try {
+      const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"];
+      const ext = path.extname(filePath).toLowerCase();
+
+      if (!allowedExtensions.includes(ext)) {
+        throw new Error("File type not allowed");
+      }
+
+      if (!fs.existsSync(filePath)) {
+        throw new Error("File not found");
+      }
+
+      const fileBuffer = fs.readFileSync(filePath);
+      const mimeType = getMimeType(ext);
+      const base64Data = fileBuffer.toString("base64");
+
+      return `data:${mimeType};base64,${base64Data}`;
+    } catch (error) {
+      console.error("Error reading local file:", error);
+      throw error;
+    }
   });
 
   windowSizeListener();

@@ -38,3 +38,15 @@ export async function windowSizeListener() {
     }
   }
 }
+
+export function getMimeType(ext: string): string {
+  const mimeTypes: { [key: string]: string } = {
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png": "image/png",
+    ".gif": "image/gif",
+    ".bmp": "image/bmp",
+    ".webp": "image/webp",
+  };
+  return mimeTypes[ext] || "image/jpeg";
+}

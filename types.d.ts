@@ -6,7 +6,7 @@ type GlobalConfig = {
 type UserInfo = {
   name: string;
   role: Role;
-  avatarPath: string;
+  avatars: { path: string; selected: boolean }[];
   inventory: InventoryConfig;
   macros: MacroConfig;
 };
@@ -83,6 +83,8 @@ type EventPayloadMapping = {
   "save-inventory-config": GlobalConfig;
   "update-locked-slots": InventoryConfig;
   "reset-config": void;
+  "update-user": UserInfo;
+  "read-local-file": string;
 };
 
 interface Window {
@@ -92,5 +94,7 @@ interface Window {
     saveInventoryConfig: (config: InventoryConfig) => Promise<GlobalConfig>;
     updateLockedSlots: (slots: InventorySlotConfig[]) => Promise<InventoryConfig>;
     resetConfig: () => Promise<void>;
+    updateUserConfig: (data: UserInfo) => Promise<UserInfo>;
+    readLocalFile: (filePath: string) => Promise<string>;
   };
 }

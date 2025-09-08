@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 type ModalProps = {
   id: string;
   title: string;
-  body: string;
+  body: string | ReactNode;
   confirmButtonText?: string;
   confirmAction: () => void;
   isOpen: boolean;
@@ -52,12 +52,12 @@ function Modal({ id, title, body, confirmButtonText, confirmAction, isOpen, setI
         >
           <div className="bg-gray-800 rounded-lg shadow-xl p-6 max-w-md w-full mx-4 relative z-999">
             <h3 className="font-bold text-lg text-white mb-4">{title}</h3>
-            <p className="py-4 text-gray-300">{body}</p>
+            {typeof body === "string" ? <p className="py-4 text-gray-300">{body}</p> : body}
             <div className="flex justify-end gap-3 mt-6">
-              <button className="px-4 py-2 btn btn-info" onClick={handleCancel}>
+              <button className="px-4 py-2 btn btn-error" onClick={handleCancel}>
                 Cancel
               </button>
-              <button className="px-4 py-2 btn btn-error" onClick={handleConfirm}>
+              <button className="px-4 py-2 btn btn-info" onClick={handleConfirm}>
                 {confirmButtonText || "Confirm"}
               </button>
             </div>

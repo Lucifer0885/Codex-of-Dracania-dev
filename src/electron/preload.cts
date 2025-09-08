@@ -1,4 +1,3 @@
-import { resetConfig } from "./utils/config";
 const electron = require("electron");
 
 electron.contextBridge.exposeInMainWorld("electron", {
@@ -7,6 +6,8 @@ electron.contextBridge.exposeInMainWorld("electron", {
   saveInventoryConfig: (config: InventoryConfig) => ipcRendererInvokeWithData("save-inventory-config", config),
   updateLockedSlots: (slots: InventorySlotConfig[]) => ipcRendererInvokeWithData("update-locked-slots", slots),
   resetConfig: () => ipcRendererInvoke("reset-config"),
+  updateUserConfig: (data: UserInfo) => ipcRendererInvokeWithData("update-user", data),
+  readLocalFile: (filePath: string) => ipcRendererInvokeWithData("read-local-file", filePath),
 } satisfies Window["electron"]);
 
 function ipcRendererInvoke<Key extends keyof EventPayloadMapping>(key: Key) {

@@ -6,7 +6,7 @@ export function createConfig() {
     user: {
       name: "Player",
       role: "player",
-      avatarPath: "",
+      avatars: [{ path: "/src/react/assets/general/dso.png", selected: true }],
       inventory: {
         layout: {
           totalTabs: 9,
