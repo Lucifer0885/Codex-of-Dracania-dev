@@ -1,4 +1,5 @@
 import { getConfigPath } from "./pathResolver.js";
+import { defaultMacros } from "../macros/defaultMacros.js";
 import fs from "fs";
 
 export function createConfig() {
@@ -6,7 +7,7 @@ export function createConfig() {
     user: {
       name: "Player",
       role: "player",
-      avatars: [{ path: "/src/react/assets/general/dso.png", selected: true }],
+      avatars: [{ path: "default", selected: true }],
       inventory: {
         layout: {
           totalTabs: 9,
@@ -17,6 +18,13 @@ export function createConfig() {
       },
       macros: {
         enabled: true,
+        defaultMacros: defaultMacros,
+        customMacros: [],
+        executionSettings: {
+          maxConcurrentMacros: 5,
+          defaultStepDelay: 100,
+        },
+        lastModified: Date.now(),
       },
     },
     targetWindow: {

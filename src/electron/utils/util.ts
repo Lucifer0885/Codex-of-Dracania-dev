@@ -3,6 +3,7 @@ import { getUIPath } from "./pathResolver.js";
 import { pathToFileURL } from "url";
 import { getTargetWindowSize } from "./targetWindow.js";
 import { updateWindowSizeConfig } from "./config.js";
+import { VK_CODES } from "../constants/vk-codes.js";
 
 export function isDev() {
   return process.env.NODE_ENV === "development";
@@ -49,4 +50,36 @@ export function getMimeType(ext: string): string {
     ".webp": "image/webp",
   };
   return mimeTypes[ext] || "image/jpeg";
+}
+
+export function generateId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+export function makeLParam(x: number, y: number): number {
+  return (y << 16) | (x & 0xffff);
+}
+
+export function getVirtualKeyCode(keyName: string): number {
+  const upperKey = keyName.toUpperCase();
+  const vkKey = `VK_${upperKey}` as keyof typeof VK_CODES;
+
+  if (vkKey in VK_CODES) {
+    return VK_CODES[vkKey];
+  }
+
+  // Handle single character keys
+  if (keyName.length === 1) {
+    const charCode = keyName.toUpperCase().charCodeAt(0);
+    if (charCode >= 65 && charCode <= 90) {
+      // A-Z
+      return charCode;
+    }
+    if (charCode >= 48 && charCode <= 57) {
+      // 0-9
+      return charCode;
+    }
+  }
+
+  throw new Error(`Unknown key: ${keyName}`);
 }

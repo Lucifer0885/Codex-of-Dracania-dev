@@ -46,9 +46,14 @@ type InventoryConfig = {
 };
 
 type MacroConfig = {
-  // Placeholder for macro configuration
-  // This can be expanded based on your macro requirements
-  enabled?: boolean;
+  enabled: boolean;
+  defaultMacros: Macro[];
+  customMacros: Macro[];
+  executionSettings: {
+    maxConcurrentMacros: number; // Limit simultaneous executions
+    defaultStepDelay: number; // Default delay between steps
+  };
+  lastModified: number;
 };
 
 type TargetNullInfo = {
@@ -85,6 +90,16 @@ type EventPayloadMapping = {
   "reset-config": void;
   "update-user": UserInfo;
   "read-local-file": string;
+  // Basic macro events
+  "get-macros": {
+    defaultMacros: Macro[];
+    customMacros: Macro[];
+    settings: { maxConcurrentMacros: number; defaultStepDelay: number };
+  };
+  "execute-macro-by-id": { success: boolean; executionId?: string; error?: string };
+  // Keybinding events
+  "refresh-keybinds": { success: boolean };
+  "get-registered-keybinds": Array<{ keybind: string; macroId: string }>;
 };
 
 interface Window {

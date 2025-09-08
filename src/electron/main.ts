@@ -1,13 +1,24 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
-import { getMimeType, isDev, windowSizeListener } from "./utils/util.js";
+import { isDev, windowSizeListener } from "./utils/util.js";
 import { loadConfig, resetConfig } from "./utils/config.js";
 import { findWindow } from "./utils/targetWindow.js";
-import { getConfigPath, getPreloadPath, getUIPath } from "./utils/pathResolver.js";
+import { getConfigPath, getPreloadPath, getUIPath, readLocalFile } from "./utils/pathResolver.js";
 import { ipcMainHandle, ipcMainHandleWithData } from "./utils/ipc.js";
+import KeybindingManager from "./macros/KeybindingManager.js";
+import MacroManager from "./macros/MacroManager.js";
+import { container, SERVICE_KEYS } from "./utils/diContainer.js";
 import fs from "fs";
 
 let mainWindow: BrowserWindow;
+
+container.registerSingleton(SERVICE_KEYS.MACRO_MANAGER, () => new MacroManager());
+container.registerSingleton(SERVICE_KEYS.KEYBINDING_MANAGER, () => {
+  const macroManager = container.get<MacroManager>(SERVICE_KEYS.MACRO_MANAGER);
+  return new KeybindingManager(macroManager);
+});
+
+const keybindingManager = container.get<KeybindingManager>(SERVICE_KEYS.KEYBINDING_MANAGER);
 
 app.whenReady().then(() => {
   mainWindow = new BrowserWindow({
@@ -27,6 +38,8 @@ app.whenReady().then(() => {
   }
 
   mainWindow.maximize();
+
+  keybindingManager.registerMacroKeybinds();
 
   ipcMainHandle("get-config", async () => {
     const config = loadConfig();
@@ -64,28 +77,56 @@ app.whenReady().then(() => {
   });
 
   ipcMainHandleWithData<string, "read-local-file">("read-local-file", async (filePath) => {
+    return readLocalFile(filePath);
+  });
+
+  ipcMainHandle("get-macros", async () => {
+    const config = loadConfig();
+    return {
+      defaultMacros: config.user.macros.defaultMacros,
+      customMacros: config.user.macros.customMacros,
+      settings: config.user.macros.executionSettings,
+    };
+  });
+
+  ipcMainHandleWithData<string, "execute-macro-by-id">("execute-macro-by-id", async (macroId) => {
     try {
-      const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"];
-      const ext = path.extname(filePath).toLowerCase();
+      const config = loadConfig();
+      const allMacros = [...config.user.macros.defaultMacros, ...config.user.macros.customMacros];
+      const macro = allMacros.find((m) => m.id === macroId);
 
-      if (!allowedExtensions.includes(ext)) {
-        throw new Error("File type not allowed");
+      if (!macro) {
+        return { success: false, error: `Macro with ID '${macroId}' not found` };
       }
 
-      if (!fs.existsSync(filePath)) {
-        throw new Error("File not found");
-      }
+      const macroManager = container.get<MacroManager>(SERVICE_KEYS.MACRO_MANAGER);
 
-      const fileBuffer = fs.readFileSync(filePath);
-      const mimeType = getMimeType(ext);
-      const base64Data = fileBuffer.toString("base64");
-
-      return `data:${mimeType};base64,${base64Data}`;
+      const executionId = await macroManager.executeMacro(macro);
+      return { success: true, executionId };
     } catch (error) {
-      console.error("Error reading local file:", error);
-      throw error;
+      return { success: false, error: error instanceof Error ? error.message : String(error) };
     }
   });
 
+  ipcMainHandle("refresh-keybinds", async () => {
+    keybindingManager.registerMacroKeybinds();
+    return { success: true };
+  });
+
+  ipcMainHandle("get-registered-keybinds", async () => {
+    return keybindingManager.getRegisteredKeybinds();
+  });
+
   windowSizeListener();
+});
+
+app.on("before-quit", () => {
+  keybindingManager.unregisterAll();
+});
+
+app.on("window-all-closed", () => {
+  keybindingManager.unregisterAll();
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
 });

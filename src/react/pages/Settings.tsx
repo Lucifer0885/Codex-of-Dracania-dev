@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useUser } from "@hooks/useUser";
 import { getFileNameFromPath } from "@utils/utils";
 import { AvatarImage } from "@components/AvatarImage";
+import { Info } from "lucide-react";
 
 function Settings() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -143,7 +144,15 @@ function Settings() {
 
                 <div className="card bg-base-300 shadow-md">
                   <div className="card-body p-4">
-                    <h3 className="card-title text-sm">Add New Avatar</h3>
+                    <div className="flex gap-2 items-center mb-2">
+                      <h3 className="card-title text-sm">Add New Avatar</h3>
+                      <div
+                        className="tooltip"
+                        data-tip="If you're wondering why you need to add a path, I have decided to not store any data from the user for privacy reasons. What a better way to preserve security if the data never leaves your pc in the first place. This also means you need to re-add your custom avatar if you clear your data or switch devices."
+                      >
+                        <Info size={24} />
+                      </div>
+                    </div>
                     <div className="flex gap-2">
                       <input
                         type="text"
