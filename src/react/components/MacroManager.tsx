@@ -193,6 +193,8 @@ const MacroManager: React.FC = () => {
           <button onClick={handleCreateNew} className="btn btn-primary">
             Create New Macro
           </button>
+        </div>
+        <div className="flex gap-2">
           <button onClick={handleImport} className="btn btn-success">
             Import
           </button>
@@ -206,25 +208,25 @@ const MacroManager: React.FC = () => {
         <div className="grid grid-cols-4 gap-4 mb-6">
           <div className="card bg-base-300 shadow-sm">
             <div className="card-body p-4">
-              <div className="text-lg font-semibold text-primary">{statistics.total}</div>
+              <div className="text-3xl font-semibold text-primary">{statistics.total}</div>
               <div className="text-sm text-base-content opacity-70">Total Macros</div>
             </div>
           </div>
           <div className="card bg-base-300 shadow-sm">
             <div className="card-body p-4">
-              <div className="text-lg font-semibold text-info">{statistics.custom}</div>
+              <div className="text-3xl font-semibold text-info">{statistics.custom}</div>
               <div className="text-sm text-base-content opacity-70">Custom Macros</div>
             </div>
           </div>
           <div className="card bg-base-300 shadow-sm">
             <div className="card-body p-4">
-              <div className="text-lg font-semibold text-success">{statistics.enabled}</div>
+              <div className="text-3xl font-semibold text-success">{statistics.enabled}</div>
               <div className="text-sm text-base-content opacity-70">Enabled</div>
             </div>
           </div>
           <div className="card bg-base-300 shadow-sm">
             <div className="card-body p-4">
-              <div className="text-lg font-semibold text-warning">{statistics.withKeybindings}</div>
+              <div className="text-3xl font-semibold text-warning">{statistics.withKeybindings}</div>
               <div className="text-sm text-base-content opacity-70">With Keybindings</div>
             </div>
           </div>
@@ -251,21 +253,30 @@ const MacroManager: React.FC = () => {
                       <p className="text-base-content opacity-70 text-sm mt-1">{macro.description}</p>
                     )}
                     <div className="flex gap-2 mt-2">
-                      <span className={`badge ${macro.enabled ? "badge-success" : "badge-error"}`}>
+                      <span
+                        className={`badge badge-outline bg-base-300 ${macro.enabled ? "badge-success" : "badge-error"}`}
+                      >
                         {macro.enabled ? "Enabled" : "Disabled"}
                       </span>
-                      {macro.keybinding && <span className="badge badge-info">{macro.keybinding}</span>}
-                      <span className="badge badge-neutral">{macro.actions.length} steps</span>
+                      {macro.keybinding && (
+                        <span className="badge badge-outline bg-base-300 badge-info">{macro.keybinding}</span>
+                      )}
+                      <span className="badge badge-outline bg-base-300 badge-warning">
+                        {macro.actions.length} steps
+                      </span>
                     </div>
                   </div>
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleToggleEnabled(macro.id, !macro.enabled)}
-                      className={`btn btn-sm ${macro.enabled ? "btn-error" : "btn-success"}`}
+                      className={`btn btn-outline btn-sm ${macro.enabled ? "btn-error" : "btn-success"}`}
                     >
                       {macro.enabled ? "Disable" : "Enable"}
                     </button>
-                    <button onClick={() => handleCloneMacro(macro.id, macro.name)} className="btn btn-sm btn-info">
+                    <button
+                      onClick={() => handleCloneMacro(macro.id, macro.name)}
+                      className="btn btn-outline btn-sm btn-info"
+                    >
                       Clone
                     </button>
                   </div>
@@ -298,21 +309,29 @@ const MacroManager: React.FC = () => {
                         <p className="text-base-content opacity-70 text-sm mt-1">{macro.description}</p>
                       )}
                       <div className="flex gap-2 mt-2">
-                        <span className={`badge ${macro.enabled ? "badge-success" : "badge-error"}`}>
+                        <span
+                          className={`badge badge-outline bg-base-300  ${
+                            macro.enabled ? "badge-success" : "badge-error"
+                          }`}
+                        >
                           {macro.enabled ? "Enabled" : "Disabled"}
                         </span>
-                        {macro.keybinding && <span className="badge badge-info">{macro.keybinding}</span>}
-                        <span className="badge badge-neutral">{macro.actions.length} steps</span>
+                        {macro.keybinding && (
+                          <span className="badge badge-outline bg-base-300 badge-info">{macro.keybinding}</span>
+                        )}
+                        <span className="badge badge-outline badge-warning bg-base-300">
+                          {macro.actions.length} steps
+                        </span>
                       </div>
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleToggleEnabled(macro.id, !macro.enabled)}
-                        className={`btn btn-sm ${macro.enabled ? "btn-error" : "btn-success"}`}
+                        className={`btn btn-outline btn-sm ${macro.enabled ? "btn-error" : "btn-success"}`}
                       >
                         {macro.enabled ? "Disable" : "Enable"}
                       </button>
-                      <button onClick={() => handleEditMacro(macro.id)} className="btn btn-sm btn-primary">
+                      <button onClick={() => handleEditMacro(macro.id)} className="btn btn-sm btn-outline btn-primary">
                         Edit
                       </button>
                       <button onClick={() => handleDeleteMacro(macro.id)} className="btn btn-sm btn-error">
@@ -449,7 +468,7 @@ const MacroBuilder: React.FC<MacroBuilderProps> = ({ macroId, onClose, onSave })
         />
         <div className="tab-content bg-base-100 border-base-300 p-6">
           <div className="space-y-4">
-            <div>
+            <div className="flex flex-col gap-2">
               <label className="label">
                 <span className="label-text">Macro Name *</span>
               </label>
@@ -457,12 +476,12 @@ const MacroBuilder: React.FC<MacroBuilderProps> = ({ macroId, onClose, onSave })
                 type="text"
                 value={builderData.name}
                 onChange={(e) => actions.updateMacroProperties({ name: e.target.value })}
-                className="input w-full border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent flex-1"
+                className="input w-full py-3 border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent flex-1"
                 placeholder="Enter macro name"
               />
             </div>
 
-            <div>
+            <div className="flex flex-col gap-2">
               <label className="label">
                 <span className="label-text">Description</span>
               </label>
@@ -475,7 +494,7 @@ const MacroBuilder: React.FC<MacroBuilderProps> = ({ macroId, onClose, onSave })
               />
             </div>
 
-            <div>
+            <div className="flex flex-col gap-2">
               <label className="label">
                 <span className="label-text">Keybinding (optional)</span>
               </label>
@@ -483,7 +502,7 @@ const MacroBuilder: React.FC<MacroBuilderProps> = ({ macroId, onClose, onSave })
                 type="text"
                 value={builderData.keybinding || ""}
                 onChange={(e) => actions.updateMacroProperties({ keybinding: e.target.value || undefined })}
-                className="input w-full border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent flex-1"
+                className="input w-full py-3 border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent flex-1"
                 placeholder="e.g., Ctrl+Alt+1"
               />
               <label className="label">
@@ -491,7 +510,7 @@ const MacroBuilder: React.FC<MacroBuilderProps> = ({ macroId, onClose, onSave })
               </label>
             </div>
 
-            <div>
+            <div className="flex flex-col gap-2">
               <label className="label">
                 <span className="label-text">Repeat Count</span>
               </label>
@@ -500,13 +519,12 @@ const MacroBuilder: React.FC<MacroBuilderProps> = ({ macroId, onClose, onSave })
                 min="1"
                 value={builderData.repeat}
                 onChange={(e) => actions.updateMacroProperties({ repeat: parseInt(e.target.value) || 1 })}
-                className="input w-full border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent flex-1"
+                className="input w-full py-3 border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent flex-1"
               />
             </div>
 
-            <div className="form-control">
+            <div className="form-control flex items-start gap-2">
               <label className="cursor-pointer label">
-                <span className="label-text">Enable macro when saved</span>
                 <input
                   type="checkbox"
                   checked={builderData.enabled}
@@ -514,6 +532,7 @@ const MacroBuilder: React.FC<MacroBuilderProps> = ({ macroId, onClose, onSave })
                   className="checkbox checkbox-primary"
                 />
               </label>
+              <span className="label-text">Enable macro when saved</span>
             </div>
           </div>
         </div>

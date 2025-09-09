@@ -5,7 +5,7 @@ function ThankYou() {
   return (
     <div className="grid grid-cols-2 gap-4 p-4 min-h-[85vh] place-items-center">
       <div className="flex flex-col items-center gap-6">
-        <h2 className="text-4xl font-bold text-yellow-600">Thank You!</h2>
+        <h2 className="text-4xl font-bold text-primary">Thank You!</h2>
         <div className="max-w-[400px] text-center flex flex-col gap-4">
           <p className="text-gray-400"> We're grateful you chose Drakensang Utils. </p>
           <p className="text-gray-400">
@@ -16,7 +16,7 @@ function ThankYou() {
           If you have any questions, feedback, or need assistance, feel free to reach out to us on our social media.
         </div>
         <div className="flex gap-4">
-          <div className="flex items-center gap-2 text-gray-400 hover:text-yellow-600 btn btn-outline w-[150px]">
+          <div className="flex items-center gap-2 text-gray-400 btn btn-outline btn-primary w-[150px]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -29,7 +29,7 @@ function ThankYou() {
             </svg>
             <Link to="#">Discord</Link>
           </div>
-          <div className="flex items-center gap-2 text-gray-400 btn btn-dash hover:text-yellow-600 w-[150px]">
+          <div className="flex items-center gap-2 text-gray-400 btn btn-dash btn-primary w-[150px]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

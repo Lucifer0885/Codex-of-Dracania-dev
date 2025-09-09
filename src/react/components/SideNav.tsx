@@ -126,15 +126,15 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
               </div>
             )}
           </div>
-          {showExpandButton && (
-            <div
-              className="flex items-center justify-center w-8 h-8 hover:bg-gray-700 rounded-lg cursor-pointer transition-colors duration-200"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
-              {isExpanded ? <Icons.ChevronLeft className="w-4 h-4" /> : <Icons.ChevronRight className="w-4 h-4" />}
-            </div>
-          )}
         </div>
+        {showExpandButton && (
+          <div
+            className="absolute top-5 right-0 z-9999 mr-[-12px] cursor-pointer"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? <Icons.ChevronLeft className="w-6 h-6" /> : <Icons.ChevronRight className="w-6 h-6" />}
+          </div>
+        )}
       </div>
       <Modal
         id="side-nav-info-modal"

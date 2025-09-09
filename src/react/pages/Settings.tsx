@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useUser } from "@hooks/useUser";
 import { getFileNameFromPath } from "@utils/utils";
 import { AvatarImage } from "@components/AvatarImage";
-import { Info } from "lucide-react";
+import { Check, Info } from "lucide-react";
 
 function Settings() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -122,8 +122,12 @@ function Settings() {
                             <p className="text-sm font-medium text-wrap">
                               {avatar.path === "default" ? "Default Avatar" : getFileNameFromPath(avatar.path)}
                             </p>
-                            {avatar.selected && <span className="badge badge-primary badge-sm">Selected</span>}
                           </div>
+                          {avatar.selected && (
+                            <span className="badge badge-primary badge-sm self-start">
+                              <Check size={12} />
+                            </span>
+                          )}
                         </div>
                         <div className="card-actions justify-end mt-2">
                           {!avatar.selected && (
@@ -132,7 +136,10 @@ function Settings() {
                             </button>
                           )}
                           {userInfo.avatars.length > 1 && (
-                            <button className="btn btn-sm btn-error" onClick={() => handleRemoveAvatar(avatar.path)}>
+                            <button
+                              className="btn btn-sm btn-outline btn-error"
+                              onClick={() => handleRemoveAvatar(avatar.path)}
+                            >
                               Remove
                             </button>
                           )}
