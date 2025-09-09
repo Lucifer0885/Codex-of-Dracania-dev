@@ -82,6 +82,75 @@ type TargetErrorInfo = {
   timestamp: number;
 };
 
+// Macro Management Types
+type MacroAction = "mouse-action" | "keyboard-action" | "wait";
+
+type MacroType = "default" | "custom";
+
+type MacroStep = {
+  id: string;
+  type: MacroAction;
+  action: string;
+  value: string;
+  wait: number;
+};
+
+type Macro = {
+  id: string;
+  name: string;
+  description?: string;
+  enabled: boolean;
+  onRepeat: boolean;
+  repeat: number;
+  type: MacroType;
+  keybinding?: string;
+  actions: MacroStep[];
+};
+
+type MacroOperationResult = {
+  success: boolean;
+  error?: string;
+  errors?: string[];
+  data?: unknown;
+};
+
+type MacroListResult = {
+  defaultMacros: Macro[];
+  customMacros: Macro[];
+  totalCount: number;
+};
+
+type MacroBuilderStep = {
+  id: string;
+  type: "keyboard-action" | "mouse-action" | "wait";
+  action: string;
+  value: string;
+  wait: number;
+  isValid: boolean;
+  errors: string[];
+};
+
+type MacroBuilderData = {
+  name: string;
+  description: string;
+  enabled: boolean;
+  keybinding?: string;
+  repeat: number;
+  steps: MacroBuilderStep[];
+  isValid: boolean;
+  errors: string[];
+};
+
+type MacroStatistics = {
+  total: number;
+  default: number;
+  custom: number;
+  enabled: number;
+  disabled: number;
+  withKeybindings: number;
+  conflicts: number;
+};
+
 type EventPayloadMapping = {
   "find-target-window": TargetWindowInfo | TargetErrorInfo | TargetNullInfo;
   "get-config": GlobalConfig;
@@ -100,6 +169,28 @@ type EventPayloadMapping = {
   // Keybinding events
   "refresh-keybinds": { success: boolean };
   "get-registered-keybinds": Array<{ keybind: string; macroId: string }>;
+  // Macro Management events
+  "macro-get-all": MacroListResult;
+  "macro-get-by-id": Macro | null;
+  "macro-create-custom": MacroOperationResult;
+  "macro-update-custom": MacroOperationResult;
+  "macro-delete-custom": MacroOperationResult;
+  "macro-toggle-enabled": MacroOperationResult;
+  "macro-clone-default": MacroOperationResult;
+  "macro-import": MacroOperationResult;
+  "macro-export-custom": MacroOperationResult;
+  "macro-get-statistics": MacroOperationResult;
+  // Macro Builder events
+  "macro-builder-create-new": MacroBuilderData;
+  "macro-builder-load-macro": MacroBuilderData | null;
+  "macro-builder-add-step": MacroBuilderData;
+  "macro-builder-update-step": MacroBuilderData;
+  "macro-builder-remove-step": MacroBuilderData;
+  "macro-builder-move-step": MacroBuilderData;
+  "macro-builder-duplicate-step": MacroBuilderData;
+  "macro-builder-save-macro": MacroOperationResult;
+  "macro-builder-get-templates": Record<string, MacroBuilderStep[]>;
+  "macro-builder-add-template": MacroBuilderData;
 };
 
 interface Window {
@@ -111,5 +202,38 @@ interface Window {
     resetConfig: () => Promise<void>;
     updateUserConfig: (data: UserInfo) => Promise<UserInfo>;
     readLocalFile: (filePath: string) => Promise<string>;
+    // Macro Management API
+    macroGetAll: () => Promise<MacroListResult>;
+    macroGetById: (macroId: string) => Promise<Macro | null>;
+    macroCreateCustom: (macroData: Omit<Macro, "id" | "type">) => Promise<MacroOperationResult>;
+    macroUpdateCustom: (macroId: string, updates: Partial<Omit<Macro, "id" | "type">>) => Promise<MacroOperationResult>;
+    macroDeleteCustom: (macroId: string) => Promise<MacroOperationResult>;
+    macroToggleEnabled: (macroId: string, enabled: boolean) => Promise<MacroOperationResult>;
+    macroCloneDefault: (defaultMacroId: string, newName?: string) => Promise<MacroOperationResult>;
+    macroImport: (macrosJson: string) => Promise<MacroOperationResult>;
+    macroExportCustom: () => Promise<MacroOperationResult>;
+    macroGetStatistics: () => Promise<MacroOperationResult>;
+    // Macro Builder API
+    macroBuilderCreateNew: () => Promise<MacroBuilderData>;
+    macroBuilderLoadMacro: (macroId: string) => Promise<MacroBuilderData | null>;
+    macroBuilderAddStep: (
+      builderData: MacroBuilderData,
+      stepType: "keyboard-action" | "mouse-action" | "wait"
+    ) => Promise<MacroBuilderData>;
+    macroBuilderUpdateStep: (
+      builderData: MacroBuilderData,
+      stepId: string,
+      updates: Partial<MacroBuilderStep>
+    ) => Promise<MacroBuilderData>;
+    macroBuilderRemoveStep: (builderData: MacroBuilderData, stepId: string) => Promise<MacroBuilderData>;
+    macroBuilderMoveStep: (
+      builderData: MacroBuilderData,
+      stepId: string,
+      direction: "up" | "down"
+    ) => Promise<MacroBuilderData>;
+    macroBuilderDuplicateStep: (builderData: MacroBuilderData, stepId: string) => Promise<MacroBuilderData>;
+    macroBuilderSaveMacro: (builderData: MacroBuilderData, existingMacroId?: string) => Promise<MacroOperationResult>;
+    macroBuilderGetTemplates: () => Promise<Record<string, MacroBuilderStep[]>>;
+    macroBuilderAddTemplate: (builderData: MacroBuilderData, templateName: string) => Promise<MacroBuilderData>;
   };
 }

@@ -8,6 +8,38 @@ electron.contextBridge.exposeInMainWorld("electron", {
   resetConfig: () => ipcRendererInvoke("reset-config"),
   updateUserConfig: (data: UserInfo) => ipcRendererInvokeWithData("update-user", data),
   readLocalFile: (filePath: string) => ipcRendererInvokeWithData("read-local-file", filePath),
+  // Macro Management API
+  macroGetAll: () => ipcRendererInvoke("macro-get-all"),
+  macroGetById: (macroId: string) => ipcRendererInvokeWithData("macro-get-by-id", macroId),
+  macroCreateCustom: (macroData: any) => ipcRendererInvokeWithData("macro-create-custom", macroData),
+  macroUpdateCustom: (macroId: string, updates: any) =>
+    ipcRendererInvokeWithData("macro-update-custom", { macroId, updates }),
+  macroDeleteCustom: (macroId: string) => ipcRendererInvokeWithData("macro-delete-custom", macroId),
+  macroToggleEnabled: (macroId: string, enabled: boolean) =>
+    ipcRendererInvokeWithData("macro-toggle-enabled", { macroId, enabled }),
+  macroCloneDefault: (defaultMacroId: string, newName?: string) =>
+    ipcRendererInvokeWithData("macro-clone-default", { defaultMacroId, newName }),
+  macroImport: (macrosJson: string) => ipcRendererInvokeWithData("macro-import", macrosJson),
+  macroExportCustom: () => ipcRendererInvoke("macro-export-custom"),
+  macroGetStatistics: () => ipcRendererInvoke("macro-get-statistics"),
+  // Macro Builder API
+  macroBuilderCreateNew: () => ipcRendererInvoke("macro-builder-create-new"),
+  macroBuilderLoadMacro: (macroId: string) => ipcRendererInvokeWithData("macro-builder-load-macro", macroId),
+  macroBuilderAddStep: (builderData: any, stepType: any) =>
+    ipcRendererInvokeWithData("macro-builder-add-step", { builderData, stepType }),
+  macroBuilderUpdateStep: (builderData: any, stepId: string, updates: any) =>
+    ipcRendererInvokeWithData("macro-builder-update-step", { builderData, stepId, updates }),
+  macroBuilderRemoveStep: (builderData: any, stepId: string) =>
+    ipcRendererInvokeWithData("macro-builder-remove-step", { builderData, stepId }),
+  macroBuilderMoveStep: (builderData: any, stepId: string, direction: any) =>
+    ipcRendererInvokeWithData("macro-builder-move-step", { builderData, stepId, direction }),
+  macroBuilderDuplicateStep: (builderData: any, stepId: string) =>
+    ipcRendererInvokeWithData("macro-builder-duplicate-step", { builderData, stepId }),
+  macroBuilderSaveMacro: (builderData: any, existingMacroId?: string) =>
+    ipcRendererInvokeWithData("macro-builder-save-macro", { builderData, existingMacroId }),
+  macroBuilderGetTemplates: () => ipcRendererInvoke("macro-builder-get-templates"),
+  macroBuilderAddTemplate: (builderData: any, templateName: string) =>
+    ipcRendererInvokeWithData("macro-builder-add-template", { builderData, templateName }),
 } satisfies Window["electron"]);
 
 function ipcRendererInvoke<Key extends keyof EventPayloadMapping>(key: Key) {

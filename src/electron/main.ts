@@ -8,6 +8,7 @@ import { ipcMainHandle, ipcMainHandleWithData } from "./utils/ipc.js";
 import KeybindingManager from "./macros/KeybindingManager.js";
 import MacroManager from "./macros/MacroManager.js";
 import { container, SERVICE_KEYS } from "./utils/diContainer.js";
+import { registerMacroIpcHandlers } from "./macros/macroIpc.js";
 import fs from "fs";
 
 let mainWindow: BrowserWindow;
@@ -39,7 +40,9 @@ app.whenReady().then(() => {
 
   mainWindow.maximize();
 
+  // Register keybindings and IPC handlers
   keybindingManager.registerMacroKeybinds();
+  registerMacroIpcHandlers();
 
   ipcMainHandle("get-config", async () => {
     const config = loadConfig();
