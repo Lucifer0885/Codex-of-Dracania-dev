@@ -2,29 +2,16 @@ import { NavLinks } from "@utils/links";
 import * as Icons from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
-import Modal from "./Modal";
 import { useUser } from "@hooks/useUser";
-import { AvatarImage } from "./AvatarImage";
+import { AvatarImage } from "@components/AvatarImage";
 
 type SideNavProps = {
   isExpanded: boolean;
   setIsExpanded: (expanded: boolean) => void;
 };
 
-function userModalBody() {
-  return (
-    <div className="flex flex-col gap-4">
-      <p className="text-gray-300">
-        The side navigation is currently collapsed due to the smaller window size. You can expand it by clicking the
-        button at the bottom.
-      </p>
-    </div>
-  );
-}
-
 function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
   const [showExpandButton, setShowExpandButton] = useState(false);
-  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const { userInfo, loading, error } = useUser();
 
   useEffect(() => {
@@ -36,7 +23,6 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
       setShowExpandButton(windowWidth >= 1600);
     };
 
-    // Set initial state
     handleResize();
 
     window.addEventListener("resize", handleResize);
@@ -44,11 +30,6 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
       window.removeEventListener("resize", handleResize);
     };
   }, [isExpanded, setIsExpanded]);
-
-  function handleUserUpdate() {
-    // Placeholder for user update logic
-    console.log("User update action triggered");
-  }
 
   return (
     <>
@@ -60,8 +41,8 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
       >
         <div>
           <div className="flex items-center pb-6 mb-2">
-            <div className="flex items-center justify-center w-8 h-8">
-              <img src="/src/react/assets/general/dso.png" alt="Logo" width={34} height={34} />
+            <div className="flex items-center justify-center w-7 h-7">
+              <img src="/src/react/assets/general/dso.png" alt="Logo" width={36} height={36} />
             </div>
             {isExpanded && (
               <span className="ml-3 text-md font-bold text-primary whitespace-nowrap overflow-hidden">
@@ -99,7 +80,7 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
           </ul>
         </div>
         <div className="absolute bottom-4 left-4 right-4">
-          <div className="flex items-center gap-3 mb-3 hover:cursor-pointer" onClick={() => setIsUserModalOpen(true)}>
+          <div className="flex items-center gap-3 mb-3 hover:cursor-pointer">
             <div className="flex items-center justify-center w-8 h-8">
               <div className="rounded-full ring-primary ring-offset-base-100 ring-2 ring-offset-2">
                 <AvatarImage
@@ -136,15 +117,6 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
           </div>
         )}
       </div>
-      <Modal
-        id="side-nav-info-modal"
-        title="Side Navigation"
-        body={userModalBody()}
-        confirmButtonText="Update"
-        confirmAction={handleUserUpdate}
-        isOpen={isUserModalOpen}
-        setIsOpen={setIsUserModalOpen}
-      />
     </>
   );
 }

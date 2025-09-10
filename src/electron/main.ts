@@ -23,8 +23,8 @@ const keybindingManager = container.get<KeybindingManager>(SERVICE_KEYS.KEYBINDI
 
 app.whenReady().then(() => {
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 850,
+    minWidth: 1200,
+    minHeight: 850,
     icon: path.join(app.getAppPath(), "/assets/dso.ico"),
     title: "Drakensang Online Utils",
     webPreferences: {
