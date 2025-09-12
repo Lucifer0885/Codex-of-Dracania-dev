@@ -11,7 +11,7 @@ import {
   OpalTiersUpgrade,
   UtilityRuneTier,
 } from "@utils/gem";
-import { newMoonTable, sargonTable } from "@utils/event";
+import { desertOfEssencesTable, fullMoonTable, newMoonTable, sargonTable } from "@utils/event";
 
 export const calculators: Calculator[] = [
   {
@@ -191,6 +191,50 @@ export function getSargonRuns(difficulty: BaseDifficulty, haveAttire: boolean): 
   }
 
   const runs = Math.ceil(sargonTable.progressBar / drop);
+
+  return { runs, drop: Math.floor(drop) };
+}
+
+export function getFullMoonRuns(difficulty: BaseDifficulty, haveAttire: boolean): EventCalculatorResult {
+  const dropPerDiff = fullMoonTable["dropRates"][difficulty];
+  if (!dropPerDiff) throw new Error("Invalid difficulty");
+  if (typeof dropPerDiff === "number") throw new Error("Internal error, please report this");
+
+  let drop = 0;
+
+  if (haveAttire) {
+    if (fullMoonTable.attirePercentBonus) {
+      drop =
+        dropPerDiff[0] +
+        dropPerDiff[0] * fullMoonTable.attirePercentBonus +
+        (dropPerDiff[1] + dropPerDiff[1] * fullMoonTable.attirePercentBonus) * 3 +
+        (dropPerDiff[2] + dropPerDiff[2] * fullMoonTable.attirePercentBonus);
+    }
+  } else {
+    drop = dropPerDiff[0] + dropPerDiff[1] * 3 + dropPerDiff[2];
+  }
+
+  const runs = Math.ceil(fullMoonTable.progressBar / drop);
+
+  return { runs, drop: Math.floor(drop) };
+}
+
+export function getDesertOfEssencesRuns(difficulty: BaseDifficulty, haveAttire: boolean): EventCalculatorResult {
+  const dropPerDiff = desertOfEssencesTable["dropRates"][difficulty];
+  if (!dropPerDiff) throw new Error("Invalid difficulty");
+  if (Array.isArray(dropPerDiff)) throw new Error("Internal error, please report this");
+
+  let drop = 0;
+
+  if (haveAttire) {
+    if (desertOfEssencesTable.attirePercentBonus) {
+      drop = dropPerDiff + dropPerDiff * desertOfEssencesTable.attirePercentBonus;
+    }
+  } else {
+    drop = dropPerDiff;
+  }
+
+  const runs = Math.ceil(desertOfEssencesTable.progressBar / drop);
 
   return { runs, drop: Math.floor(drop) };
 }

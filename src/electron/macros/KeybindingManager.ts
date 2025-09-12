@@ -12,6 +12,23 @@ export default class KeybindingManager {
     globalShortcut.unregisterAll();
     this.registeredKeybinds.clear();
 
+    // Register stop all macros hotkey first
+    try {
+      const stopAllSuccess = globalShortcut.register("Ctrl+Alt+X", () => {
+        console.log("Stop all macros hotkey triggered");
+        this.stopAllMacros();
+      });
+
+      if (stopAllSuccess) {
+        this.registeredKeybinds.set("Ctrl+Alt+X", "stop-all-macros");
+        console.log("Registered stop all macros keybind: Ctrl+Alt+X");
+      } else {
+        console.warn("Failed to register stop all macros keybind: Ctrl+Alt+X");
+      }
+    } catch (error) {
+      console.error("Error registering stop all macros keybind:", error);
+    }
+
     const config = loadConfig();
     const allMacros = [...config.user.macros.defaultMacros, ...config.user.macros.customMacros];
 
@@ -33,6 +50,16 @@ export default class KeybindingManager {
           console.error(`Error registering keybind ${macro.keybinding}:`, error);
         }
       }
+    }
+  }
+
+  private stopAllMacros(): void {
+    try {
+      const macroManager = this.macroManager || container.get<MacroManager>(SERVICE_KEYS.MACRO_MANAGER);
+      macroManager.stopAllMacros();
+      console.log("All macros stopped via hotkey");
+    } catch (error) {
+      console.error("Failed to stop all macros:", error);
     }
   }
 

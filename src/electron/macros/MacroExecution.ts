@@ -12,36 +12,87 @@ import {
 } from "../constants/windows-message.js";
 import { Macro, MacroStep } from "../interfaces/Imacro.js";
 import { getVirtualKeyCode, makeLParam } from "../utils/util.js";
-import { findWindow } from "../utils/targetWindow.js";
+import { findWindow, getTargetWindowSize } from "../utils/targetWindow.js";
+import { generateSellInventoryActions } from "../utils/inventoryCalculations.js";
+import { loadConfig } from "../utils/config.js";
 
 export default class MacroExecution {
   private shouldStop = false;
   private user32: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   private gameWindowHandle: number | null = null;
+  private actualMacro: Macro;
 
   constructor(private macro: Macro, private executionId: string) {
     this.user32 = User32.load();
+    this.actualMacro = macro;
   }
 
   async start(): Promise<void> {
     try {
       this.gameWindowHandle = await this.getGameWindowHandle();
 
-      for (let i = 0; i < this.macro.repeat; i++) {
+      // Special handling for sell-inventory macro - generate dynamic actions
+      if (this.macro.id === "sell-inventory") {
+        this.actualMacro = await this.generateDynamicSellInventoryMacro();
+      }
+
+      for (let i = 0; i < this.actualMacro.repeat; i++) {
         if (this.shouldStop) break;
 
-        for (const step of this.macro.actions) {
+        for (const step of this.actualMacro.actions) {
           if (this.shouldStop) break;
           await this.executeStep(step);
         }
 
-        if (this.macro.onRepeat && i < this.macro.repeat - 1) {
+        if (this.actualMacro.onRepeat && i < this.actualMacro.repeat - 1) {
           await this.delay(100);
         }
       }
     } catch (error) {
-      console.error(`Macro execution failed for ${this.macro.name}:`, error);
+      console.error(`Macro execution failed for ${this.actualMacro.name}:`, error);
     }
+  }
+
+  private async generateDynamicSellInventoryMacro(): Promise<Macro> {
+    const config = loadConfig();
+
+    // Get current window size
+    let windowWidth = config.targetWindow.size.width;
+    let windowHeight = config.targetWindow.size.height;
+
+    try {
+      const windowSize = await getTargetWindowSize();
+      windowWidth = windowSize.width;
+      windowHeight = windowSize.height;
+    } catch (error) {
+      console.warn("Could not get current window size, using config defaults:", error);
+    }
+
+    const { layout, lockedSlots } = config.user.inventory;
+
+    console.log(`[WINDOW] Detected window size: ${windowWidth}x${windowHeight}`);
+    console.log(
+      `[INVENTORY] Layout: ${layout.totalTabs} tabs, ${layout.rowsPerTab} rows, ${layout.columnsPerRow} columns`
+    );
+    console.log(`[INVENTORY] Locked slots: ${lockedSlots.length}`);
+
+    // Generate dynamic sell actions (without open/close inventory)
+    const sellActions = generateSellInventoryActions(
+      windowWidth,
+      windowHeight,
+      lockedSlots,
+      layout.totalTabs,
+      layout.rowsPerTab,
+      layout.columnsPerRow
+    );
+
+    console.log(`[MACRO] Generated ${sellActions.length} sell actions for window ${windowWidth}x${windowHeight}`);
+
+    return {
+      ...this.macro,
+      description: `Automates selling items in inventory by right-clicking each slot, skipping locked slots. Generated for ${windowWidth}x${windowHeight} window with ${sellActions.length} actions.`,
+      actions: sellActions,
+    };
   }
 
   stop(): void {
@@ -81,6 +132,8 @@ export default class MacroExecution {
   private async executeKeyboardAction(step: MacroStep): Promise<void> {
     const vkCode = getVirtualKeyCode(step.value);
 
+    console.log(`[KEYBOARD] Executing ${step.action} with key '${step.value}' (VK: ${vkCode}) | Step ID: ${step.id}`);
+
     switch (step.action) {
       case "key-press":
         this.user32.SendMessageW(this.gameWindowHandle, WM_KEYDOWN, vkCode, 0);
@@ -104,6 +157,8 @@ export default class MacroExecution {
 
     const [x, y] = coords;
     const lParam = makeLParam(x, y);
+
+    console.log(`[MOUSE] Executing ${step.action} at (${x}, ${y}) | Step ID: ${step.id} | lParam: ${lParam}`);
 
     switch (step.action) {
       case "click":
@@ -141,7 +196,7 @@ export default class MacroExecution {
   }
 
   getMacro(): Macro {
-    return this.macro;
+    return this.actualMacro;
   }
 
   isRunning(): boolean {

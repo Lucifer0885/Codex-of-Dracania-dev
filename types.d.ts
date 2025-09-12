@@ -35,6 +35,28 @@ type InventorySlotConfig = {
   isLocked: boolean;
 };
 
+type InventoryLayoutPreset = {
+  windowWidth: number;
+  windowHeight: number;
+  name: string;
+  // First slot position (row 1, column 1)
+  firstSlot: {
+    x: number;
+    y: number;
+  };
+  // First tab position
+  firstTab: {
+    x: number;
+    y: number;
+  };
+  // Gaps between elements
+  gaps: {
+    tabX: number; // Gap between tabs (X only)
+    columnX: number; // Gap between item slots in columns (X only)
+    rowY: number; // Gap between rows (Y only)
+  };
+};
+
 type InventoryConfig = {
   layout: {
     totalTabs: number;
@@ -43,6 +65,9 @@ type InventoryConfig = {
   };
 
   lockedSlots: InventorySlotConfig[];
+
+  // Simple preset selection - users choose from predefined presets
+  selectedPresetName?: string; // Name of selected preset from DEFAULT_INVENTORY_PRESETS
 };
 
 type MacroConfig = {

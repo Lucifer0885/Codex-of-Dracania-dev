@@ -2,7 +2,7 @@
   "name": "dso-utils",
   "description": "A set of utilities to help with DSO gameplay",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.4",
   "type": "module",
   "author": {
     "name": "lucifer0885",

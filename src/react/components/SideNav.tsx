@@ -110,7 +110,7 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
         </div>
         {showExpandButton && (
           <div
-            className="absolute top-5 right-0 z-9999 mr-[-12px] cursor-pointer"
+            className="absolute top-4.5 right-0 z-9999 mr-[-12px] cursor-pointer"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? <Icons.ChevronLeft className="w-6 h-6" /> : <Icons.ChevronRight className="w-6 h-6" />}

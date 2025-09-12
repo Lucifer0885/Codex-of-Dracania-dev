@@ -56,3 +56,35 @@ export const sargonTips: string[] = [
   "You can do bloodchests in the first map, but it is not very efficient.",
   "If you are struggling to find a group, consider joining the official DSO Discord and looking for a party there.",
 ];
+
+export const fullMoonTable: GameEvent = {
+  progressBar: 45000,
+  attirePercentBonus: 0.5,
+  dropRates: {
+    normal: [10, 13, 20],
+    painful: [20, 19, 45],
+    excruciating: [50, 26, 100],
+    fatal: [87, 32, 175],
+    infernal: [135, 39, 270],
+    merciless: [270, 58, 540],
+    bloodshed: [467, 71, 935],
+  },
+};
+//TODO: Add tips
+export const fullMoonTips: string[] = [];
+
+export const desertOfEssencesTable: GameEvent = {
+  progressBar: 4000,
+  attirePercentBonus: 0.5,
+  dropRates: {
+    normal: 75,
+    painful: 122,
+    excruciating: 119,
+    fatal: 150,
+    infernal: 294,
+    merciless: 361,
+    bloodshed: 481,
+  },
+};
+//TODO: Add tips
+export const desertOfEssencesTips: string[] = [];

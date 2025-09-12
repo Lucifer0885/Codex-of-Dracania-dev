@@ -131,4 +131,15 @@ export const defaultMacros: Macro[] = [
       },
     ],
   },
+  {
+    id: "sell-inventory",
+    name: "Sell Inventory",
+    description: "Automates selling items in inventory by right-clicking each slot, skipping locked slots",
+    enabled: true,
+    onRepeat: false,
+    repeat: 1,
+    type: "default",
+    keybinding: "Ctrl+Alt+F",
+    actions: [],
+  },
 ];
