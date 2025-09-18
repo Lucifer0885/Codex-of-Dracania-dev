@@ -63,6 +63,24 @@ app.whenReady().then(() => {
     return currentConfig.user.inventory;
   });
 
+  // Inventory Preset Management Handlers
+  ipcMainHandle("get-available-presets", async () => {
+    const { getAvailablePresets } = await import("./utils/inventoryCalculations.js");
+    return getAvailablePresets();
+  });
+
+  ipcMainHandle("get-selected-preset", async () => {
+    const currentConfig = loadConfig();
+    return currentConfig.user.inventory.selectedPresetName || null;
+  });
+
+  ipcMainHandleWithData<string, "set-selected-preset">("set-selected-preset", async (presetName) => {
+    const currentConfig = loadConfig();
+    currentConfig.user.inventory.selectedPresetName = presetName;
+    fs.writeFileSync(getConfigPath(), JSON.stringify(currentConfig, null, 2));
+    return presetName;
+  });
+
   ipcMainHandle("find-target-window", async () => {
     return await findWindow(null, "Nebula3::MainWindow");
   });

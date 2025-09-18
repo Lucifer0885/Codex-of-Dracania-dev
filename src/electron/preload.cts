@@ -8,6 +8,10 @@ electron.contextBridge.exposeInMainWorld("electron", {
   resetConfig: () => ipcRendererInvoke("reset-config"),
   updateUserConfig: (data: UserInfo) => ipcRendererInvokeWithData("update-user", data),
   readLocalFile: (filePath: string) => ipcRendererInvokeWithData("read-local-file", filePath),
+  // Inventory Preset Management API
+  getAvailablePresets: () => ipcRendererInvoke("get-available-presets"),
+  getSelectedPreset: () => ipcRendererInvoke("get-selected-preset"),
+  setSelectedPreset: (presetName: string) => ipcRendererInvokeWithData("set-selected-preset", presetName),
   // Macro Management API
   macroGetAll: () => ipcRendererInvoke("macro-get-all"),
   macroGetById: (macroId: string) => ipcRendererInvokeWithData("macro-get-by-id", macroId),

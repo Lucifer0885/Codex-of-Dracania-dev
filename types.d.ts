@@ -184,6 +184,10 @@ type EventPayloadMapping = {
   "reset-config": void;
   "update-user": UserInfo;
   "read-local-file": string;
+  // Inventory Preset Management
+  "get-available-presets": InventoryLayoutPreset[];
+  "get-selected-preset": string | null;
+  "set-selected-preset": string;
   // Basic macro events
   "get-macros": {
     defaultMacros: Macro[];
@@ -227,6 +231,10 @@ interface Window {
     resetConfig: () => Promise<void>;
     updateUserConfig: (data: UserInfo) => Promise<UserInfo>;
     readLocalFile: (filePath: string) => Promise<string>;
+    // Inventory Preset Management API
+    getAvailablePresets: () => Promise<InventoryLayoutPreset[]>;
+    getSelectedPreset: () => Promise<string | null>;
+    setSelectedPreset: (presetName: string) => Promise<string>;
     // Macro Management API
     macroGetAll: () => Promise<MacroListResult>;
     macroGetById: (macroId: string) => Promise<Macro | null>;

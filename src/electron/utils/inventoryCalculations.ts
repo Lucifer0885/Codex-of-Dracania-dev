@@ -1,45 +1,7 @@
 import { MacroStep } from "../interfaces/Imacro.js";
 import type { InventoryLayoutPreset, InventorySlotPosition } from "../interfaces/Iinventory.js";
+import { DEFAULT_INVENTORY_PRESETS } from "../constants/window-presets.js";
 
-const DEFAULT_INVENTORY_PRESETS: InventoryLayoutPreset[] = [
-  {
-    windowWidth: 1920,
-    windowHeight: 1080,
-    name: "Full HD Window (1920x1080)",
-    firstSlot: { x: 1145, y: 510 }, // Row 1 Col 1 position
-    firstTab: { x: 1125, y: 460 }, // First tab position
-    gaps: { tabX: 50, columnX: 81, rowY: 81 },
-  },
-  {
-    windowWidth: 1600,
-    windowHeight: 900,
-    name: "Medium Window (1600x900)",
-    firstSlot: { x: 515, y: 270 }, // Row 1 Col 1 position
-    firstTab: { x: 535, y: 225 }, // First tab position
-    gaps: { tabX: 40, columnX: 65, rowY: 65 },
-  },
-  {
-    windowWidth: 2560,
-    windowHeight: 1440,
-    name: "HD Window (2560x1440)",
-    firstSlot: { x: 550, y: 288 }, // Row 1 Col 1 position
-    firstTab: { x: 575, y: 240 }, // First tab position
-    gaps: { tabX: 45, columnX: 80, rowY: 85 },
-  },
-  {
-    windowWidth: 3840,
-    windowHeight: 2160,
-    name: "Large Window (3840x2160)",
-    firstSlot: { x: 607, y: 363 }, // Row 1 Col 1 position
-    firstTab: { x: 598, y: 315 }, // First tab position
-    gaps: { tabX: 50, columnX: 85, rowY: 104 },
-  },
-];
-
-/**
- * Gets the inventory layout preset for a given window size
- * Automatically selects the best matching preset from defaults
- */
 export function getInventoryPreset(windowWidth: number, windowHeight: number): InventoryLayoutPreset {
   // First try to find exact match
   const exactMatch = DEFAULT_INVENTORY_PRESETS.find(
@@ -64,9 +26,6 @@ export function getInventoryPreset(windowWidth: number, windowHeight: number): I
     }
   }
 
-  console.log(
-    `[PRESET] No exact match for ${windowWidth}x${windowHeight}, using closest: ${closestPreset.name} (diff: ${smallestDiff}px)`
-  );
   return closestPreset;
 }
 
@@ -91,10 +50,6 @@ export function calculateSlotPosition(
     column,
   };
 
-  console.log(
-    `[SLOT] Tab ${tabIndex}, Row ${row}, Col ${column} -> (${result.x}, ${result.y}) | Window: ${windowWidth}x${windowHeight} | Preset: ${preset.name} | FirstSlot: (${preset.firstSlot.x}, ${preset.firstSlot.y}) | Gaps: (${preset.gaps.columnX}, ${preset.gaps.rowY})`
-  );
-
   return result;
 }
 
@@ -114,25 +69,14 @@ export function calculateTabPosition(
     y: Math.round(y),
   };
 
-  console.log(
-    `[TAB] Tab ${tabIndex} -> (${result.x}, ${result.y}) | Window: ${windowWidth}x${windowHeight} | Preset: ${preset.name} | FirstTab: (${preset.firstTab.x}, ${preset.firstTab.y}) | TabGap: ${preset.gaps.tabX}`
-  );
-
   return result;
 }
 
-/**
- * Gets all available inventory presets
- */
 export function getAvailablePresets(): InventoryLayoutPreset[] {
   return [...DEFAULT_INVENTORY_PRESETS];
 }
 
-/**
- * Adds or updates a custom preset
- */
 export function addCustomPreset(preset: InventoryLayoutPreset): void {
-  // Remove existing preset with same window size if it exists
   const existingIndex = DEFAULT_INVENTORY_PRESETS.findIndex(
     (p) => p.windowWidth === preset.windowWidth && p.windowHeight === preset.windowHeight
   );
@@ -146,9 +90,6 @@ export function addCustomPreset(preset: InventoryLayoutPreset): void {
   }
 }
 
-/**
- * Creates a template preset for a new window size
- */
 export function createPresetTemplate(windowWidth: number, windowHeight: number, name?: string): InventoryLayoutPreset {
   return {
     windowWidth,

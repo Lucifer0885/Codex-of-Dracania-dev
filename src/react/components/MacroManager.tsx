@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useMacroStorage, useMacroBuilder } from "@hooks/useMacroManagement";
 import Toast from "@components/Toast";
 import Modal from "@components/Modal";
+import SellInventorySettings from "@components/SellInventorySettings";
 
 interface StepEditorProps {
   step: MacroBuilderStep;
@@ -39,6 +40,7 @@ const MacroManager: React.FC = () => {
 
   const [selectedMacroId, setSelectedMacroId] = useState<string | null>(null);
   const [showBuilder, setShowBuilder] = useState(false);
+  const [showSellInventorySettings, setShowSellInventorySettings] = useState(false);
 
   const [confirmModal, setConfirmModal] = useState<ConfirmModalState>({
     isOpen: false,
@@ -261,12 +263,17 @@ const MacroManager: React.FC = () => {
                       {macro.keybinding && (
                         <span className="badge badge-outline bg-base-300 badge-info">{macro.keybinding}</span>
                       )}
-                      <span className="badge badge-outline bg-base-300 badge-warning">
-                        {macro.actions.length} steps
-                      </span>
                     </div>
                   </div>
                   <div className="flex gap-2">
+                    {macro.id === "sell-inventory" && (
+                      <button
+                        onClick={() => setShowSellInventorySettings(true)}
+                        className="btn btn-outline btn-sm btn-warning"
+                      >
+                        Settings
+                      </button>
+                    )}
                     <button
                       onClick={() => handleToggleEnabled(macro.id, !macro.enabled)}
                       className={`btn btn-outline btn-sm ${macro.enabled ? "btn-error" : "btn-success"}`}
@@ -319,9 +326,6 @@ const MacroManager: React.FC = () => {
                         {macro.keybinding && (
                           <span className="badge badge-outline bg-base-300 badge-info">{macro.keybinding}</span>
                         )}
-                        <span className="badge badge-outline badge-warning bg-base-300">
-                          {macro.actions.length} steps
-                        </span>
                       </div>
                     </div>
                     <div className="flex gap-2">
@@ -376,6 +380,27 @@ const MacroManager: React.FC = () => {
           message={toast.message}
           onClose={() => setToast((prev) => ({ ...prev, isOpen: false }))}
         />
+      )}
+
+      {/* Sell Inventory Settings Modal */}
+      {showSellInventorySettings && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          onClick={() => setShowSellInventorySettings(false)}
+        >
+          <div
+            className="bg-base-100 p-6 rounded-lg shadow-xl max-w-2xl w-full m-4 z-999"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold">Sell Inventory Settings</h3>
+              <button onClick={() => setShowSellInventorySettings(false)} className="btn btn-sm btn-circle btn-ghost">
+                ✕
+              </button>
+            </div>
+            <SellInventorySettings />
+          </div>
+        </div>
       )}
     </div>
   );
