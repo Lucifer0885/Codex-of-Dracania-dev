@@ -13,7 +13,7 @@ export const eventDifficulties: BaseDifficulty[] = [
 export const extraEventDifficulties: PWEventDifficulty[] = ["pw-infernal", "pw-merciless", "pw-bloodshed"];
 
 export const newMoonTable: GameEvent = {
-  progressBar: 15000,
+  progressBar: [{ progress: 15000 }],
   attirePercentBonus: 0.5,
   dropRates: {
     normal: [240, 140],
@@ -35,7 +35,7 @@ export const newMoonTips: string[] = [
 ];
 
 export const sargonTable: GameEvent = {
-  progressBar: 50000,
+  progressBar: [{ progress: 50000 }],
   attirePercentBonus: 0.5,
   dropRates: {
     normal: [10, 103],
@@ -58,7 +58,7 @@ export const sargonTips: string[] = [
 ];
 
 export const fullMoonTable: GameEvent = {
-  progressBar: 45000,
+  progressBar: [{ progress: 45000 }],
   attirePercentBonus: 0.5,
   dropRates: {
     normal: [10, 13, 20],
@@ -74,7 +74,7 @@ export const fullMoonTable: GameEvent = {
 export const fullMoonTips: string[] = [];
 
 export const desertOfEssencesTable: GameEvent = {
-  progressBar: 4000,
+  progressBar: [{ progress: 4000 }],
   attirePercentBonus: 0.5,
   dropRates: {
     normal: 75,

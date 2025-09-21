@@ -6,8 +6,10 @@ export type EventDifficulty<T> = {
   [K in PWEventDifficulty]?: T;
 };
 
+export type ProgressBar = { level?: number; achievements?: number; progress: number };
+
 export interface GameEvent {
-  progressBar: number;
+  progressBar: ProgressBar[];
   attirePercentBonus?: number;
   dropRates: EventDifficulty<number | number[]>;
 }

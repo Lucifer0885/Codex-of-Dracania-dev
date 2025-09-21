@@ -168,7 +168,7 @@ export function getNewMoonRuns(
         : dropPerDiff[0] * bossesSpawned + dropPerDiff[1] * bossesSpawned;
   }
 
-  const runs = Math.ceil(newMoonTable.progressBar / drop);
+  const runs = Math.ceil(newMoonTable.progressBar[0].progress / drop);
 
   return { runs, drop: Math.floor(drop) };
 }
@@ -190,7 +190,7 @@ export function getSargonRuns(difficulty: BaseDifficulty, haveAttire: boolean): 
     drop = dropPerDiff[0] * 3 + dropPerDiff[1];
   }
 
-  const runs = Math.ceil(sargonTable.progressBar / drop);
+  const runs = Math.ceil(sargonTable.progressBar[0].progress / drop);
 
   return { runs, drop: Math.floor(drop) };
 }
@@ -214,7 +214,7 @@ export function getFullMoonRuns(difficulty: BaseDifficulty, haveAttire: boolean)
     drop = dropPerDiff[0] + dropPerDiff[1] * 3 + dropPerDiff[2];
   }
 
-  const runs = Math.ceil(fullMoonTable.progressBar / drop);
+  const runs = Math.ceil(fullMoonTable.progressBar[0].progress / drop);
 
   return { runs, drop: Math.floor(drop) };
 }
@@ -234,7 +234,7 @@ export function getDesertOfEssencesRuns(difficulty: BaseDifficulty, haveAttire: 
     drop = dropPerDiff;
   }
 
-  const runs = Math.ceil(desertOfEssencesTable.progressBar / drop);
+  const runs = Math.ceil(desertOfEssencesTable.progressBar[0].progress / drop);
 
   return { runs, drop: Math.floor(drop) };
 }

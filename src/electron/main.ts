@@ -1,17 +1,21 @@
-import { app, BrowserWindow } from "electron";
+import { app, autoUpdater, BrowserWindow } from "electron";
 import path from "path";
 import { isDev, windowSizeListener } from "./utils/util.js";
 import { loadConfig, resetConfig } from "./utils/config.js";
 import { findWindow } from "./utils/targetWindow.js";
 import { getConfigPath, getPreloadPath, getUIPath, readLocalFile } from "./utils/pathResolver.js";
-import { ipcMainHandle, ipcMainHandleWithData } from "./utils/ipc.js";
+import { ipcMainHandle, ipcMainHandleWithData, ipcWebContentsSend } from "./utils/ipc.js";
 import KeybindingManager from "./macros/KeybindingManager.js";
 import MacroManager from "./macros/MacroManager.js";
 import { container, SERVICE_KEYS } from "./utils/diContainer.js";
 import { registerMacroIpcHandlers } from "./macros/macroIpc.js";
 import fs from "fs";
+import { getAppUpdater } from "./installer/updater.js";
 
 let mainWindow: BrowserWindow;
+const appUpdater = getAppUpdater();
+appUpdater.autoDownload = false;
+appUpdater.autoInstallOnAppQuit = true;
 
 container.registerSingleton(SERVICE_KEYS.MACRO_MANAGER, () => new MacroManager());
 container.registerSingleton(SERVICE_KEYS.KEYBINDING_MANAGER, () => {
@@ -26,7 +30,7 @@ app.whenReady().then(() => {
     minWidth: 1200,
     minHeight: 850,
     icon: path.join(app.getAppPath(), "/assets/dso.ico"),
-    title: "Drakensang Online Utils",
+    title: "Codex of Dracania",
     webPreferences: {
       preload: getPreloadPath(),
     },
@@ -38,11 +42,18 @@ app.whenReady().then(() => {
     mainWindow.loadFile(getUIPath());
   }
 
+  appUpdater.checkForUpdatesAndNotify().catch((err) => {
+    console.error("Failed to check for updates:", err);
+  });
+
   mainWindow.maximize();
 
-  // Register keybindings and IPC handlers
   keybindingManager.registerMacroKeybinds();
   registerMacroIpcHandlers();
+
+  ipcMainHandle("get-app-version", async () => {
+    return app.getVersion();
+  });
 
   ipcMainHandle("get-config", async () => {
     const config = loadConfig();
@@ -63,7 +74,6 @@ app.whenReady().then(() => {
     return currentConfig.user.inventory;
   });
 
-  // Inventory Preset Management Handlers
   ipcMainHandle("get-available-presets", async () => {
     const { getAvailablePresets } = await import("./utils/inventoryCalculations.js");
     return getAvailablePresets();
@@ -150,4 +160,12 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+autoUpdater.on("update-available", () => {
+  ipcWebContentsSend("update-message", mainWindow.webContents, "Update available. Downloading...");
+});
+
+autoUpdater.on("update-downloaded", () => {
+  ipcWebContentsSend("update-message", mainWindow.webContents, "Update downloaded. It will be installed on restart.");
 });

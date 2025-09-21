@@ -1,8 +1,8 @@
 {
-  "name": "dso-utils",
+  "name": "codex-of-dracania",
   "description": "A set of utilities to help with DSO gameplay",
   "private": true,
-  "version": "0.0.4",
+  "version": "0.1.0",
   "type": "module",
   "author": {
     "name": "lucifer0885",
@@ -19,8 +19,16 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "repository": {
+    "url": "https://github.com/Lucifer0885/Codex-of-Dracania"
+  },
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
+  },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
+    "electron-updater": "^6.6.2",
     "lucide-react": "^0.542.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

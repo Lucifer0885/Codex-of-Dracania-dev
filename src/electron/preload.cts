@@ -1,6 +1,8 @@
 const electron = require("electron");
 
 electron.contextBridge.exposeInMainWorld("electron", {
+  getAppVersion: () => ipcRendererInvoke("get-app-version"),
+  updateMessage: (callback: (message: string) => void) => ipcRendererOn("update-message", callback),
   findTargetWindow: () => ipcRendererInvoke("find-target-window"),
   getConfig: () => ipcRendererInvoke("get-config"),
   saveInventoryConfig: (config: InventoryConfig) => ipcRendererInvokeWithData("save-inventory-config", config),

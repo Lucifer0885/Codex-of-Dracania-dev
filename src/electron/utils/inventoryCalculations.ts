@@ -3,17 +3,14 @@ import type { InventoryLayoutPreset, InventorySlotPosition } from "../interfaces
 import { DEFAULT_INVENTORY_PRESETS } from "../constants/window-presets.js";
 
 export function getInventoryPreset(windowWidth: number, windowHeight: number): InventoryLayoutPreset {
-  // First try to find exact match
   const exactMatch = DEFAULT_INVENTORY_PRESETS.find(
     (preset) => preset.windowWidth === windowWidth && preset.windowHeight === windowHeight
   );
 
   if (exactMatch) {
-    console.log(`[PRESET] Found exact match: ${exactMatch.name}`);
     return exactMatch;
   }
 
-  // Find closest preset by total pixel difference
   let closestPreset = DEFAULT_INVENTORY_PRESETS[0];
   let smallestDiff =
     Math.abs(windowWidth - closestPreset.windowWidth) + Math.abs(windowHeight - closestPreset.windowHeight);
@@ -38,7 +35,6 @@ export function calculateSlotPosition(
 ): InventorySlotPosition {
   const preset = getInventoryPreset(windowWidth, windowHeight);
 
-  // Calculate position based on preset values
   const x = preset.firstSlot.x + column * preset.gaps.columnX;
   const y = preset.firstSlot.y + row * preset.gaps.rowY;
 
@@ -60,7 +56,6 @@ export function calculateTabPosition(
 ): { x: number; y: number } {
   const preset = getInventoryPreset(windowWidth, windowHeight);
 
-  // Calculate tab position based on preset values
   const x = preset.firstTab.x + tabIndex * preset.gaps.tabX;
   const y = preset.firstTab.y;
 
@@ -83,32 +78,9 @@ export function addCustomPreset(preset: InventoryLayoutPreset): void {
 
   if (existingIndex >= 0) {
     DEFAULT_INVENTORY_PRESETS[existingIndex] = preset;
-    console.log(`[PRESET] Updated existing preset for ${preset.windowWidth}x${preset.windowHeight}`);
   } else {
     DEFAULT_INVENTORY_PRESETS.push(preset);
-    console.log(`[PRESET] Added new preset for ${preset.windowWidth}x${preset.windowHeight}`);
   }
-}
-
-export function createPresetTemplate(windowWidth: number, windowHeight: number, name?: string): InventoryLayoutPreset {
-  return {
-    windowWidth,
-    windowHeight,
-    name: name || `Custom ${windowWidth}x${windowHeight}`,
-    firstSlot: {
-      x: Math.round(windowWidth * 0.52), // Default to ~52% from left
-      y: Math.round(windowHeight * 0.45), // Default to ~45% from top
-    },
-    firstTab: {
-      x: Math.round(windowWidth * 0.51), // Default to ~51% from left
-      y: Math.round(windowHeight * 0.39), // Default to ~39% from top (above inventory)
-    },
-    gaps: {
-      tabX: Math.round(windowWidth * 0.043), // Default gap ratios
-      columnX: Math.round(windowWidth * 0.073),
-      rowY: Math.round(windowHeight * 0.129),
-    },
-  };
 }
 
 export function generateSellInventoryActions(

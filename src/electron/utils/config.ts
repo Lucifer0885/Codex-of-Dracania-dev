@@ -15,7 +15,7 @@ export function createConfig() {
           columnsPerRow: 7,
         },
         lockedSlots: [],
-        selectedPresetName: "Full HD Window (1920x1080)", // Default preset
+        selectedPresetName: "Full HD Window (1920x1080)",
       },
       macros: {
         enabled: true,

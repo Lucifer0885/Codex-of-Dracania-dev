@@ -177,6 +177,8 @@ type MacroStatistics = {
 };
 
 type EventPayloadMapping = {
+  "get-app-version": string;
+  "update-message": string;
   "find-target-window": TargetWindowInfo | TargetErrorInfo | TargetNullInfo;
   "get-config": GlobalConfig;
   "save-inventory-config": GlobalConfig;
@@ -222,8 +224,12 @@ type EventPayloadMapping = {
   "macro-builder-add-template": MacroBuilderData;
 };
 
+type UnsubscribeFunction = () => void;
+
 interface Window {
   electron: {
+    getAppVersion: () => string;
+    updateMessage: (callback: (message: string) => void) => UnsubscribeFunction;
     findTargetWindow: () => Promise<TargetWindowInfo | TargetErrorInfo | TargetNullInfo>;
     getConfig: () => Promise<GlobalConfig>;
     saveInventoryConfig: (config: InventoryConfig) => Promise<GlobalConfig>;

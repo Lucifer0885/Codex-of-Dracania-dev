@@ -1,19 +1,19 @@
 {
-    "appId": "com.lucifer0885.dso-utils",
-    "artifactName": "Dso Utils-${version}.${ext}",
+    "appId": "com.lucifer0885.codex-of-dracania",
+    "artifactName": "Codex of Dracania-${version}.${ext}",
     "extraResources": ["dist-electron/preload.cjs"],
     "electronLanguages": [
         "en"
     ],
-    "executableName" : "DsoUtils",
+    "executableName" : "Codex of Dracania",
     "files": [
         "dist-react/**/*",
-        "dist-electron/**/*"
+        "dist-electron/**/*",
+        "!node_modules"
     ],
-    "asarUnpack": [
-        "**/node_modules/@emnapi/**/*",
-        "**/node_modules/tailwindcss/**/*.wasm"
-    ],
+    "directories": {
+        "output": "dist"
+    },
     "buildDependenciesFromSource": false,
     "nodeGypRebuild": false,
     "npmRebuild": false,
@@ -21,7 +21,7 @@
         "icon": "assets/dso.ico",
         "target": [
             {
-                "target": "portable",
+                "target": "nsis",
                 "arch": [
                     "x64"
                 ]

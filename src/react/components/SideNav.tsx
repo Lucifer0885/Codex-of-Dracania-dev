@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import { useUser } from "@hooks/useUser";
 import { AvatarImage } from "@components/AvatarImage";
+import AppVersion from "@components/AppVersion";
+import UpdateAvailable from "./UpdateAvailable";
 
 type SideNavProps = {
   isExpanded: boolean;
@@ -46,7 +48,7 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
             </div>
             {isExpanded && (
               <span className="ml-3 text-md font-bold text-primary whitespace-nowrap overflow-hidden">
-                Drakensang Utils
+                Codex of Dracania
               </span>
             )}
           </div>
@@ -80,6 +82,7 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
           </ul>
         </div>
         <div className="absolute bottom-4 left-4 right-4">
+          <UpdateAvailable />
           <div className="flex items-center gap-3 mb-3 hover:cursor-pointer">
             <div className="flex items-center justify-center w-8 h-8">
               <div className="rounded-full ring-primary ring-offset-base-100 ring-2 ring-offset-2">
@@ -107,6 +110,7 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
               </div>
             )}
           </div>
+          <AppVersion />
         </div>
         {showExpandButton && (
           <div

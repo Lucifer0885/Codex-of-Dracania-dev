@@ -1,5 +1,3 @@
-// Simple Dependency Injection Container
-
 export interface ServiceContainer {
   get<T>(serviceKey: string): T;
   register<T>(serviceKey: string, factory: () => T): void;
