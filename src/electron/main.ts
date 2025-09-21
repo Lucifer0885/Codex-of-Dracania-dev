@@ -42,7 +42,7 @@ app.whenReady().then(() => {
     mainWindow.loadFile(getUIPath());
   }
 
-  appUpdater.checkForUpdatesAndNotify().catch((err) => {
+  appUpdater.checkForUpdates().catch((err) => {
     console.error("Failed to check for updates:", err);
   });
 

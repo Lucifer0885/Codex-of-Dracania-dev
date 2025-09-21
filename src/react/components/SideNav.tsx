@@ -110,7 +110,7 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
               </div>
             )}
           </div>
-          <AppVersion />
+          <AppVersion isExpanded={isExpanded} />
         </div>
         {showExpandButton && (
           <div
