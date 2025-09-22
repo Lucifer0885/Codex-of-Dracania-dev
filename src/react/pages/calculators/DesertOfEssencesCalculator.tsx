@@ -51,10 +51,10 @@ function DesertOfEssencesCalculator() {
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
         <img
-          src="/src/react/assets/events/newmoon/tabicon_newmoon.png"
+          src="/src/react/assets/events/doe/tabicon_essences.png"
           alt="Desert of Essences Event Calculator"
-          width={100}
-          height={100}
+          width={80}
+          height={80}
         />
         <h1 className="text-4xl text-primary">Desert of Essences Event Calculator</h1>
       </div>
@@ -123,9 +123,9 @@ function DesertOfEssencesCalculator() {
           dropsPerRun={dropsPerRun}
           error={error}
           title="Desert of Essences Event Calculator"
-          titleImage="/src/react/assets/events/newmoon/tabicon_newmoon.png"
+          titleImage="/src/react/assets/events/doe/tabicon_essences.png"
           desc="Select the difficulty and if you have the attire to see how many runs you need to complete the Desert of Essences event"
-          dropImage="/src/react/assets/events/newmoon/newmoon-prog.png"
+          dropImage="/src/react/assets/events/doe/doe-prog.png"
           loading={loading}
         />
       </div>

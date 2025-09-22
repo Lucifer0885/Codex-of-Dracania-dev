@@ -19,13 +19,3 @@ export const SargonEventItems: ProgressBarItem[] = [
     icon: "/images/events/new-moon/attire.png",
   },
 ];
-
-export const DesertOfEssencesEventItems: ProgressBarItem[] = [
-  {
-    page: 1,
-    progress: 15000,
-    amount: 1,
-    name: "Desert of Essences Attire",
-    icon: "/images/events/new-moon/attire.png",
-  },
-];

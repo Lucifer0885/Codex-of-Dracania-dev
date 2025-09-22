@@ -1,7 +1,8 @@
 import type { BaseDifficulty, Event, PWEventDifficulty } from "@interfaces/Ievent";
-import { DesertOfEssencesEventItems, NewMoonEventItems, SargonEventItems } from "@utils/events/eventItems";
-import { FullMoonEventItems } from "@utils/events/FullMoonItems";
-import { desertOfEssencesTips, fullMoonTips, newMoonTips, sargonTips } from "@utils/events/eventTips";
+import { NewMoonEventItems, SargonEventItems } from "@utils/events/eventItems";
+import { FullMoonEventItems, fullMoonTips } from "@utils/events/FullMoonItems";
+import { DesertOfEssencesEventItems, desertOfEssencesTips } from "@utils/events/DesertOfEssencesItems";
+import { newMoonTips, sargonTips } from "@utils/events/eventTips";
 
 export const eventDifficulties: BaseDifficulty[] = [
   "normal",
@@ -61,8 +62,9 @@ export const sargonTable: Event = {
 export const fullMoonTable: Event = {
   id: "full-moon",
   name: "Full Moon",
-  image: "/src/react/assets/events/event.png",
-  description: "A mystical event that takes place during the full moon.",
+  image: "/src/react/assets/events/fullmoon/tabicon_fullmoon.png",
+  description:
+    "The full moon rises over Varholm! Join the hunt, slay cursed werewolves, and confront the Bloodmage for treasures hidden in the night.",
   progressBar: [
     { level: 80, progress: 7500 },
     { level: 100, progress: 45000 },
@@ -85,8 +87,8 @@ export const fullMoonTable: Event = {
 export const desertOfEssencesTable: Event = {
   id: "desert-of-essences",
   name: "Desert of Essences",
-  image: "/src/react/assets/events/event.png",
-  description: "Explore the Desert of Essences and uncover its secrets.",
+  image: "/src/react/assets/events/doe/tabicon_essences.png",
+  description: "Thabo found a wondrous place in Qaizah. Mysterious and deadly. Are you willing to unveil its secrets?",
   progressBar: [{ progress: 4000 }],
   attirePercentBonus: 0.5,
   dropRates: {

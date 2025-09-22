@@ -14,7 +14,3 @@ export const sargonTips: string[] = [
   "You can do bloodchests in the first map, but it is not very efficient.",
   "If you are struggling to find a group, consider joining the official DSO Discord and looking for a party there.",
 ];
-
-export const fullMoonTips: string[] = [];
-
-export const desertOfEssencesTips: string[] = [];

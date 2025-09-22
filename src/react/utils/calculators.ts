@@ -54,13 +54,13 @@ export const calculators: Calculator[] = [
     id: "event-full-moon",
     name: "Full Moon Event Calculator",
     description: "Calculate the runs needed to finish for the Full Moon event",
-    image: "/src/react/assets/events/newmoon/tabicon_newmoon.png",
+    image: "/src/react/assets/events/fullmoon/tabicon_fullmoon.png",
   },
   {
     id: "event-desert-of-essences",
     name: "Desert of Essences Event Calculator",
     description: "Calculate the runs needed to finish for the Desert of Essences event",
-    image: "/src/react/assets/events/newmoon/tabicon_newmoon.png",
+    image: "/src/react/assets/events/doe/tabicon_essences.png",
   },
 ];
 
