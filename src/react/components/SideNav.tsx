@@ -42,7 +42,7 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
       >
         <div>
           <div className="flex items-center pb-6 mb-2">
-            <div className="flex items-center justify-center w-7 h-7">
+            <div className="flex items-center justify-center">
               <img src="/src/react/assets/general/dso.png" alt="Logo" width={36} height={36} />
             </div>
             {isExpanded && (
@@ -64,15 +64,15 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
                     to={link.to}
                     className={({ isActive }: { isActive: boolean }) =>
                       [
-                        "flex items-center gap-3 px-1 py-3 text-white hover:text-primary rounded-lg transition-all duration-200 min-h-[44px]",
+                        "flex items-center gap-3 px-1 py-3 text-white hover:text-primary rounded-lg min-h-[44px]",
                         isExpanded && isActive && "bg-primary/20 text-primary",
                       ].join(" ")
                     }
                   >
-                    <div className="flex items-center justify-center w-5 h-5">
+                    <div className="flex items-center justify-center">
                       {LucideIcon && <LucideIcon size={20} aria-hidden={true} />}
                     </div>
-                    {isExpanded && <span className="whitespace-nowrap overflow-hidden">{link.label}</span>}
+                    {isExpanded && <span className="text-sm whitespace-nowrap overflow-hidden">{link.label}</span>}
                   </NavLink>
                   {index < NavLinks.length - 1 && <div className="border-b border-gray-700 my-2" />}
                 </li>

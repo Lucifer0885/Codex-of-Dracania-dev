@@ -101,7 +101,7 @@ export function generateSellInventoryActions(
     type: "mouse-action",
     action: "click",
     value: `${firstTabPosition.x},${firstTabPosition.y}`,
-    wait: 500,
+    wait: 80,
   });
 
   for (let tab = 0; tab < totalTabs; tab++) {
@@ -112,7 +112,7 @@ export function generateSellInventoryActions(
         type: "mouse-action",
         action: "click",
         value: `${tabPosition.x},${tabPosition.y}`,
-        wait: 300,
+        wait: 80,
       });
     }
 
@@ -131,7 +131,7 @@ export function generateSellInventoryActions(
           type: "mouse-action",
           action: "right-click",
           value: `${position.x},${position.y}`,
-          wait: 150,
+          wait: 80,
         });
       }
     }

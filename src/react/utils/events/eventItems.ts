@@ -20,16 +20,6 @@ export const SargonEventItems: ProgressBarItem[] = [
   },
 ];
 
-export const FullMoonEventItems: ProgressBarItem[] = [
-  {
-    page: 1,
-    progress: 15000,
-    amount: 1,
-    name: "New Moon Attire",
-    icon: "/images/events/new-moon/attire.png",
-  },
-];
-
 export const DesertOfEssencesEventItems: ProgressBarItem[] = [
   {
     page: 1,

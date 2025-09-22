@@ -45,7 +45,7 @@ export default class MacroExecution {
         }
 
         if (this.actualMacro.onRepeat && i < this.actualMacro.repeat - 1) {
-          await this.delay(100);
+          await this.delay(10);
         }
       }
     } catch (error) {

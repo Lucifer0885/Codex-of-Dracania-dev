@@ -195,7 +195,6 @@ export default class MacroBuilder {
     }
   }
 
-  // Get step templates for common actions
   getStepTemplates(): Record<string, MacroBuilderStep[]> {
     return {
       "Health Potion": [
@@ -204,46 +203,6 @@ export default class MacroBuilder {
           type: "keyboard-action",
           action: "key",
           value: "H",
-          wait: 0,
-          isValid: true,
-          errors: [],
-        },
-      ],
-      "Mana Potion": [
-        {
-          id: "template-mana",
-          type: "keyboard-action",
-          action: "key",
-          value: "M",
-          wait: 0,
-          isValid: true,
-          errors: [],
-        },
-      ],
-      "Attack Combo (Q-W-E)": [
-        {
-          id: "template-q",
-          type: "keyboard-action",
-          action: "key",
-          value: "Q",
-          wait: 500,
-          isValid: true,
-          errors: [],
-        },
-        {
-          id: "template-w",
-          type: "keyboard-action",
-          action: "key",
-          value: "W",
-          wait: 500,
-          isValid: true,
-          errors: [],
-        },
-        {
-          id: "template-e",
-          type: "keyboard-action",
-          action: "key",
-          value: "E",
           wait: 0,
           isValid: true,
           errors: [],

@@ -1,4 +1,4 @@
-import { app, autoUpdater, BrowserWindow } from "electron";
+import { app, autoUpdater, BrowserWindow, shell } from "electron";
 import path from "path";
 import { isDev, windowSizeListener } from "./utils/util.js";
 import { loadConfig, resetConfig } from "./utils/config.js";
@@ -94,6 +94,19 @@ app.whenReady().then(() => {
   ipcMainHandle("find-target-window", async () => {
     return await findWindow(null, "Nebula3::MainWindow");
   });
+
+  ipcMainHandleWithData<{ url: string; options?: unknown }, "open-external">(
+    "open-external",
+    async ({ url, options }) => {
+      try {
+        await shell.openExternal(url, options as Electron.OpenExternalOptions);
+        return { success: true };
+      } catch (error) {
+        console.error("Failed to open external URL:", error);
+        throw error;
+      }
+    }
+  );
 
   ipcMainHandle("reset-config", async () => {
     console.log("Resetting config...");

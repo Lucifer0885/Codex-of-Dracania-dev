@@ -1,7 +1,7 @@
 import EventResultCard from "@components/EventResultCard";
 import type { BaseDifficulty } from "@interfaces/Ievent";
 import { getDesertOfEssencesRuns } from "@utils/calculators";
-import { eventDifficulties, desertOfEssencesTable } from "@utils/event";
+import { eventDifficulties, desertOfEssencesTable } from "@utils/events/event";
 import React, { useState } from "react";
 import EventTips from "@components/EventTips";
 

@@ -186,6 +186,7 @@ type EventPayloadMapping = {
   "reset-config": void;
   "update-user": UserInfo;
   "read-local-file": string;
+  "open-external": { success: boolean };
   // Inventory Preset Management
   "get-available-presets": InventoryLayoutPreset[];
   "get-selected-preset": string | null;
@@ -228,7 +229,7 @@ type UnsubscribeFunction = () => void;
 
 interface Window {
   electron: {
-    openExternal: (url: string, options?: Electron.ShellOpenExternalOptions) => Promise<void>;
+    openExternal: (url: string, options?: unknown) => Promise<{ success: boolean }>;
     getAppVersion: () => string;
     updateMessage: (callback: (message: string) => void) => UnsubscribeFunction;
     findTargetWindow: () => Promise<TargetWindowInfo | TargetErrorInfo | TargetNullInfo>;

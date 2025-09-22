@@ -1,7 +1,7 @@
 import EventResultCard from "@components/EventResultCard";
 import type { BaseDifficulty } from "@interfaces/Ievent";
 import { getNewMoonRuns } from "@utils/calculators";
-import { eventDifficulties, newMoonTable } from "@utils/event";
+import { eventDifficulties, newMoonTable } from "@utils/events/event";
 import React, { useState } from "react";
 import EventTips from "@components/EventTips";
 

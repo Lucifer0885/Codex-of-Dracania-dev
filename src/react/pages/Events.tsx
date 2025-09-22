@@ -1,4 +1,4 @@
-import { EventsList } from "@utils/event";
+import { EventsList } from "@utils/events/event";
 import { Link } from "react-router";
 import { Trophy } from "lucide-react";
 import { useState } from "react";

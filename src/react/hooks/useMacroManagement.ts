@@ -1,7 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
 
-// All types are now available globally from types.d.ts
-
 export function useMacroStorage() {
   const [macros, setMacros] = useState<MacroListResult>({
     defaultMacros: [],
@@ -12,7 +10,6 @@ export function useMacroStorage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load all macros
   const loadMacros = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -26,7 +23,6 @@ export function useMacroStorage() {
     }
   }, []);
 
-  // Load statistics
   const loadStatistics = useCallback(async () => {
     try {
       const result = await window.electron.macroGetStatistics();
@@ -38,7 +34,6 @@ export function useMacroStorage() {
     }
   }, []);
 
-  // Create custom macro
   const createCustomMacro = useCallback(
     async (macroData: Omit<Macro, "id" | "type">): Promise<MacroOperationResult> => {
       const result = await window.electron.macroCreateCustom(macroData);
@@ -51,7 +46,6 @@ export function useMacroStorage() {
     [loadMacros, loadStatistics]
   );
 
-  // Update custom macro
   const updateCustomMacro = useCallback(
     async (macroId: string, updates: Partial<Omit<Macro, "id" | "type">>): Promise<MacroOperationResult> => {
       const result = await window.electron.macroUpdateCustom(macroId, updates);
@@ -64,7 +58,6 @@ export function useMacroStorage() {
     [loadMacros, loadStatistics]
   );
 
-  // Delete custom macro
   const deleteCustomMacro = useCallback(
     async (macroId: string): Promise<MacroOperationResult> => {
       const result = await window.electron.macroDeleteCustom(macroId);
@@ -77,7 +70,6 @@ export function useMacroStorage() {
     [loadMacros, loadStatistics]
   );
 
-  // Toggle macro enabled/disabled
   const toggleMacroEnabled = useCallback(
     async (macroId: string, enabled: boolean): Promise<MacroOperationResult> => {
       const result = await window.electron.macroToggleEnabled(macroId, enabled);
@@ -90,7 +82,6 @@ export function useMacroStorage() {
     [loadMacros, loadStatistics]
   );
 
-  // Clone default macro
   const cloneDefaultMacro = useCallback(
     async (defaultMacroId: string, newName?: string): Promise<MacroOperationResult> => {
       const result = await window.electron.macroCloneDefault(defaultMacroId, newName);
@@ -103,7 +94,6 @@ export function useMacroStorage() {
     [loadMacros, loadStatistics]
   );
 
-  // Import macros
   const importMacros = useCallback(
     async (macrosJson: string): Promise<MacroOperationResult> => {
       const result = await window.electron.macroImport(macrosJson);
@@ -116,17 +106,14 @@ export function useMacroStorage() {
     [loadMacros, loadStatistics]
   );
 
-  // Export custom macros
   const exportCustomMacros = useCallback(async (): Promise<MacroOperationResult> => {
     return await window.electron.macroExportCustom();
   }, []);
 
-  // Get macro by ID
   const getMacroById = useCallback(async (macroId: string): Promise<Macro | null> => {
     return await window.electron.macroGetById(macroId);
   }, []);
 
-  // Initial load
   useEffect(() => {
     loadMacros();
     loadStatistics();
@@ -158,7 +145,6 @@ export function useMacroBuilder(initialMacroId?: string) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Initialize new builder
   const createNew = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -172,7 +158,6 @@ export function useMacroBuilder(initialMacroId?: string) {
     }
   }, []);
 
-  // Load existing macro into builder
   const loadMacro = useCallback(async (macroId: string) => {
     setLoading(true);
     setError(null);
@@ -190,7 +175,6 @@ export function useMacroBuilder(initialMacroId?: string) {
     }
   }, []);
 
-  // Add step
   const addStep = useCallback(
     async (stepType: "keyboard-action" | "mouse-action" | "wait") => {
       if (!builderData) return;
@@ -205,7 +189,6 @@ export function useMacroBuilder(initialMacroId?: string) {
     [builderData]
   );
 
-  // Update step
   const updateStep = useCallback(
     async (stepId: string, updates: Partial<MacroBuilderStep>) => {
       if (!builderData) return;
@@ -220,7 +203,6 @@ export function useMacroBuilder(initialMacroId?: string) {
     [builderData]
   );
 
-  // Remove step
   const removeStep = useCallback(
     async (stepId: string) => {
       if (!builderData) return;
@@ -235,7 +217,6 @@ export function useMacroBuilder(initialMacroId?: string) {
     [builderData]
   );
 
-  // Move step
   const moveStep = useCallback(
     async (stepId: string, direction: "up" | "down") => {
       if (!builderData) return;
@@ -250,7 +231,6 @@ export function useMacroBuilder(initialMacroId?: string) {
     [builderData]
   );
 
-  // Duplicate step
   const duplicateStep = useCallback(
     async (stepId: string) => {
       if (!builderData) return;
@@ -265,7 +245,6 @@ export function useMacroBuilder(initialMacroId?: string) {
     [builderData]
   );
 
-  // Update macro properties
   const updateMacroProperties = useCallback(
     (updates: Partial<Pick<MacroBuilderData, "name" | "description" | "enabled" | "keybinding" | "repeat">>) => {
       if (!builderData) return;
@@ -282,7 +261,6 @@ export function useMacroBuilder(initialMacroId?: string) {
     [builderData]
   );
 
-  // Save macro
   const saveMacro = useCallback(
     async (existingMacroId?: string): Promise<MacroOperationResult> => {
       if (!builderData) {
@@ -294,7 +272,6 @@ export function useMacroBuilder(initialMacroId?: string) {
     [builderData]
   );
 
-  // Add template
   const addTemplate = useCallback(
     async (templateName: string) => {
       if (!builderData) return;
@@ -309,7 +286,6 @@ export function useMacroBuilder(initialMacroId?: string) {
     [builderData]
   );
 
-  // Load templates
   const loadTemplates = useCallback(async () => {
     try {
       const templatesData = await window.electron.macroBuilderGetTemplates();
@@ -319,7 +295,6 @@ export function useMacroBuilder(initialMacroId?: string) {
     }
   }, []);
 
-  // Initialize
   useEffect(() => {
     loadTemplates();
 

@@ -11,7 +11,7 @@ import {
   OpalTiersUpgrade,
   UtilityRuneTier,
 } from "@utils/gem";
-import { desertOfEssencesTable, fullMoonTable, newMoonTable, sargonTable } from "@utils/event";
+import { desertOfEssencesTable, fullMoonTable, newMoonTable, sargonTable } from "@utils/events/event";
 
 export const calculators: Calculator[] = [
   {

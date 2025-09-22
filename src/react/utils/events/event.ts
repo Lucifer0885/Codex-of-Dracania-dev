@@ -1,6 +1,7 @@
 import type { BaseDifficulty, Event, PWEventDifficulty } from "@interfaces/Ievent";
-import { DesertOfEssencesEventItems, FullMoonEventItems, NewMoonEventItems, SargonEventItems } from "@utils/eventItems";
-import { desertOfEssencesTips, fullMoonTips, newMoonTips, sargonTips } from "@utils/eventTips";
+import { DesertOfEssencesEventItems, NewMoonEventItems, SargonEventItems } from "@utils/events/eventItems";
+import { FullMoonEventItems } from "@utils/events/FullMoonItems";
+import { desertOfEssencesTips, fullMoonTips, newMoonTips, sargonTips } from "@utils/events/eventTips";
 
 export const eventDifficulties: BaseDifficulty[] = [
   "normal",
