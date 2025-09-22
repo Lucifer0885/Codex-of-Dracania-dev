@@ -1,7 +1,6 @@
 import { BadgeCheck, AlertCircle, Info, AlertTriangle } from "lucide-react";
 import { useState, useEffect } from "react";
-
-type ToastType = "success" | "error" | "info" | "warning";
+import type { ToastType } from "@interfaces/Igeneral";
 
 type ToastProps = {
   message?: string;

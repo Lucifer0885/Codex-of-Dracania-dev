@@ -32,3 +32,5 @@ export interface InventorySlotData {
   column: number;
   isLocked: boolean;
 }
+
+export type ToastType = "success" | "error" | "info" | "warning";

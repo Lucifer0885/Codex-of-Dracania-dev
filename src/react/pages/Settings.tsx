@@ -4,12 +4,17 @@ import { useUser } from "@hooks/useUser";
 import { getFileNameFromPath } from "@utils/utils";
 import { AvatarImage } from "@components/AvatarImage";
 import { Check, Info } from "lucide-react";
+import Toast from "@components/Toast";
+import type { ToastType } from "@interfaces/Igeneral";
 
 function Settings() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newAvatarPath, setNewAvatarPath] = useState("");
   const { userInfo, loading, error, updateUserField, clearError, addAvatar, removeAvatar, selectAvatar } = useUser();
+  const [newAvatarPath, setNewAvatarPath] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<ToastType>("info");
 
   const handleReset = async () => {
     await window.electron.resetConfig();
@@ -39,6 +44,20 @@ function Settings() {
 
   const handleSelectAvatar = async (path: string) => {
     await selectAvatar(path);
+  };
+
+  const handleFindWindow = async () => {
+    const dso = await window.electron.findTargetWindow();
+    setToastVisible(true);
+    if (dso.found) {
+      setToastMessage("Drakensang Online Found");
+      console.log("Found window:", dso);
+      setToastType("success");
+    } else {
+      setToastMessage("Drakensang Online Not Found");
+      console.error("Drakensang Online Not Found");
+      setToastType("error");
+    }
   };
 
   return (
@@ -185,6 +204,19 @@ function Settings() {
 
       <div className="card bg-base-200 shadow-xl">
         <div className="card-body">
+          <h2 className="card-title text-secondary">Find Game Window</h2>
+          <p className="text-gray-400 mb-4">
+            If you launched the app before Drakensang Online, it is very likely that you will encounter issues. Click
+            the button below to attach the app to game window.
+          </p>
+          <button className="btn btn-secondary w-fit" onClick={handleFindWindow}>
+            Find Drakensang Online
+          </button>
+        </div>
+      </div>
+
+      <div className="card bg-base-200 shadow-xl">
+        <div className="card-body">
           <h2 className="card-title text-error">Danger Zone</h2>
           <p className="text-gray-400 mb-4">These actions cannot be undone. Please be careful.</p>
           <button className="btn btn-error w-fit" onClick={() => setIsModalOpen(true)}>
@@ -192,6 +224,8 @@ function Settings() {
           </button>
         </div>
       </div>
+
+      {toastVisible && <Toast message={toastMessage} type={toastType} onClose={() => setToastVisible(false)} />}
 
       <Modal
         id="reset_settings_modal"

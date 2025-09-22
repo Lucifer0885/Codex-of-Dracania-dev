@@ -50,6 +50,18 @@ export const calculators: Calculator[] = [
     description: "Calculate the runs needed for the Sargon event",
     image: "/src/react/assets/events/sargon/tabicon_sargon.png",
   },
+  {
+    id: "event-full-moon",
+    name: "Full Moon Event Calculator",
+    description: "Calculate the runs needed to finish for the Full Moon event",
+    image: "/src/react/assets/events/newmoon/tabicon_newmoon.png",
+  },
+  {
+    id: "event-desert-of-essences",
+    name: "Desert of Essences Event Calculator",
+    description: "Calculate the runs needed to finish for the Desert of Essences event",
+    image: "/src/react/assets/events/newmoon/tabicon_newmoon.png",
+  },
 ];
 
 export function getGemCost(amount: number, gemTierStart: GemTier, gemTierEnd: GemTier, gemType: GemType): number {
@@ -195,7 +207,7 @@ export function getSargonRuns(difficulty: BaseDifficulty, haveAttire: boolean): 
   return { runs, drop: Math.floor(drop) };
 }
 
-export function getFullMoonRuns(difficulty: BaseDifficulty, haveAttire: boolean): EventCalculatorResult {
+export function getFullMoonRuns(difficulty: BaseDifficulty, haveAttire: boolean, level: number): EventCalculatorResult {
   const dropPerDiff = fullMoonTable["dropRates"][difficulty];
   if (!dropPerDiff) throw new Error("Invalid difficulty");
   if (typeof dropPerDiff === "number") throw new Error("Internal error, please report this");
@@ -214,9 +226,16 @@ export function getFullMoonRuns(difficulty: BaseDifficulty, haveAttire: boolean)
     drop = dropPerDiff[0] + dropPerDiff[1] * 3 + dropPerDiff[2];
   }
 
-  const runs = Math.ceil(fullMoonTable.progressBar[0].progress / drop);
+  if (level >= 20 && level <= 80) {
+    const runs = Math.ceil(fullMoonTable.progressBar[0].progress / drop);
 
-  return { runs, drop: Math.floor(drop) };
+    return { runs, drop: Math.floor(drop) };
+  } else if (level > 80 && level <= 100) {
+    const runs = Math.ceil(fullMoonTable.progressBar[1].progress / drop);
+    return { runs, drop: Math.floor(drop) };
+  } else {
+    throw new Error("Level must be between 20 and 100");
+  }
 }
 
 export function getDesertOfEssencesRuns(difficulty: BaseDifficulty, haveAttire: boolean): EventCalculatorResult {

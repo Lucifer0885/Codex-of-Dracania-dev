@@ -6,17 +6,6 @@ type AppVersionProps = {
 
 function AppVersion({ isExpanded }: AppVersionProps) {
   const [appVersion, setAppVersion] = useState("");
-  const [appVersionText, setAppVersionText] = useState("");
-
-  useEffect(() => {
-    if (isExpanded) {
-      setTimeout(() => {
-        setAppVersionText(isExpanded ? `Current Version: ${appVersion} stable-beta` : `v${appVersion}`);
-      }, 300);
-    } else {
-      setAppVersionText(`v${appVersion}`);
-    }
-  }, [isExpanded, appVersion]);
 
   useEffect(() => {
     const fetchAppVersion = async () => {
@@ -27,7 +16,24 @@ function AppVersion({ isExpanded }: AppVersionProps) {
     fetchAppVersion();
   }, []);
 
-  return <div className="text-xs text-gray-400">{appVersionText}</div>;
+  return (
+    <div className="relative h-5 text-sm text-gray-400">
+      <span
+        className={`absolute left-0 top-0 w-full transition-opacity duration-300 ${
+          isExpanded ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        v{appVersion}
+      </span>
+      <span
+        className={`absolute left-0 top-0 w-full transition-opacity duration-300 ${
+          isExpanded ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        Current Version: {appVersion} stable-beta
+      </span>
+    </div>
+  );
 }
 
 export default AppVersion;

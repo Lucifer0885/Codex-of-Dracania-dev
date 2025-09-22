@@ -4,6 +4,8 @@ import JewelCalculator from "@pages/calculators/JewelCalculator";
 import OpalCalculator from "@pages/calculators/OpalCalculator";
 import NewMoonCalculator from "@pages/calculators/NewMoonCalculator";
 import SargonCalculator from "@pages/calculators/SargonCalculator";
+import FullMoonCalculator from "@pages/calculators/FullMoonCalculator";
+import DesertOfEssencesCalculator from "@pages/calculators/DesertOfEssencesCalculator";
 
 export const calculatorRouteConfig = [
   {
@@ -35,5 +37,15 @@ export const calculatorRouteConfig = [
     path: "/calculators/event-sargon",
     element: SargonCalculator,
     key: "event-sargon",
+  },
+  {
+    path: "/calculators/event-full-moon",
+    element: FullMoonCalculator,
+    key: "event-full-moon",
+  },
+  {
+    path: "/calculators/event-desert-of-essences",
+    element: DesertOfEssencesCalculator,
+    key: "event-desert-of-essences",
   },
 ];

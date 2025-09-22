@@ -58,7 +58,10 @@ export const sargonTips: string[] = [
 ];
 
 export const fullMoonTable: GameEvent = {
-  progressBar: [{ progress: 45000 }],
+  progressBar: [
+    { level: 80, progress: 7500 },
+    { level: 100, progress: 45000 },
+  ],
   attirePercentBonus: 0.5,
   dropRates: {
     normal: [10, 13, 20],

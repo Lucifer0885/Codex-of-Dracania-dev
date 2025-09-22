@@ -82,7 +82,7 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
           </ul>
         </div>
         <div className="absolute bottom-4 left-4 right-4">
-          <UpdateAvailable />
+          <UpdateAvailable isExpanded={isExpanded} />
           <div className="flex items-center gap-3 mb-3 hover:cursor-pointer">
             <div className="flex items-center justify-center w-8 h-8">
               <div className="rounded-full ring-primary ring-offset-base-100 ring-2 ring-offset-2">
