@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { fullMoonTable } from "@utils/events/event";
-import { FullMoonDraken } from "@utils/events/FullMoonItems";
+import { FullMoonDraken1, FullMoonDraken2, FullMoonEventItems1 } from "@utils/events/FullMoonItems";
 import EventTips from "@components/EventTips";
 
 function FullMoonEventDetails() {
   const [tablePage, setTablePage] = useState(1);
   const [uiState, setUiState] = useState<"80" | "100">("100");
 
-  const currentPageItems = fullMoonTable.items.filter((item) => item.page === tablePage);
+  const currentPageItems = fullMoonTable.items[1].filter((item) => item.page === tablePage);
 
-  const totalPages = [...new Set(fullMoonTable.items.map((item) => item.page))].sort((a, b) => a - b);
+  const totalPages = [...new Set(fullMoonTable.items[1].map((item) => item.page))].sort((a, b) => a - b);
 
   return (
     <div className="flex flex-col gap-6 min-h-screen items-center mt-20 mb-10">
@@ -42,7 +42,7 @@ function FullMoonEventDetails() {
           <>
             <div className="flex items-center justify-center py-3">
               <img src="/src/react/assets/coins/draken.png" alt="Draken" className="w-10 h-10" />
-              {FullMoonDraken} total
+              {FullMoonDraken2} total
             </div>
             <div className="flex justify-center items-center gap-2 p-4 border-b border-base-content/10">
               <span className="text-sm text-base-content/70">Page:</span>
@@ -92,9 +92,33 @@ function FullMoonEventDetails() {
             </div>
           </>
         ) : (
-          <div className="flex justify-center items-center h-48">
-            <p className="text-gray-400">WIP.</p>
-          </div>
+          <>
+            <div className="flex items-center justify-center py-3">
+              <img src="/src/react/assets/coins/draken.png" alt="Draken" className="w-10 h-10" />
+              {FullMoonDraken1} total
+            </div>
+
+            <table className="table table-zebra ">
+              <thead>
+                <tr>
+                  <th>Icon</th>
+                  <th>Quantity</th>
+                  <th>Name</th>
+                  <th>Progress</th>
+                </tr>
+              </thead>
+              <tbody>
+                {FullMoonEventItems1.map((item, index) => (
+                  <tr key={index}>
+                    <th>{<img src={item.icon} alt={item.name} className="w-15 h-15" />}</th>
+                    <td>{item.amount}</td>
+                    <td>{item.name}</td>
+                    <td>{item.progress}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
         )}
       </div>
       <EventTips tips={fullMoonTable.eventTips} title="Full Moon Event Tips" />

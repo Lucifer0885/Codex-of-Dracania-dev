@@ -30,5 +30,5 @@ export interface Event {
   attirePercentBonus?: number;
   dropRates: EventDifficulty<number | number[]>;
   eventTips: string[];
-  items: ProgressBarItem[];
+  items: ProgressBarItem[][];
 }

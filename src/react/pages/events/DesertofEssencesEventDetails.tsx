@@ -33,7 +33,7 @@ function DesertofEssencesEventDetails() {
             </tr>
           </thead>
           <tbody>
-            {desertOfEssencesTable.items.map((item, index) => (
+            {desertOfEssencesTable.items[0].map((item, index) => (
               <tr key={index}>
                 <th>{<img src={item.icon} alt={item.name} className="w-15 h-15" />}</th>
                 <td>{item.amount}</td>

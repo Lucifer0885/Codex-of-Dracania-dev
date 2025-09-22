@@ -1,10 +1,99 @@
 import type { ProgressBarItem } from "@interfaces/Ievent";
 
-export const FullMoonDraken = 7000;
+export const FullMoonDraken1 = 2500;
+
+export const FullMoonDraken2 = 7000;
 
 export const fullMoonTips: string[] = [];
 
-export const FullMoonEventItems: ProgressBarItem[] = [
+export const FullMoonEventItems1: ProgressBarItem[] = [
+  {
+    page: 1,
+    progress: 625,
+    amount: 3,
+    name: "Amphora Key",
+    icon: "/src/react/assets/keys/amphora-key.png",
+  },
+  {
+    page: 1,
+    progress: 1250,
+    amount: 1000,
+    name: "Shining Silver Essences",
+    icon: "/src/react/assets/events/fullmoon/shiny-silver-ess.png",
+  },
+  {
+    page: 1,
+    progress: 1875,
+    amount: 2,
+    name: "Vial of Werewolf Blood",
+    icon: "/src/react/assets/events/fullmoon/vial.png",
+  },
+  {
+    page: 1,
+    progress: 2500,
+    amount: 50,
+    name: "Realm Fragment",
+    icon: "/src/react/assets/coins/realm-fragment.png",
+  },
+  {
+    page: 1,
+    progress: 3125,
+    amount: 1,
+    name: "Big Varholm Survival Chest",
+    icon: "/src/react/assets/events/fullmoon/varholm-survival-chest.png",
+  },
+  {
+    page: 1,
+    progress: 3700,
+    amount: 3,
+    name: "Vial of Werewolf Blood",
+    icon: "/src/react/assets/events/fullmoon/vial.png",
+  },
+  {
+    page: 1,
+    progress: 4325,
+    amount: 75,
+    name: "Realm Fragment",
+    icon: "/src/react/assets/coins/realm-fragment.png",
+  },
+  {
+    page: 1,
+    progress: 5000,
+    amount: 1,
+    name: "Fullmoon Reward Chest",
+    icon: "/src/react/assets/events/fullmoon/varholm-survival-chest.png",
+  },
+  {
+    page: 1,
+    progress: 5575,
+    amount: 1500,
+    name: "Shining Silver Essences",
+    icon: "/src/react/assets/events/fullmoon/shiny-silver-ess.png",
+  },
+  {
+    page: 1,
+    progress: 6200,
+    amount: 7,
+    name: "Amphora Key",
+    icon: "/src/react/assets/keys/amphora-key.png",
+  },
+  {
+    page: 1,
+    progress: 6825,
+    amount: 5,
+    name: "Vial of Werewolf Blood",
+    icon: "/src/react/assets/events/fullmoon/vial.png",
+  },
+  {
+    page: 1,
+    progress: 7450,
+    amount: 1,
+    name: "Shining Fullmoon Reward Chest",
+    icon: "/src/react/assets/events/fullmoon/shining-fullmoon-chest.png",
+  },
+];
+
+export const FullMoonEventItems2: ProgressBarItem[] = [
   {
     page: 1,
     progress: 1250,

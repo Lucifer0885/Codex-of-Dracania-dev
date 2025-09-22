@@ -1,6 +1,7 @@
 import type { BaseDifficulty, Event, PWEventDifficulty } from "@interfaces/Ievent";
-import { NewMoonEventItems, SargonEventItems } from "@utils/events/eventItems";
-import { FullMoonEventItems, fullMoonTips } from "@utils/events/FullMoonItems";
+import { SargonEventItems } from "@utils/events/eventItems";
+import { FullMoonEventItems1, FullMoonEventItems2, fullMoonTips } from "@utils/events/FullMoonItems";
+import { NewMoonEventItems1, NewMoonEventItems2 } from "@utils/events/NewMoonItems";
 import { DesertOfEssencesEventItems, desertOfEssencesTips } from "@utils/events/DesertOfEssencesItems";
 import { newMoonTips, sargonTips } from "@utils/events/eventTips";
 
@@ -34,7 +35,7 @@ export const newMoonTable: Event = {
     bloodshed: 1200,
   },
   eventTips: newMoonTips,
-  items: NewMoonEventItems,
+  items: [NewMoonEventItems1, NewMoonEventItems2],
 };
 
 // Sargon Event
@@ -55,7 +56,7 @@ export const sargonTable: Event = {
     bloodshed: [114, 2235],
   },
   eventTips: sargonTips,
-  items: SargonEventItems,
+  items: [SargonEventItems],
 };
 
 // Full Moon Event
@@ -80,7 +81,7 @@ export const fullMoonTable: Event = {
     bloodshed: [467, 71, 935],
   },
   eventTips: fullMoonTips,
-  items: FullMoonEventItems,
+  items: [FullMoonEventItems1, FullMoonEventItems2],
 };
 
 // Desert of Essences Event
@@ -101,7 +102,7 @@ export const desertOfEssencesTable: Event = {
     bloodshed: 481,
   },
   eventTips: desertOfEssencesTips,
-  items: DesertOfEssencesEventItems,
+  items: [DesertOfEssencesEventItems],
 };
 
 export const EventsList: Event[] = [newMoonTable, sargonTable, fullMoonTable, desertOfEssencesTable];
