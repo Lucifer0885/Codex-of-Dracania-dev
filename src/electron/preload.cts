@@ -1,6 +1,7 @@
 const electron = require("electron");
 
 electron.contextBridge.exposeInMainWorld("electron", {
+  openExternal: (url: string, options?: Electron.OpenExternalOptions) => electron.shell.openExternal(url, options),
   getAppVersion: () => ipcRendererInvoke("get-app-version"),
   updateMessage: (callback: (message: string) => void) => ipcRendererOn("update-message", callback),
   findTargetWindow: () => ipcRendererInvoke("find-target-window"),

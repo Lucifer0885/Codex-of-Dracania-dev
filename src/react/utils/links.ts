@@ -7,9 +7,9 @@ export const NavLinks: NavLink[] = [
     icon: "Home",
   },
   {
-    to: "/general",
-    label: "General",
-    icon: "Book",
+    to: "/events",
+    label: "Events",
+    icon: "Trophy",
   },
   {
     to: "/inventory",

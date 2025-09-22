@@ -31,21 +31,21 @@ export const calculatorRouteConfig = [
   {
     path: "/calculators/event-new-moon",
     element: NewMoonCalculator,
-    key: "event-new-moon",
+    key: "event-new-moon-calculator",
   },
   {
     path: "/calculators/event-sargon",
     element: SargonCalculator,
-    key: "event-sargon",
+    key: "event-sargon-calculator",
   },
   {
     path: "/calculators/event-full-moon",
     element: FullMoonCalculator,
-    key: "event-full-moon",
+    key: "event-full-moon-calculator",
   },
   {
     path: "/calculators/event-desert-of-essences",
     element: DesertOfEssencesCalculator,
-    key: "event-desert-of-essences",
+    key: "event-desert-of-essences-calculator",
   },
 ];

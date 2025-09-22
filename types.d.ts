@@ -228,6 +228,7 @@ type UnsubscribeFunction = () => void;
 
 interface Window {
   electron: {
+    openExternal: (url: string, options?: Electron.ShellOpenExternalOptions) => Promise<void>;
     getAppVersion: () => string;
     updateMessage: (callback: (message: string) => void) => UnsubscribeFunction;
     findTargetWindow: () => Promise<TargetWindowInfo | TargetErrorInfo | TargetNullInfo>;

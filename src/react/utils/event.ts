@@ -1,4 +1,6 @@
-import type { BaseDifficulty, GameEvent, PWEventDifficulty } from "@interfaces/Ievent";
+import type { BaseDifficulty, Event, PWEventDifficulty } from "@interfaces/Ievent";
+import { DesertOfEssencesEventItems, FullMoonEventItems, NewMoonEventItems, SargonEventItems } from "@utils/eventItems";
+import { desertOfEssencesTips, fullMoonTips, newMoonTips, sargonTips } from "@utils/eventTips";
 
 export const eventDifficulties: BaseDifficulty[] = [
   "normal",
@@ -12,7 +14,12 @@ export const eventDifficulties: BaseDifficulty[] = [
 
 export const extraEventDifficulties: PWEventDifficulty[] = ["pw-infernal", "pw-merciless", "pw-bloodshed"];
 
-export const newMoonTable: GameEvent = {
+// New Moon Event
+export const newMoonTable: Event = {
+  id: "new-moon",
+  name: "New Moon",
+  image: "/src/react/assets/events/newmoon/tabicon_newmoon.png",
+  description: "A mysterious event that occurs during the new moon.",
   progressBar: [{ progress: 15000 }],
   attirePercentBonus: 0.5,
   dropRates: {
@@ -24,17 +31,16 @@ export const newMoonTable: GameEvent = {
     merciless: 928,
     bloodshed: 1200,
   },
+  eventTips: newMoonTips,
+  items: NewMoonEventItems,
 };
 
-export const newMoonTips: string[] = [
-  "The attire is very worth to purchase, if you plan on farming the event a lot.",
-  "Always try to spawn all 3 additional bosses for maximum drops.",
-  "This event is best farmed in a group of 3 players, each spawning 1 additional boss for a total of 4 bosses or find a donor to spawn all 3 additional bosses.",
-  "This event is like a mini DTU. If you need gems, consider farming this event a lot.",
-  "Opening Amphora chests in the first event map is a decent way to get wood and boss entries.",
-];
-
-export const sargonTable: GameEvent = {
+// Sargon Event
+export const sargonTable: Event = {
+  id: "sargon",
+  name: "Sargon",
+  image: "/src/react/assets/events/sargon/tabicon_sargon.png",
+  description: "A challenging event featuring the powerful Sargon.",
   progressBar: [{ progress: 50000 }],
   attirePercentBonus: 0.5,
   dropRates: {
@@ -46,18 +52,16 @@ export const sargonTable: GameEvent = {
     merciless: [76, 1360],
     bloodshed: [114, 2235],
   },
+  eventTips: sargonTips,
+  items: SargonEventItems,
 };
 
-export const sargonTips: string[] = [
-  "The attire is not worth to purchase, as it does not provide a significant boost.",
-  "This event is best farmed with at least 2 players, as the first map is quite long to solo.",
-  "Each player should try to get at least 1 book drop per run to maximize clear speed.",
-  "Consider using a speedrun strategy to clear the first map quickly.",
-  "You can do bloodchests in the first map, but it is not very efficient.",
-  "If you are struggling to find a group, consider joining the official DSO Discord and looking for a party there.",
-];
-
-export const fullMoonTable: GameEvent = {
+// Full Moon Event
+export const fullMoonTable: Event = {
+  id: "full-moon",
+  name: "Full Moon",
+  image: "/src/react/assets/events/event.png",
+  description: "A mystical event that takes place during the full moon.",
   progressBar: [
     { level: 80, progress: 7500 },
     { level: 100, progress: 45000 },
@@ -72,11 +76,16 @@ export const fullMoonTable: GameEvent = {
     merciless: [270, 58, 540],
     bloodshed: [467, 71, 935],
   },
+  eventTips: fullMoonTips,
+  items: FullMoonEventItems,
 };
-//TODO: Add tips
-export const fullMoonTips: string[] = [];
 
-export const desertOfEssencesTable: GameEvent = {
+// Desert of Essences Event
+export const desertOfEssencesTable: Event = {
+  id: "desert-of-essences",
+  name: "Desert of Essences",
+  image: "/src/react/assets/events/event.png",
+  description: "Explore the Desert of Essences and uncover its secrets.",
   progressBar: [{ progress: 4000 }],
   attirePercentBonus: 0.5,
   dropRates: {
@@ -88,6 +97,8 @@ export const desertOfEssencesTable: GameEvent = {
     merciless: 361,
     bloodshed: 481,
   },
+  eventTips: desertOfEssencesTips,
+  items: DesertOfEssencesEventItems,
 };
-//TODO: Add tips
-export const desertOfEssencesTips: string[] = [];
+
+export const EventsList: Event[] = [newMoonTable, sargonTable, fullMoonTable, desertOfEssencesTable];

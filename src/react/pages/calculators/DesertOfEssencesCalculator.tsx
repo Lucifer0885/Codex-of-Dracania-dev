@@ -1,7 +1,7 @@
 import EventResultCard from "@components/EventResultCard";
 import type { BaseDifficulty } from "@interfaces/Ievent";
 import { getDesertOfEssencesRuns } from "@utils/calculators";
-import { eventDifficulties, desertOfEssencesTips } from "@utils/event";
+import { eventDifficulties, desertOfEssencesTable } from "@utils/event";
 import React, { useState } from "react";
 import EventTips from "@components/EventTips";
 
@@ -129,7 +129,7 @@ function DesertOfEssencesCalculator() {
           loading={loading}
         />
       </div>
-      <EventTips title="Desert of Essences Event Tips" tips={desertOfEssencesTips} />
+      <EventTips title="Desert of Essences Event Tips" tips={desertOfEssencesTable.eventTips} />
     </div>
   );
 }

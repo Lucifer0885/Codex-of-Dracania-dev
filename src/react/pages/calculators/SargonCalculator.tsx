@@ -1,7 +1,7 @@
 import EventResultCard from "@components/EventResultCard";
 import type { BaseDifficulty } from "@interfaces/Ievent";
 import { getSargonRuns } from "@utils/calculators";
-import { eventDifficulties, sargonTips } from "@utils/event";
+import { eventDifficulties, sargonTable } from "@utils/event";
 import React, { useState } from "react";
 import EventTips from "@components/EventTips";
 
@@ -129,7 +129,7 @@ function SargonCalculator() {
           loading={loading}
         />
       </div>
-      <EventTips title="Sargon Event Tips" tips={sargonTips} />
+      <EventTips title="Sargon Event Tips" tips={sargonTable.eventTips} />
     </div>
   );
 }

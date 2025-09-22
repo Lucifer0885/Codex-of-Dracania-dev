@@ -36,10 +36,9 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
   return (
     <>
       <div
-        className={[
-          "flex flex-col p-4 border-r border-gray-700 transition-all duration-300 fixed min-h-screen",
-          isExpanded ? "w-64" : "w-16",
-        ].join(" ")}
+        className={["flex flex-col p-4 border-r border-gray-700 fixed min-h-screen", isExpanded ? "w-64" : "w-16"].join(
+          " "
+        )}
       >
         <div>
           <div className="flex items-center pb-6 mb-2">

@@ -207,7 +207,7 @@ function Settings() {
           <h2 className="card-title text-secondary">Find Game Window</h2>
           <p className="text-gray-400 mb-4">
             If you launched the app before Drakensang Online, it is very likely that you will encounter issues. Click
-            the button below to attach the app to game window.
+            the button below to attach the app to the game window.
           </p>
           <button className="btn btn-secondary w-fit" onClick={handleFindWindow}>
             Find Drakensang Online

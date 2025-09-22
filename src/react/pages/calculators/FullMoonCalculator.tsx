@@ -1,7 +1,7 @@
 import EventResultCard from "@components/EventResultCard";
 import type { BaseDifficulty } from "@interfaces/Ievent";
 import { getFullMoonRuns } from "@utils/calculators";
-import { eventDifficulties, fullMoonTips } from "@utils/event";
+import { eventDifficulties, fullMoonTable } from "@utils/event";
 import React, { useState } from "react";
 import EventTips from "@components/EventTips";
 
@@ -139,7 +139,7 @@ function FullMoonCalculator() {
           loading={loading}
         />
       </div>
-      <EventTips title="Full Moon Event Tips" tips={fullMoonTips} />
+      <EventTips title="Full Moon Event Tips" tips={fullMoonTable.eventTips} />
     </div>
   );
 }

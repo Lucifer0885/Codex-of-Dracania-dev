@@ -1,7 +1,7 @@
 import EventResultCard from "@components/EventResultCard";
 import type { BaseDifficulty } from "@interfaces/Ievent";
 import { getNewMoonRuns } from "@utils/calculators";
-import { eventDifficulties, newMoonTips } from "@utils/event";
+import { eventDifficulties, newMoonTable } from "@utils/event";
 import React, { useState } from "react";
 import EventTips from "@components/EventTips";
 
@@ -139,7 +139,7 @@ function NewMoonCalculator() {
           loading={loading}
         />
       </div>
-      <EventTips title="New Moon Event Tips" tips={newMoonTips} />
+      <EventTips title="New Moon Event Tips" tips={newMoonTable.eventTips} />
     </div>
   );
 }

@@ -11,9 +11,9 @@ function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className="flex bg-base-200 text-base-content">
       <SideNav isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
-      <MaxWidthWrapper className="self-center">
-        <div className={`py-4 transition-all duration-300`}>{children}</div>
-      </MaxWidthWrapper>
+      <div className={`flex-1 ${isExpanded ? "ml-64" : "ml-20"} transition-all duration-300`}>
+        <MaxWidthWrapper>{children}</MaxWidthWrapper>
+      </div>
     </div>
   );
 }
