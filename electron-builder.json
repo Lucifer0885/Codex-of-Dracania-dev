@@ -1,7 +1,7 @@
 {
     "appId": "com.lucifer0885.codex-of-dracania",
     "artifactName": "Codex of Dracania-${version}.${ext}",
-    "extraResources": ["dist-electron/preload.cjs"],
+    "extraResources": ["dist-electron/preload.cjs", "src/assets/**"],
     "electronLanguages": [
         "en"
     ],
@@ -18,7 +18,7 @@
     "nodeGypRebuild": false,
     "npmRebuild": false,
     "win": {
-        "icon": "assets/dso.ico",
+        "icon": "src/assets/dso.ico",
         "target": [
             {
                 "target": "nsis",

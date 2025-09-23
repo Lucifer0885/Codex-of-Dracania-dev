@@ -1,16 +1,17 @@
-import { app, autoUpdater, BrowserWindow, shell } from "electron";
+import fs from "fs";
 import path from "path";
-import { isDev, windowSizeListener } from "./utils/util.js";
+import { app, autoUpdater, BrowserWindow, shell } from "electron";
+import { handleCloseEvents, isDev, windowSizeListener } from "./utils/util.js";
 import { loadConfig, resetConfig } from "./utils/config.js";
 import { findWindow } from "./utils/targetWindow.js";
-import { getConfigPath, getPreloadPath, getUIPath, readLocalFile } from "./utils/pathResolver.js";
+import { getAssetsPath, getConfigPath, getPreloadPath, getUIPath, readLocalFile } from "./utils/pathResolver.js";
 import { ipcMainHandle, ipcMainHandleWithData, ipcWebContentsSend } from "./utils/ipc.js";
 import KeybindingManager from "./macros/KeybindingManager.js";
 import MacroManager from "./macros/MacroManager.js";
 import { container, SERVICE_KEYS } from "./utils/diContainer.js";
 import { registerMacroIpcHandlers } from "./macros/macroIpc.js";
-import fs from "fs";
 import { getAppUpdater } from "./installer/updater.js";
+import { initTray } from "./tray.js";
 
 let mainWindow: BrowserWindow;
 const appUpdater = getAppUpdater();
@@ -29,7 +30,7 @@ app.whenReady().then(() => {
   mainWindow = new BrowserWindow({
     minWidth: 1200,
     minHeight: 850,
-    icon: path.join(app.getAppPath(), "/assets/dso.ico"),
+    icon: path.join(getAssetsPath(), "/dso@2x.ico"),
     title: "Codex of Dracania",
     webPreferences: {
       preload: getPreloadPath(),
@@ -41,6 +42,10 @@ app.whenReady().then(() => {
   } else {
     mainWindow.loadFile(getUIPath());
   }
+
+  initTray(mainWindow);
+
+  handleCloseEvents(mainWindow);
 
   appUpdater.checkForUpdates().catch((err) => {
     console.error("Failed to check for updates:", err);

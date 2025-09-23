@@ -16,6 +16,10 @@ export function getUserPath() {
   return os.userInfo().homedir;
 }
 
+export function getAssetsPath() {
+  return path.join(app.getAppPath(), isDev() ? "." : "..", "/src/assets");
+}
+
 export function getConfigPath() {
   return fs.existsSync(path.join(getUserPath(), ".dso-utils"))
     ? path.join(getUserPath(), ".dso-utils", "config.json")

@@ -1,4 +1,4 @@
-import { WebFrameMain } from "electron";
+import { app, BrowserWindow, WebFrameMain } from "electron";
 import { getUIPath } from "./pathResolver.js";
 import { pathToFileURL } from "url";
 import { getTargetWindowSize } from "./targetWindow.js";
@@ -82,4 +82,26 @@ export function getVirtualKeyCode(keyName: string): number {
   }
 
   throw new Error(`Unknown key: ${keyName}`);
+}
+
+export function handleCloseEvents(mainWindow: BrowserWindow) {
+  let willClose = false;
+
+  mainWindow.on("close", (event) => {
+    if (willClose) {
+      return;
+    }
+
+    event.preventDefault();
+    mainWindow.hide();
+  });
+
+  app.on("before-quit", () => {
+    willClose = true;
+    mainWindow.close();
+  });
+
+  mainWindow.on("show", () => {
+    willClose = false;
+  });
 }
