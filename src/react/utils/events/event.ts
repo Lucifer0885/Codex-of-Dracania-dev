@@ -1,9 +1,15 @@
 import type { BaseDifficulty, Event, PWEventDifficulty } from "@interfaces/Ievent";
-import { SargonEventItems } from "@utils/events/eventItems";
 import { FullMoonEventItems1, FullMoonEventItems2, fullMoonTips } from "@utils/events/FullMoonItems";
-import { NewMoonEventItems1, NewMoonEventItems2 } from "@utils/events/NewMoonItems";
+import { NewMoonEventItems1, NewMoonEventItems2, NewMoonTips } from "@utils/events/NewMoonItems";
 import { DesertOfEssencesEventItems, desertOfEssencesTips } from "@utils/events/DesertOfEssencesItems";
-import { newMoonTips, sargonTips } from "@utils/events/eventTips";
+import {
+  SargonEventItems1,
+  SargonEventItems2,
+  SargonEventItems3,
+  SargonEventItems4,
+  SargonEventItems5,
+  SargonTips,
+} from "@utils/events/SargonItems";
 
 export const eventDifficulties: BaseDifficulty[] = [
   "normal",
@@ -34,14 +40,14 @@ export const newMoonTable: Event = {
     merciless: 928,
     bloodshed: 1200,
   },
-  eventTips: newMoonTips,
+  eventTips: NewMoonTips,
   items: [NewMoonEventItems1, NewMoonEventItems2],
 };
 
 // Sargon Event
 export const sargonTable: Event = {
   id: "sargon",
-  name: "Sargon",
+  name: "Terrifying Shadows",
   image: "/src/react/assets/events/sargon/tabicon_sargon.png",
   description: "A challenging event featuring the powerful Sargon.",
   progressBar: [{ progress: 50000 }],
@@ -55,8 +61,8 @@ export const sargonTable: Event = {
     merciless: [76, 1360],
     bloodshed: [114, 2235],
   },
-  eventTips: sargonTips,
-  items: [SargonEventItems],
+  eventTips: SargonTips,
+  items: [SargonEventItems1, SargonEventItems2, SargonEventItems3, SargonEventItems4, SargonEventItems5],
 };
 
 // Full Moon Event

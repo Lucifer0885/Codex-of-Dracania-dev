@@ -18,7 +18,7 @@ export const DEFAULT_INVENTORY_PRESETS: InventoryLayoutPreset[] = [
   {
     windowWidth: 2560,
     windowHeight: 1440,
-    name: "QHD (2560x1440)",
+    name: "2K QHD (2560x1440)",
     firstSlot: { x: 1829, y: 885 },
     firstTab: { x: 1794, y: 768 },
     gaps: { tabX: 67, columnX: 115, rowY: 115 },
