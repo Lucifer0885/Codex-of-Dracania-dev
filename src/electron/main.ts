@@ -12,6 +12,7 @@ import { container, SERVICE_KEYS } from "./utils/diContainer.js";
 import { registerMacroIpcHandlers } from "./macros/macroIpc.js";
 import { getAppUpdater } from "./installer/updater.js";
 import { initTray } from "./tray.js";
+import { InitMenu } from "./menu.js";
 
 let mainWindow: BrowserWindow;
 const appUpdater = getAppUpdater();
@@ -44,6 +45,7 @@ app.whenReady().then(() => {
   }
 
   initTray(mainWindow);
+  InitMenu();
 
   handleCloseEvents(mainWindow);
 
