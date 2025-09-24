@@ -10,6 +10,7 @@ import {
   SargonEventItems5,
   SargonTips,
 } from "@utils/events/SargonItems";
+import { ImageExporter } from "@utils/ImageExporter";
 
 export const eventDifficulties: BaseDifficulty[] = [
   "normal",
@@ -27,7 +28,7 @@ export const extraEventDifficulties: PWEventDifficulty[] = ["pw-infernal", "pw-m
 export const newMoonTable: Event = {
   id: "new-moon",
   name: "New Moon",
-  image: "/src/react/assets/events/newmoon/tabicon_newmoon.png",
+  image: ImageExporter.tabIconNewmoon,
   description: "A mysterious event that occurs during the new moon.",
   progressBar: [{ progress: 15000 }],
   attirePercentBonus: 0.5,
@@ -48,7 +49,7 @@ export const newMoonTable: Event = {
 export const sargonTable: Event = {
   id: "sargon",
   name: "Terrifying Shadows",
-  image: "/src/react/assets/events/sargon/tabicon_sargon.png",
+  image: ImageExporter.tabIconSargon,
   description: "A challenging event featuring the powerful Sargon.",
   progressBar: [{ progress: 50000 }],
   attirePercentBonus: 0.5,
@@ -69,7 +70,7 @@ export const sargonTable: Event = {
 export const fullMoonTable: Event = {
   id: "full-moon",
   name: "Full Moon",
-  image: "/src/react/assets/events/fullmoon/tabicon_fullmoon.png",
+  image: ImageExporter.tabIconFullmoon,
   description:
     "The full moon rises over Varholm! Join the hunt, slay cursed werewolves, and confront the Bloodmage for treasures hidden in the night.",
   progressBar: [
@@ -94,7 +95,7 @@ export const fullMoonTable: Event = {
 export const desertOfEssencesTable: Event = {
   id: "desert-of-essences",
   name: "Desert of Essences",
-  image: "/src/react/assets/events/doe/tabicon_essences.png",
+  image: ImageExporter.tabIconDoe,
   description: "Thabo found a wondrous place in Qaizah. Mysterious and deadly. Are you willing to unveil its secrets?",
   progressBar: [{ progress: 4000 }],
   attirePercentBonus: 0.5,

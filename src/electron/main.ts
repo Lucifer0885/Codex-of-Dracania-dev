@@ -35,6 +35,7 @@ app.whenReady().then(() => {
     title: "Codex of Dracania",
     webPreferences: {
       preload: getPreloadPath(),
+      devTools: isDev(),
     },
   });
 

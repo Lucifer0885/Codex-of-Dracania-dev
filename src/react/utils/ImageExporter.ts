@@ -15,6 +15,7 @@ import fullmoonProg from "@assets/events/fullmoon/fullmoon-prog.png";
 import tabIconFullmoon from "@assets/events/fullmoon/tabicon_fullmoon.png";
 import fullmoonVial from "@assets/events/fullmoon/vial.png";
 import varholmSurvivalChest from "@assets/events/fullmoon/varholm-survival-chest.png";
+import shinyFullmoonChest from "@assets/events/fullmoon/shining-fullmoon-chest.png";
 // New Moon Event
 import tabIconNewmoon from "@assets/events/newmoon/tabicon_newmoon.png";
 import newmoonBossEntry from "@assets/events/newmoon/boss-entry.png";
@@ -77,6 +78,7 @@ export const ImageExporter = {
   fullmoonProg,
   fullmoonVial,
   varholmSurvivalChest,
+  shinyFullmoonChest,
   tabIconNewmoon,
   newmoonProg,
   newmoonBossEntry,

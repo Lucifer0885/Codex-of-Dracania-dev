@@ -15,6 +15,7 @@ export function validateEventFrame(frame: WebFrameMain) {
   }
 
   if (frame.url !== pathToFileURL(getUIPath()).toString()) {
+    console.error("Malicious Event Detected:", frame.url, pathToFileURL(getUIPath()).toString());
     throw new Error("Malicious Event");
   }
 }

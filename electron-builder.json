@@ -1,7 +1,11 @@
 {
     "appId": "com.lucifer0885.codex-of-dracania",
     "artifactName": "Setup-${version}.${ext}",
-    "extraResources": ["dist-electron/preload.cjs", "src/assets/**", "src/react/assets/**"],
+    "extraResources": [
+        "dist-electron/preload.cjs",
+        "src/assets/**",
+        "src/react/assets/**"
+    ],
     "electronLanguages": [
         "en"
     ],
@@ -23,5 +27,14 @@
                 ]
             }
         ]
+    },
+    "nsis": {
+        "oneClick": false,
+        "allowToChangeInstallationDirectory": true,
+        "license": "installer-license.md",
+        "uninstallDisplayName": "Uninstall Codex of Dracania",
+        "createDesktopShortcut": true,
+        "createStartMenuShortcut": true,
+        "runAfterFinish": true
     }
 }
