@@ -2,6 +2,7 @@ import { useState } from "react";
 import { fullMoonTable } from "@utils/events/event";
 import { FullMoonDraken1, FullMoonDraken2, FullMoonEventItems1 } from "@utils/events/FullMoonItems";
 import EventTips from "@components/EventTips";
+import { ImageExporter } from "@utils/ImageExporter";
 
 function FullMoonEventDetails() {
   const [tablePage, setTablePage] = useState(1);
@@ -14,7 +15,7 @@ function FullMoonEventDetails() {
   return (
     <div className="flex flex-col gap-6 min-h-screen items-center mt-20 mb-10">
       <div className="flex items-center gap-4">
-        <img src="/src/react/assets/events/fullmoon/tabicon_fullmoon.png" alt="Full Moon" />
+        <img src={ImageExporter.tabIconFullmoon} alt="Full Moon" />
         <h1 className="text-3xl font-bold text-primary">Full Moon Event Details</h1>
       </div>
 
@@ -41,7 +42,7 @@ function FullMoonEventDetails() {
         {uiState === "100" ? (
           <>
             <div className="flex items-center justify-center py-3">
-              <img src="/src/react/assets/coins/draken.png" alt="Draken" className="w-10 h-10" />
+              <img src={ImageExporter.draken} alt="Draken" className="w-10 h-10" />
               {FullMoonDraken2} total
             </div>
             <div className="flex justify-center items-center gap-2 p-4 border-b border-base-content/10">
@@ -94,7 +95,7 @@ function FullMoonEventDetails() {
         ) : (
           <>
             <div className="flex items-center justify-center py-3">
-              <img src="/src/react/assets/coins/draken.png" alt="Draken" className="w-10 h-10" />
+              <img src={ImageExporter.draken} alt="Draken" className="w-10 h-10" />
               {FullMoonDraken1} total
             </div>
 

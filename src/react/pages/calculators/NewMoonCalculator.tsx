@@ -4,6 +4,7 @@ import { getNewMoonRuns } from "@utils/calculators";
 import { eventDifficulties, newMoonTable } from "@utils/events/event";
 import React, { useState } from "react";
 import EventTips from "@components/EventTips";
+import { ImageExporter } from "@utils/ImageExporter";
 
 function NewMoonCalculator() {
   const [difficulty, setDifficulty] = useState<BaseDifficulty | null>(null);
@@ -51,12 +52,7 @@ function NewMoonCalculator() {
   return (
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
-        <img
-          src="/src/react/assets/events/newmoon/tabicon_newmoon.png"
-          alt="New Moon Event Calculator"
-          width={100}
-          height={100}
-        />
+        <img src={ImageExporter.tabIconNewmoon} alt="New Moon Event Calculator" width={100} height={100} />
         <h1 className="text-4xl text-primary">New Moon Event Calculator</h1>
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -133,9 +129,9 @@ function NewMoonCalculator() {
           dropsPerRun={dropsPerRun}
           error={error}
           title="New Moon Event Calculator"
-          titleImage="/src/react/assets/events/newmoon/tabicon_newmoon.png"
+          titleImage={ImageExporter.tabIconNewmoon}
           desc="Select the difficulty, the amount of bosses spawned and if you have the attire to see how many runs you need to complete the New Moon event"
-          dropImage="/src/react/assets/events/newmoon/newmoon-prog.png"
+          dropImage={ImageExporter.newmoonProg}
           loading={loading}
         />
       </div>

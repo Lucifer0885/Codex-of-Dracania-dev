@@ -2,6 +2,7 @@ import { useState } from "react";
 import { newMoonTable } from "@utils/events/event";
 import { NewMoonDraken1, NewMoonDraken2 } from "@utils/events/NewMoonItems";
 import EventTips from "@components/EventTips";
+import { ImageExporter } from "@utils/ImageExporter";
 
 function NewMoonEventDetails() {
   const [uiState, setUiState] = useState<"80" | "100">("100");
@@ -9,7 +10,7 @@ function NewMoonEventDetails() {
   return (
     <div className="flex flex-col gap-6 min-h-screen items-center mt-20 mb-10">
       <div className="flex items-center gap-4">
-        <img src="/src/react/assets/events/newmoon/tabicon_newmoon.png" alt="New Moon" />
+        <img src={ImageExporter.tabIconNewmoon} alt="New Moon" />
         <h1 className="text-3xl font-bold text-primary">New Moon Event Details</h1>
       </div>
 
@@ -36,7 +37,7 @@ function NewMoonEventDetails() {
         {uiState === "100" ? (
           <>
             <div className="flex items-center justify-center py-3">
-              <img src="/src/react/assets/coins/draken.png" alt="Draken" className="w-10 h-10" />
+              <img src={ImageExporter.draken} alt="Draken" className="w-10 h-10" />
               {NewMoonDraken2} total
             </div>
 
@@ -64,7 +65,7 @@ function NewMoonEventDetails() {
         ) : (
           <>
             <div className="flex items-center justify-center py-3">
-              <img src="/src/react/assets/coins/draken.png" alt="Draken" className="w-10 h-10" />
+              <img src={ImageExporter.draken} alt="Draken" className="w-10 h-10" />
               {NewMoonDraken1} total
             </div>
 

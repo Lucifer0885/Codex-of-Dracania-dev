@@ -1,15 +1,14 @@
 {
     "appId": "com.lucifer0885.codex-of-dracania",
     "artifactName": "Setup-${version}.${ext}",
-    "extraResources": ["dist-electron/preload.cjs", "src/assets/**"],
+    "extraResources": ["dist-electron/preload.cjs", "src/assets/**", "src/react/assets/**"],
     "electronLanguages": [
         "en"
     ],
     "productName": "Codex of Dracania",
     "files": [
         "dist-react/**/*",
-        "dist-electron/**/*",
-        "!node_modules"
+        "dist-electron/**/*"
     ],
     "directories": {
         "output": "dist"

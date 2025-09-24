@@ -1,3 +1,5 @@
+import { ImageExporter } from "@utils/ImageExporter";
+
 function ThankYou() {
   return (
     <>
@@ -49,7 +51,7 @@ function ThankYou() {
           </div>
         </div>
         <div className="flex justify-center">
-          <img src="/src/react/assets/general/dragon-thank-you-2.png" alt="Thank You" className="w-[350px] h-auto" />
+          <img src={ImageExporter.dragonThankYou} alt="Thank You" className="w-[350px] h-auto" />
         </div>
       </div>
       <footer className="footer footer-center p-4 bg-base-200 text-base-content border-t border-gray-300 flex flex-col">
@@ -65,7 +67,7 @@ function ThankYou() {
           <p>
             All the drakensang related assets found in this app belong to{" "}
             <img
-              src="/src/react/assets/general/logo_bigpoint.svg"
+              src={ImageExporter.logoBigpoint}
               alt="Bigpoint Logo"
               className="inline-block w-26 cursor-pointer"
               onClick={() => window.electron.openExternal("https://www.bigpoint.net/")}

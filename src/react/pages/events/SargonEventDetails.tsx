@@ -3,6 +3,7 @@ import { sargonTable } from "@utils/events/event";
 import EventTips from "@components/EventTips";
 import { getEventPages, getItemsPerPage } from "@utils/utils";
 import { SargonDraken1, SargonDraken2, SargonDraken3, SargonDraken4, SargonDraken5 } from "@utils/events/SargonItems";
+import { ImageExporter } from "@utils/ImageExporter";
 
 function SargonEventDetails() {
   const [tablePage, setTablePage] = useState(1);
@@ -11,7 +12,7 @@ function SargonEventDetails() {
   return (
     <div className="flex flex-col gap-6 min-h-screen items-center mt-20 mb-10">
       <div className="flex items-center gap-4">
-        <img src="/src/react/assets/events/sargon/tabicon_sargon.png" alt="Sargon" />
+        <img src={ImageExporter.tabIconSargon} alt="Sargon" />
         <h1 className="text-3xl font-bold text-primary">Terryfing Shadows - New Era Event Details</h1>
       </div>
 
@@ -72,7 +73,7 @@ function SargonEventDetails() {
         {uiState === "100q" ? (
           <>
             <div className="flex items-center justify-center py-3">
-              <img src="/src/react/assets/coins/draken.png" alt="Draken" className="w-10 h-10" />
+              <img src={ImageExporter.draken} alt="Draken" className="w-10 h-10" />
               {SargonDraken5} total
             </div>
             <div className="flex justify-center items-center gap-2 p-4 border-b border-base-content/10">
@@ -125,7 +126,7 @@ function SargonEventDetails() {
         ) : uiState === "100" ? (
           <>
             <div className="flex items-center justify-center py-3">
-              <img src="/src/react/assets/coins/draken.png" alt="Draken" className="w-10 h-10" />
+              <img src={ImageExporter.draken} alt="Draken" className="w-10 h-10" />
               {SargonDraken4} total
             </div>
             <div className="flex justify-center items-center gap-2 p-4 border-b border-base-content/10">
@@ -178,7 +179,7 @@ function SargonEventDetails() {
         ) : uiState === "99" ? (
           <>
             <div className="flex items-center justify-center py-3">
-              <img src="/src/react/assets/coins/draken.png" alt="Draken" className="w-10 h-10" />
+              <img src={ImageExporter.draken} alt="Draken" className="w-10 h-10" />
               {SargonDraken3} total
             </div>
             <div className="flex justify-center items-center gap-2 p-4 border-b border-base-content/10">
@@ -231,7 +232,7 @@ function SargonEventDetails() {
         ) : uiState === "84" ? (
           <>
             <div className="flex items-center justify-center py-3">
-              <img src="/src/react/assets/coins/draken.png" alt="Draken" className="w-10 h-10" />
+              <img src={ImageExporter.draken} alt="Draken" className="w-10 h-10" />
               {SargonDraken2} total
             </div>
             <div className="flex justify-center items-center gap-2 p-4 border-b border-base-content/10">
@@ -284,7 +285,7 @@ function SargonEventDetails() {
         ) : (
           <>
             <div className="flex items-center justify-center py-3">
-              <img src="/src/react/assets/coins/draken.png" alt="Draken" className="w-10 h-10" />
+              <img src={ImageExporter.draken} alt="Draken" className="w-10 h-10" />
               {SargonDraken1} total
             </div>
             <div className="flex justify-center items-center gap-2 p-4 border-b border-base-content/10">

@@ -4,6 +4,7 @@ import { getDesertOfEssencesRuns } from "@utils/calculators";
 import { eventDifficulties, desertOfEssencesTable } from "@utils/events/event";
 import React, { useState } from "react";
 import EventTips from "@components/EventTips";
+import { ImageExporter } from "@utils/ImageExporter";
 
 function DesertOfEssencesCalculator() {
   const [difficulty, setDifficulty] = useState<BaseDifficulty | null>(null);
@@ -50,12 +51,7 @@ function DesertOfEssencesCalculator() {
   return (
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
-        <img
-          src="/src/react/assets/events/doe/tabicon_essences.png"
-          alt="Desert of Essences Event Calculator"
-          width={80}
-          height={80}
-        />
+        <img src={ImageExporter.tabIconDoe} alt="Desert of Essences Event Calculator" width={80} height={80} />
         <h1 className="text-4xl text-primary">Desert of Essences Event Calculator</h1>
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -123,9 +119,9 @@ function DesertOfEssencesCalculator() {
           dropsPerRun={dropsPerRun}
           error={error}
           title="Desert of Essences Event Calculator"
-          titleImage="/src/react/assets/events/doe/tabicon_essences.png"
+          titleImage={ImageExporter.tabIconDoe}
           desc="Select the difficulty and if you have the attire to see how many runs you need to complete the Desert of Essences event"
-          dropImage="/src/react/assets/events/doe/doe-prog.png"
+          dropImage={ImageExporter.doeProg}
           loading={loading}
         />
       </div>

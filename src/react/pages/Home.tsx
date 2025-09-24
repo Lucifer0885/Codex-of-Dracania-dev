@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { ImageExporter } from "@utils/ImageExporter";
 
 function Home() {
   return (
@@ -13,7 +14,7 @@ function Home() {
           </div>
         </div>
         <div>
-          <img src="/src/react/assets/general/dragon-resting.png" alt="dragon-resting" className="w-[300px] h-auto" />
+          <img src={ImageExporter.dragonResting} alt="dragon-resting" className="w-[300px] h-auto" />
         </div>
         <div className="flex gap-6">
           <Link to="/macros" className="text-lg btn btn-primary btn-outline w-[200px]">
@@ -60,7 +61,7 @@ function Home() {
           <p>
             All the drakensang related assets found in this app belong to{" "}
             <img
-              src="/src/react/assets/general/logo_bigpoint.svg"
+              src={ImageExporter.logoBigpoint}
               alt="Bigpoint Logo"
               className="inline-block w-26 cursor-pointer"
               onClick={() => window.electron.openExternal("https://www.bigpoint.net/")}

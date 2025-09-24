@@ -1,4 +1,5 @@
 import { useImageLoader } from "@hooks/useImageLoader";
+import dsoLogo from "@assets/general/dso.png";
 
 interface AvatarImageProps {
   path: string;
@@ -8,7 +9,7 @@ interface AvatarImageProps {
   onError?: () => void;
 }
 
-const defaultAvatarPath = "/src/react/assets/general/dso.png";
+const defaultAvatarPath = dsoLogo;
 
 const sizeClasses = {
   sm: "w-8 h-8",

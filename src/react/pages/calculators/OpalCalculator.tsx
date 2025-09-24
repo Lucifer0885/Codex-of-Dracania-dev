@@ -3,6 +3,7 @@ import type { OpalTier } from "@interfaces/Igem";
 import { getOpalCreateCost, getOpalUpgradeCost } from "@utils/calculators";
 import { OpalTiersCreate, OpalTiersUpgrade } from "@utils/gem";
 import React, { useState } from "react";
+import { ImageExporter } from "@utils/ImageExporter";
 
 function OpalCalculator() {
   const [uiState, setUIState] = useState<"create" | "upgrade">("create");
@@ -70,7 +71,7 @@ function OpalCalculator() {
   return (
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
-        <img src="/src/react/assets/gem/gem.png" alt="Opal Calculator" width={100} height={100} />
+        <img src={ImageExporter.gem} alt="Opal Calculator" width={100} height={100} />
         <h1 className="text-4xl text-primary ">
           {uiState === "create" ? "Opal Creation Calculator" : "Opal Upgrade Calculator"}
         </h1>
@@ -240,9 +241,9 @@ function OpalCalculator() {
           upgradeCost={upgradeCost}
           error={error}
           title={uiState === "create" ? "Opal Creation Result" : "Opal Upgrade Result"}
-          titleImage="/src/react/assets/gem/gem.png"
+          titleImage={ImageExporter.gem}
           desc="Select opal tiers, enter an amount"
-          descImage="/src/react/assets/gem/shiny-dust.png"
+          descImage={ImageExporter.shinyDust}
           loading={loading}
         />
       </div>

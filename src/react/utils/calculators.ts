@@ -12,55 +12,56 @@ import {
   UtilityRuneTier,
 } from "@utils/gem";
 import { desertOfEssencesTable, fullMoonTable, newMoonTable, sargonTable } from "@utils/events/event";
+import { ImageExporter } from "@utils/ImageExporter";
 
 export const calculators: Calculator[] = [
   {
     id: "gem",
     name: "Gem Calculator",
     description: "Calculate the shiny dust needed to upgrade gems",
-    image: "/src/react/assets/gem/gem.png",
+    image: ImageExporter.gem,
   },
   {
     id: "rune",
     name: "Rune Calculator",
     description: "Calculate the shiny dust needed to upgrade runes",
-    image: "/src/react/assets/gem/rune.png",
+    image: ImageExporter.rune,
   },
   {
     id: "jewel",
     name: "Jewel Calculator",
     description: "Calculate the shiny dust needed to upgrade jewels",
-    image: "/src/react/assets/gem/jewel.png",
+    image: ImageExporter.jewel,
   },
   {
     id: "opal",
     name: "Opal Calculator",
     description: "Calculate the shiny dust needed to create or upgrade opal gems",
-    image: "/src/react/assets/gem/gem.png",
+    image: ImageExporter.gem,
   },
   {
     id: "event-new-moon",
     name: "New Moon Event Calculator",
     description: "Calculate the boss kills needed for the New Moon event",
-    image: "/src/react/assets/events/newmoon/tabicon_newmoon.png",
+    image: ImageExporter.tabIconNewmoon,
   },
   {
     id: "event-sargon",
     name: "Sargon Event Calculator",
     description: "Calculate the runs needed for the Sargon event",
-    image: "/src/react/assets/events/sargon/tabicon_sargon.png",
+    image: ImageExporter.tabIconSargon,
   },
   {
     id: "event-full-moon",
     name: "Full Moon Event Calculator",
     description: "Calculate the runs needed to finish for the Full Moon event",
-    image: "/src/react/assets/events/fullmoon/tabicon_fullmoon.png",
+    image: ImageExporter.tabIconFullmoon,
   },
   {
     id: "event-desert-of-essences",
     name: "Desert of Essences Event Calculator",
     description: "Calculate the runs needed to finish for the Desert of Essences event",
-    image: "/src/react/assets/events/doe/tabicon_essences.png",
+    image: ImageExporter.tabIconDoe,
   },
 ];
 

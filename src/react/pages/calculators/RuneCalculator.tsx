@@ -3,6 +3,7 @@ import type { RuneTier, RuneType } from "@interfaces/Igem";
 import { getRuneCost } from "@utils/calculators";
 import { OffensiveRuneTier } from "@utils/gem";
 import React, { useState } from "react";
+import { ImageExporter } from "@utils/ImageExporter";
 
 function RuneCalculator() {
   const [startingTier, setStartingTier] = useState<null | RuneTier>(null);
@@ -49,7 +50,7 @@ function RuneCalculator() {
   return (
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
-        <img src="/src/react/assets/rune.png" alt="Rune Calculator" width={100} height={100} />
+        <img src={ImageExporter.rune} alt="Rune Calculator" width={100} height={100} />
         <h1 className="text-4xl text-primary">Rune Calculator</h1>
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -201,9 +202,9 @@ function RuneCalculator() {
           upgradeCost={upgradeCost}
           error={error}
           title="Rune Upgrade Cost"
-          titleImage="/src/react/assets/rune.png"
+          titleImage={ImageExporter.rune}
           desc="Select rune tiers and type, enter an amount"
-          descImage="/src/react/assets/rune-dust.png"
+          descImage={ImageExporter.runeDust}
           loading={loading}
         />
       </div>

@@ -6,6 +6,7 @@ import { useUser } from "@hooks/useUser";
 import { AvatarImage } from "@components/AvatarImage";
 import AppVersion from "@components/AppVersion";
 import UpdateAvailable from "./UpdateAvailable";
+import Logo from "@assets/general/dracania-codex.png";
 
 type SideNavProps = {
   isExpanded: boolean;
@@ -43,7 +44,7 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
         <div>
           <div className="flex items-center pb-6 mb-2">
             <div className="flex items-center justify-center">
-              <img src="/src/react/assets/general/dracania-codex.png" alt="Logo" width={36} height={36} />
+              <img src={Logo} alt="Logo" width={36} height={36} />
             </div>
             {isExpanded && (
               <span className="ml-3 text-md font-bold text-primary whitespace-nowrap overflow-hidden">

@@ -4,6 +4,7 @@ import { getSargonRuns } from "@utils/calculators";
 import { eventDifficulties, sargonTable } from "@utils/events/event";
 import React, { useState } from "react";
 import EventTips from "@components/EventTips";
+import { ImageExporter } from "@utils/ImageExporter";
 
 function SargonCalculator() {
   const [difficulty, setDifficulty] = useState<BaseDifficulty | null>(null);
@@ -50,12 +51,7 @@ function SargonCalculator() {
   return (
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
-        <img
-          src="/src/react/assets/events/sargon/tabicon_sargon.png"
-          alt="Sargon Event Calculator"
-          width={100}
-          height={100}
-        />
+        <img src={ImageExporter.tabIconSargon} alt="Sargon Event Calculator" width={100} height={100} />
         <h1 className="text-4xl text-primary">Sargon Event Calculator</h1>
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -123,9 +119,9 @@ function SargonCalculator() {
           dropsPerRun={dropsPerRun}
           error={error}
           title="Sargon Event Calculator"
-          titleImage="/src/react/assets/events/sargon/tabicon_sargon.png"
+          titleImage={ImageExporter.tabIconSargon}
           desc="Select the difficulty and if you have the attire to see how many runs you need to complete the Sargon event (assuming you will get the drop from all 3 books in first map)"
-          dropImage="/src/react/assets/events/sargon/sargon-prog.png"
+          dropImage={ImageExporter.sargonProg}
           loading={loading}
         />
       </div>
