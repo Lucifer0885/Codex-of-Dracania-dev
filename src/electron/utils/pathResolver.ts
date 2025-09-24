@@ -21,9 +21,9 @@ export function getAssetsPath() {
 }
 
 export function getConfigPath() {
-  return fs.existsSync(path.join(getUserPath(), ".dso-utils"))
-    ? path.join(getUserPath(), ".dso-utils", "config.json")
-    : fs.mkdirSync(path.join(getUserPath(), ".dso-utils")) + path.sep + "config.json";
+  return fs.existsSync(path.join(getUserPath(), ".dracania-codex"))
+    ? path.join(getUserPath(), ".dracania-codex", "config.json")
+    : fs.mkdirSync(path.join(getUserPath(), ".dracania-codex")) + path.sep + "config.json";
 }
 
 export function readLocalFile(filePath: string): string {

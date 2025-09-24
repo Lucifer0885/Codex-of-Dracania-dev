@@ -1,11 +1,11 @@
 {
     "appId": "com.lucifer0885.codex-of-dracania",
-    "artifactName": "Codex of Dracania-${version}.${ext}",
+    "artifactName": "Setup-${version}.${ext}",
     "extraResources": ["dist-electron/preload.cjs", "src/assets/**"],
     "electronLanguages": [
         "en"
     ],
-    "executableName" : "Codex of Dracania",
+    "productName": "Codex of Dracania",
     "files": [
         "dist-react/**/*",
         "dist-electron/**/*",
@@ -14,11 +14,8 @@
     "directories": {
         "output": "dist"
     },
-    "buildDependenciesFromSource": false,
-    "nodeGypRebuild": false,
-    "npmRebuild": false,
     "win": {
-        "icon": "src/assets/dso.ico",
+        "icon": "src/assets/dracania-codex.png",
         "target": [
             {
                 "target": "nsis",

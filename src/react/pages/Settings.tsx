@@ -185,7 +185,7 @@ function Settings() {
                         className="input border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent flex-1"
                         value={newAvatarPath}
                         onChange={(e) => setNewAvatarPath(e.target.value)}
-                        placeholder="Enter avatar path or 'default' for built-in avatar"
+                        placeholder="Enter avatar absolute path or 'default' for built-in avatar"
                       />
                       <button className="btn btn-primary" onClick={handleAddAvatar} disabled={!newAvatarPath.trim()}>
                         Add

@@ -3,7 +3,7 @@ import { getAssetsPath } from "./utils/pathResolver.js";
 import path from "path";
 
 export function initTray(mainWindow: BrowserWindow) {
-  const tray = new Tray(path.join(getAssetsPath(), "dso@2x.ico"));
+  const tray = new Tray(path.join(getAssetsPath(), "dracania-codex@3x.png"));
 
   tray.setContextMenu(
     Menu.buildFromTemplate([

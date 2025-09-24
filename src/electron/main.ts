@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { app, autoUpdater, BrowserWindow, shell } from "electron";
+import { app, BrowserWindow, shell } from "electron";
 import { handleCloseEvents, isDev, windowSizeListener } from "./utils/util.js";
 import { loadConfig, resetConfig } from "./utils/config.js";
 import { findWindow } from "./utils/targetWindow.js";
@@ -15,9 +15,9 @@ import { initTray } from "./tray.js";
 import { InitMenu } from "./menu.js";
 
 let mainWindow: BrowserWindow;
-const appUpdater = getAppUpdater();
-appUpdater.autoDownload = false;
-appUpdater.autoInstallOnAppQuit = true;
+const autoUpdater = getAppUpdater();
+autoUpdater.autoDownload = false;
+autoUpdater.autoInstallOnAppQuit = true;
 
 container.registerSingleton(SERVICE_KEYS.MACRO_MANAGER, () => new MacroManager());
 container.registerSingleton(SERVICE_KEYS.KEYBINDING_MANAGER, () => {
@@ -31,7 +31,7 @@ app.whenReady().then(() => {
   mainWindow = new BrowserWindow({
     minWidth: 1200,
     minHeight: 850,
-    icon: path.join(getAssetsPath(), "/dso@2x.ico"),
+    icon: path.join(getAssetsPath(), "/dracania-codex@3x.png"),
     title: "Codex of Dracania",
     webPreferences: {
       preload: getPreloadPath(),
@@ -49,7 +49,7 @@ app.whenReady().then(() => {
 
   handleCloseEvents(mainWindow);
 
-  appUpdater.checkForUpdates().catch((err) => {
+  autoUpdater.checkForUpdates().catch((err) => {
     console.error("Failed to check for updates:", err);
   });
 
