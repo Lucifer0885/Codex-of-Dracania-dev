@@ -11,6 +11,9 @@ electron.contextBridge.exposeInMainWorld("electron", {
   resetConfig: () => ipcRendererInvoke("reset-config"),
   updateUserConfig: (data: UserInfo) => ipcRendererInvokeWithData("update-user", data),
   readLocalFile: (filePath: string) => ipcRendererInvokeWithData("read-local-file", filePath),
+  // Config import/export
+  exportConfig: () => ipcRendererInvoke("export-config"),
+  importConfig: () => ipcRendererInvoke("import-config"),
   // Inventory Preset Management API
   getAvailablePresets: () => ipcRendererInvoke("get-available-presets"),
   getSelectedPreset: () => ipcRendererInvoke("get-selected-preset"),

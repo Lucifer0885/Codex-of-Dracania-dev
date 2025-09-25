@@ -1,7 +1,14 @@
 import { Link } from "react-router";
 import { ImageExporter } from "@utils/ImageExporter";
+import { useEffect } from "react";
 
 function Home() {
+  useEffect(() => {
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 1000);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen justify-between gap-4">
       <div className="flex flex-col h-full justify-center items-center gap-8 pt-16">

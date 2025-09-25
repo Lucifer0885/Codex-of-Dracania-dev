@@ -192,6 +192,9 @@ type EventPayloadMapping = {
   "update-user": UserInfo;
   "read-local-file": string;
   "open-external": { success: boolean };
+  // Config import/export
+  "export-config": { success: boolean; filePath?: string; error?: string };
+  "import-config": { success: boolean; config?: GlobalConfig; error?: string };
   // Inventory Preset Management
   "get-available-presets": InventoryLayoutPreset[];
   "get-selected-preset": string | null;
@@ -244,6 +247,9 @@ interface Window {
     resetConfig: () => Promise<void>;
     updateUserConfig: (data: UserInfo) => Promise<UserInfo>;
     readLocalFile: (filePath: string) => Promise<string>;
+    // Config import/export
+    exportConfig: () => Promise<{ success: boolean; filePath?: string; error?: string }>;
+    importConfig: () => Promise<{ success: boolean; config?: GlobalConfig; error?: string }>;
     // Inventory Preset Management API
     getAvailablePresets: () => Promise<InventoryLayoutPreset[]>;
     getSelectedPreset: () => Promise<string | null>;

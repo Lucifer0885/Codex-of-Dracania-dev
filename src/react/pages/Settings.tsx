@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useUser } from "@hooks/useUser";
 import { getFileNameFromPath } from "@utils/utils";
 import { AvatarImage } from "@components/AvatarImage";
-import { Check, Info } from "lucide-react";
+import { Check, Info, Import, Download } from "lucide-react";
 import Toast from "@components/Toast";
 import type { ToastType } from "@interfaces/Igeneral";
 
@@ -57,6 +57,31 @@ function Settings() {
       setToastMessage("Drakensang Online Not Found");
       console.error("Drakensang Online Not Found");
       setToastType("error");
+    }
+  };
+
+  const handleExportConfig = async () => {
+    const res = await window.electron.exportConfig();
+    setToastVisible(true);
+    if (res.success) {
+      setToastMessage(`Config exported${res.filePath ? ` to ${res.filePath}` : ""}`);
+      setToastType("success");
+    } else {
+      setToastMessage(res.error || "Export canceled");
+      setToastType("warning");
+    }
+  };
+
+  const handleImportConfig = async () => {
+    const res = await window.electron.importConfig();
+    setToastVisible(true);
+    if (res.success) {
+      setToastMessage("Config imported successfully");
+      setToastType("success");
+      setTimeout(() => window.location.reload(), 2000);
+    } else {
+      setToastMessage(res.error || "Import canceled");
+      setToastType("warning");
     }
   };
 
@@ -209,9 +234,18 @@ function Settings() {
             If you launched the app before Drakensang Online, it is very likely that you will encounter issues. Click
             the button below to attach the app to the game window.
           </p>
-          <button className="btn btn-secondary w-fit" onClick={handleFindWindow}>
-            Find Drakensang Online
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button className="btn btn-secondary w-fit" onClick={handleFindWindow}>
+              Find Drakensang Online
+            </button>
+            <div className="divider divider-horizontal" />
+            <button className="btn btn-outline btn-primary w-fit" onClick={handleExportConfig} title="Export Config">
+              <Download className="h-4 w-4 mr-2" /> Export Config
+            </button>
+            <button className="btn btn-outline btn-accent w-fit" onClick={handleImportConfig} title="Import Config">
+              <Import className="h-4 w-4 mr-2" /> Import Config
+            </button>
+          </div>
         </div>
       </div>
 

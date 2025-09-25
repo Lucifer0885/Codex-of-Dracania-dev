@@ -7,6 +7,11 @@ export const NavLinks: NavLink[] = [
     icon: "Home",
   },
   {
+    to: "/calculators",
+    label: "Calculators",
+    icon: "Layers",
+  },
+  {
     to: "/events",
     label: "Events",
     icon: "Trophy",
@@ -17,19 +22,14 @@ export const NavLinks: NavLink[] = [
     icon: "Package",
   },
   {
-    to: "/calculators",
-    label: "Calculators",
-    icon: "Layers",
+    to: "/macros",
+    label: "Macros",
+    icon: "Play",
   },
   {
     to: "/settings",
     label: "Settings",
     icon: "Settings",
-  },
-  {
-    to: "/macros",
-    label: "Macros",
-    icon: "FileText",
   },
   {
     to: "/thank-you",

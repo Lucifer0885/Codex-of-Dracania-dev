@@ -21,9 +21,11 @@ export function getAssetsPath() {
 }
 
 export function getConfigPath() {
-  return fs.existsSync(path.join(getUserPath(), ".dracania-codex"))
-    ? path.join(getUserPath(), ".dracania-codex", "config.json")
-    : fs.mkdirSync(path.join(getUserPath(), ".dracania-codex")) + path.sep + "config.json";
+  const configDir = path.join(getUserPath(), ".dracania-codex");
+  if (!fs.existsSync(configDir)) {
+    fs.mkdirSync(configDir, { recursive: true });
+  }
+  return path.join(configDir, "config.json");
 }
 
 export function readLocalFile(filePath: string): string {

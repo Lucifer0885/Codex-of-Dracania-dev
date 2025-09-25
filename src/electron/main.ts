@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { app, BrowserWindow, shell } from "electron";
 import { handleCloseEvents, isDev, windowSizeListener } from "./utils/util.js";
-import { loadConfig, resetConfig } from "./utils/config.js";
+import { loadConfig, resetConfig, createConfig, importConfig, exportConfig } from "./utils/config.js";
 import { findWindow } from "./utils/targetWindow.js";
 import { getAssetsPath, getConfigPath, getPreloadPath, getUIPath, readLocalFile } from "./utils/pathResolver.js";
 import { ipcMainHandle, ipcMainHandleWithData, ipcWebContentsSend } from "./utils/ipc.js";
@@ -28,6 +28,10 @@ container.registerSingleton(SERVICE_KEYS.KEYBINDING_MANAGER, () => {
 const keybindingManager = container.get<KeybindingManager>(SERVICE_KEYS.KEYBINDING_MANAGER);
 
 app.whenReady().then(() => {
+  if (!fs.existsSync(getConfigPath())) {
+    createConfig();
+  }
+
   mainWindow = new BrowserWindow({
     minWidth: 1200,
     minHeight: 850,
@@ -117,8 +121,15 @@ app.whenReady().then(() => {
   );
 
   ipcMainHandle("reset-config", async () => {
-    console.log("Resetting config...");
     resetConfig();
+  });
+
+  ipcMainHandle("export-config", async () => {
+    return exportConfig(mainWindow);
+  });
+
+  ipcMainHandle("import-config", async () => {
+    return importConfig(mainWindow);
   });
 
   ipcMainHandleWithData<UserInfo, "update-user">("update-user", async (user) => {

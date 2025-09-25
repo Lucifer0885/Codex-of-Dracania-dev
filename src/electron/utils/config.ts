@@ -1,5 +1,6 @@
 import { getConfigPath } from "./pathResolver.js";
 import { defaultMacros } from "../macros/defaultMacros.js";
+import { dialog, BrowserWindow } from "electron";
 import fs from "fs";
 
 export function createConfig() {
@@ -70,4 +71,51 @@ export function resetConfig(): void {
 
 export function updateConfig(config: GlobalConfig): void {
   fs.writeFileSync(getConfigPath(), JSON.stringify(config, null, 2));
+}
+
+export async function importConfig(mainWindow: BrowserWindow) {
+  try {
+    const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
+      title: "Import Configuration",
+      properties: ["openFile"],
+      filters: [{ name: "JSON Files", extensions: ["json"] }],
+    });
+    if (canceled || filePaths.length === 0) {
+      return { success: false, error: "Import canceled" };
+    }
+    const selectedPath = filePaths[0];
+    const raw = fs.readFileSync(selectedPath, "utf-8");
+    const parsed = JSON.parse(raw) as GlobalConfig;
+
+    // Basic validation: ensure required top-level keys exist
+    if (!parsed || typeof parsed !== "object" || !("user" in parsed) || !("targetWindow" in parsed)) {
+      return { success: false, error: "Invalid configuration format" };
+    }
+
+    // Write to app config path
+    fs.writeFileSync(getConfigPath(), JSON.stringify(parsed, null, 2), "utf-8");
+    return { success: true, config: parsed };
+  } catch (error) {
+    console.error("Failed to import config:", error);
+    return { success: false, error: error instanceof Error ? error.message : String(error) };
+  }
+}
+
+export async function exportConfig(mainWindow: BrowserWindow) {
+  try {
+    const config = loadConfig();
+    const { canceled, filePath } = await dialog.showSaveDialog(mainWindow, {
+      title: "Export Configuration",
+      defaultPath: "config.json",
+      filters: [{ name: "JSON Files", extensions: ["json"] }],
+    });
+    if (canceled || !filePath) {
+      return { success: false, error: "Export canceled" };
+    }
+    fs.writeFileSync(filePath, JSON.stringify(config, null, 2), "utf-8");
+    return { success: true, filePath };
+  } catch (error) {
+    console.error("Failed to export config:", error);
+    return { success: false, error: error instanceof Error ? error.message : String(error) };
+  }
 }
