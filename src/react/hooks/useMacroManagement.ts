@@ -248,15 +248,30 @@ export function useMacroBuilder(initialMacroId?: string) {
   const updateMacroProperties = useCallback(
     (updates: Partial<Pick<MacroBuilderData, "name" | "description" | "enabled" | "keybinding" | "repeat">>) => {
       if (!builderData) return;
+      // Local revalidation logic (mirrors MacroBuilder.validateBuilder on main process)
+      const recalc = (data: MacroBuilderData): MacroBuilderData => {
+        const errors: string[] = [];
+        if (!data.name?.trim()) {
+          errors.push("Macro name is required");
+        }
+        if (data.steps.length === 0) {
+          errors.push("At least one step is required");
+        }
+        if (data.repeat < 1) {
+          errors.push("Repeat count must be at least 1");
+        }
+        const hasInvalidSteps = data.steps.some((s) => !s.isValid);
+        if (hasInvalidSteps) {
+          errors.push("Some steps have validation errors");
+        }
+        return { ...data, isValid: errors.length === 0, errors };
+      };
 
-      setBuilderData((prevData) =>
-        prevData
-          ? {
-              ...prevData,
-              ...updates,
-            }
-          : null
-      );
+      setBuilderData((prevData) => {
+        if (!prevData) return prevData;
+        const updated: MacroBuilderData = { ...prevData, ...updates };
+        return recalc(updated);
+      });
     },
     [builderData]
   );

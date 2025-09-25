@@ -190,6 +190,15 @@ const MacroManager: React.FC = () => {
 
   return (
     <div className="p-6">
+      <div className="w-full max-w-7xl px-4 pb-4 border-b border-base-300 mb-6">
+        <p className="text-lg text-error font-bold italic">
+          All the macros here should be explicitly tested that they work as intended. Any issues should be reported to
+          the maintainer. If any item is lost or sold unintentionally nor the maintainer is responsible neither you can
+          contact Drakensang Online's support to recover them. Please make sure you understand how the macros work
+          before using them.
+        </p>
+      </div>
+
       <div className="flex justify-between items-center mb-6">
         <div className="flex gap-2">
           <button onClick={handleCreateNew} className="btn btn-primary">
@@ -243,7 +252,13 @@ const MacroManager: React.FC = () => {
       {error && <div className="alert alert-error mb-4">{error}</div>}
 
       <div className="mb-8">
-        <h2 className="text-xl font-semibold mb-4 text-primary">Default Macros</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold mb-4 text-primary">Default Macros</h2>
+          <p className="text-base-content opacity-70">
+            <span className="border border-info rounded-lg px-3 py-1 bg-base-300 text-info">Ctrl+Alt+X</span> To stop
+            all running macros.
+          </p>
+        </div>
         <div className="grid gap-4">
           {macros.defaultMacros.map((macro) => (
             <div key={macro.id} className="card bg-base-200 border border-base-300">
@@ -280,12 +295,14 @@ const MacroManager: React.FC = () => {
                     >
                       {macro.enabled ? "Disable" : "Enable"}
                     </button>
-                    <button
-                      onClick={() => handleCloneMacro(macro.id, macro.name)}
-                      className="btn btn-outline btn-sm btn-info"
-                    >
-                      Clone
-                    </button>
+                    {macro.actions.length > 0 && (
+                      <button
+                        onClick={() => handleCloneMacro(macro.id, macro.name)}
+                        className="btn btn-outline btn-sm btn-info"
+                      >
+                        Clone
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -295,7 +312,12 @@ const MacroManager: React.FC = () => {
       </div>
 
       <div>
-        <h2 className="text-xl font-semibold mb-4 text-primary">Custom Macros</h2>
+        <div className="flex flex-col mb-4">
+          <h2 className="text-xl font-semibold mb-4 text-primary">Custom Macros</h2>
+          <p className="text-base-content opacity-70 text-sm">
+            After creating or editing a macro, you need to restart the application for the macro to (re)register
+          </p>
+        </div>
         {macros.customMacros.length === 0 ? (
           <div className="card bg-base-200 border border-base-300">
             <div className="card-body text-center py-8">

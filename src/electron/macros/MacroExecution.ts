@@ -20,7 +20,9 @@ export default class MacroExecution {
   private shouldStop = false;
   private user32: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   private gameWindowHandle: number | null = null;
+  private mouseWindowHandle: number | null = null;
   private actualMacro: Macro;
+  private targetWindowRect: { x: number; y: number; width: number; height: number } | null = null;
 
   constructor(private macro: Macro, private executionId: string) {
     this.user32 = User32.load();
@@ -30,8 +32,13 @@ export default class MacroExecution {
   async start(): Promise<void> {
     try {
       this.gameWindowHandle = await this.getGameWindowHandle();
+      this.mouseWindowHandle = await this.getMouseTargetWindowHandle(this.gameWindowHandle);
+      try {
+        this.targetWindowRect = await getTargetWindowSize();
+      } catch {
+        this.targetWindowRect = null;
+      }
 
-      // Special handling for inventory macros - generate dynamic actions
       if (this.macro.id === "sell-inventory") {
         this.actualMacro = await this.generateDynamicSellInventoryMacro();
       } else if (this.macro.id === "melt-inventory") {
@@ -131,6 +138,22 @@ export default class MacroExecution {
     return Number(window.handle);
   }
 
+  private async getMouseTargetWindowHandle(mainHandle: number): Promise<number> {
+    try {
+      const isVisible = this.user32.IsWindowVisible(Number(mainHandle));
+      if (isVisible) {
+        return Number(mainHandle);
+      }
+      const client = await findWindow(null, "Qt5QWindowIcon");
+      if (client.found && client.handle) {
+        return Number(client.handle);
+      }
+      return Number(mainHandle);
+    } catch {
+      return Number(mainHandle);
+    }
+  }
+
   private async executeStep(step: MacroStep): Promise<void> {
     if (!this.gameWindowHandle) {
       throw new Error("Game window handle not available");
@@ -177,27 +200,43 @@ export default class MacroExecution {
       throw new Error(`Invalid mouse coordinates: ${step.value}`);
     }
 
-    const [x, y] = coords;
+    let [x, y] = coords;
+    if (this.targetWindowRect) {
+      const { x: winX, y: winY, width, height } = this.targetWindowRect;
+      if (x > width || y > height) {
+        x = x - winX;
+        y = y - winY;
+        x = Math.max(0, Math.min(x, width - 1));
+        y = Math.max(0, Math.min(y, height - 1));
+      }
+    }
     const lParam = makeLParam(x, y);
+    const targetHwnd = this.mouseWindowHandle ?? this.gameWindowHandle;
+    if (!targetHwnd) {
+      throw new Error("Mouse target window handle not available");
+    }
+
+    this.user32.PostMessageW(targetHwnd, WM_MOUSEMOVE, 0, lParam);
+    await this.delay(5);
 
     switch (step.action) {
       case "click":
-        this.user32.PostMessageW(this.gameWindowHandle, WM_LBUTTONDOWN, 0, lParam);
+        this.user32.PostMessageW(targetHwnd, WM_LBUTTONDOWN, 0, lParam);
         await this.delay(10);
-        this.user32.PostMessageW(this.gameWindowHandle, WM_LBUTTONUP, 0, lParam);
+        this.user32.PostMessageW(targetHwnd, WM_LBUTTONUP, 0, lParam);
         break;
       case "right-click":
-        this.user32.PostMessageW(this.gameWindowHandle, WM_RBUTTONDOWN, 0, lParam);
+        this.user32.PostMessageW(targetHwnd, WM_RBUTTONDOWN, 0, lParam);
         await this.delay(10);
-        this.user32.PostMessageW(this.gameWindowHandle, WM_RBUTTONUP, 0, lParam);
+        this.user32.PostMessageW(targetHwnd, WM_RBUTTONUP, 0, lParam);
         break;
       case "middle-click":
-        this.user32.PostMessageW(this.gameWindowHandle, WM_MBUTTONDOWN, 0, lParam);
+        this.user32.PostMessageW(targetHwnd, WM_MBUTTONDOWN, 0, lParam);
         await this.delay(10);
-        this.user32.PostMessageW(this.gameWindowHandle, WM_MBUTTONUP, 0, lParam);
+        this.user32.PostMessageW(targetHwnd, WM_MBUTTONUP, 0, lParam);
         break;
       case "move":
-        this.user32.PostMessageW(this.gameWindowHandle, WM_MOUSEMOVE, 0, lParam);
+        this.user32.PostMessageW(targetHwnd, WM_MOUSEMOVE, 0, lParam);
         break;
     }
   }
