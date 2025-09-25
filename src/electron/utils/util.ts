@@ -5,8 +5,23 @@ import { getTargetWindowSize } from "./targetWindow.js";
 import { updateWindowSizeConfig } from "./config.js";
 import { VK_CODES } from "../constants/vk-codes.js";
 
-export function isDev() {
-  return process.env.NODE_ENV === "development";
+export function isDev(): boolean {
+  // Be robust across dev, packaged, and electron CLI launches
+  try {
+    return (
+      process.env.NODE_ENV === "development" ||
+      !app.isPackaged ||
+      // When run via `electron .`
+      // defaultApp exists when launching via Electron CLI; guard with in-operator
+      ("defaultApp" in (process as NodeJS.Process & { defaultApp?: boolean }) &&
+        Boolean((process as NodeJS.Process & { defaultApp?: boolean }).defaultApp)) ||
+      /[\\/]electron[\\/]/i.test(process.execPath) ||
+      /[\\/]electron\.exe$/i.test(process.execPath)
+    );
+  } catch {
+    // Fallback to env var only
+    return process.env.NODE_ENV === "development";
+  }
 }
 
 export function validateEventFrame(frame: WebFrameMain) {

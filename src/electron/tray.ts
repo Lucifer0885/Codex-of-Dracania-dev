@@ -8,7 +8,7 @@ export function initTray(mainWindow: BrowserWindow) {
   tray.setContextMenu(
     Menu.buildFromTemplate([
       {
-        label: "Show",
+        label: "Show      ",
         click: () => {
           mainWindow.show();
         },
