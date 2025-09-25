@@ -96,6 +96,7 @@ export function generateSellInventoryActions(
   const lockedSlotIds = new Set(lockedSlots.map((slot) => slot.id));
 
   const firstTabPosition = calculateTabPosition(0, windowWidth, windowHeight);
+
   actions.push({
     id: `click-tab-0-initial`,
     type: "mouse-action",
@@ -135,6 +136,87 @@ export function generateSellInventoryActions(
         });
       }
     }
+  }
+  return actions;
+}
+
+export function generateMeltInventoryActions(
+  windowWidth: number,
+  windowHeight: number,
+  lockedSlots: InventorySlotConfig[],
+  totalTabs: number = 9,
+  rowsPerTab: number = 4,
+  columnsPerRow: number = 7
+): MacroStep[] {
+  const actions: MacroStep[] = [];
+
+  const lockedSlotIds = new Set(lockedSlots.map((slot) => slot.id));
+  const preset = getInventoryPreset(windowWidth, windowHeight);
+  const meltPosition = { x: Math.round(preset.meltButton.x), y: Math.round(preset.meltButton.y) };
+
+  const firstTabPosition = calculateTabPosition(0, windowWidth, windowHeight);
+  actions.push({
+    id: `click-tab-0-initial`,
+    type: "mouse-action",
+    action: "click",
+    value: `${firstTabPosition.x},${firstTabPosition.y}`,
+    wait: 80,
+  });
+
+  let processed = 0;
+  let batch = 0;
+
+  for (let tab = 0; tab < totalTabs; tab++) {
+    if (tab > 0) {
+      const tabPosition = calculateTabPosition(tab, windowWidth, windowHeight);
+      actions.push({
+        id: `click-tab-${tab}`,
+        type: "mouse-action",
+        action: "click",
+        value: `${tabPosition.x},${tabPosition.y}`,
+        wait: 80,
+      });
+    }
+
+    for (let row = 0; row < rowsPerTab; row++) {
+      for (let col = 0; col < columnsPerRow; col++) {
+        const slotId = `${tab}-${row}-${col}`;
+        if (lockedSlotIds.has(slotId)) continue;
+
+        const position = calculateSlotPosition(tab, row, col, windowWidth, windowHeight);
+
+        actions.push({
+          id: `melt-slot-${slotId}`,
+          type: "mouse-action",
+          action: "right-click",
+          value: `${position.x},${position.y}`,
+          wait: 80,
+        });
+        processed++;
+
+        if (processed % 9 === 0) {
+          batch++;
+          actions.push({
+            id: `melt-confirm-batch-${batch}`,
+            type: "mouse-action",
+            action: "click",
+            value: `${meltPosition.x},${meltPosition.y}`,
+            wait: 120,
+          });
+        }
+      }
+    }
+  }
+
+  if (processed > 0 && processed % 9 !== 0) {
+    batch++;
+    actions.push({
+      id: `melt-confirm-batch-${batch}-final`,
+      type: "mouse-action",
+      action: "click",
+      value: `${meltPosition.x},${meltPosition.y}`,
+      wait: 120,
+    });
   }
 
   return actions;

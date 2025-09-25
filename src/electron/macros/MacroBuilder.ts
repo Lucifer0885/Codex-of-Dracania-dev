@@ -7,7 +7,6 @@ export default class MacroBuilder {
     this.storageManager = new MacroStorageManager();
   }
 
-  // Create a new macro builder instance
   createNew(): MacroBuilderData {
     return {
       name: "",
@@ -20,7 +19,6 @@ export default class MacroBuilder {
     };
   }
 
-  // Load existing macro into builder
   loadMacro(macroId: string): MacroBuilderData | null {
     const macro = this.storageManager.getMacroById(macroId);
     if (!macro) return null;
@@ -51,7 +49,6 @@ export default class MacroBuilder {
     };
   }
 
-  // Add a new step
   addStep(builderData: MacroBuilderData, stepType: "keyboard-action" | "mouse-action" | "wait"): MacroBuilderData {
     const newStep: MacroBuilderStep = {
       id: `step-${Date.now()}`,

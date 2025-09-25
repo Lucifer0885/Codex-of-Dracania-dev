@@ -55,6 +55,11 @@ type InventoryLayoutPreset = {
     columnX: number; // Gap between item slots in columns (X only)
     rowY: number; // Gap between rows (Y only)
   };
+
+  meltButton: {
+    x: number;
+    y: number;
+  };
 };
 
 type InventoryConfig = {

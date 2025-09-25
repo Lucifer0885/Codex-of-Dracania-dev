@@ -12,7 +12,6 @@ export default class KeybindingManager {
     globalShortcut.unregisterAll();
     this.registeredKeybinds.clear();
 
-    // Register stop all macros hotkey first
     try {
       const stopAllSuccess = globalShortcut.register("Ctrl+Alt+X", () => {
         console.log("Stop all macros hotkey triggered");

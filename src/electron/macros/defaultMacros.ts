@@ -31,4 +31,15 @@ export const defaultMacros: Macro[] = [
     keybinding: "Ctrl+Alt+F",
     actions: [],
   },
+  {
+    id: "melt-inventory",
+    name: "Melt Inventory",
+    description: "Automates melting items in inventory by dragging each slot to the melt area, skipping locked slots",
+    enabled: true,
+    onRepeat: false,
+    repeat: 1,
+    type: "default",
+    keybinding: "Ctrl+Alt+M",
+    actions: [],
+  },
 ];

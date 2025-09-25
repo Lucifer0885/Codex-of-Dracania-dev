@@ -26,4 +26,8 @@ export interface InventoryLayoutPreset {
     columnX: number;
     rowY: number;
   };
+  meltButton: {
+    x: number;
+    y: number;
+  };
 }

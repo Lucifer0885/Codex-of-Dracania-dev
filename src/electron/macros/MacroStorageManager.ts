@@ -2,7 +2,6 @@ import { loadConfig, updateConfig } from "../utils/config.js";
 import { findKeybindConflicts, isValidKeybind, normalizeKeybind } from "../utils/keybinding.js";
 
 export default class MacroStorageManager {
-  // Get all macros (default + custom)
   getAllMacros(): MacroListResult {
     const config = loadConfig();
     return {
@@ -12,33 +11,27 @@ export default class MacroStorageManager {
     };
   }
 
-  // Get macro by ID (searches both default and custom)
   getMacroById(id: string): Macro | null {
     const { defaultMacros, customMacros } = this.getAllMacros();
     const allMacros = [...defaultMacros, ...customMacros];
     return allMacros.find((macro) => macro.id === id) || null;
   }
 
-  // Create a new custom macro
   createCustomMacro(macroData: Omit<Macro, "id" | "type">): MacroOperationResult {
     try {
-      // Generate unique ID
       const id = this.generateUniqueId(macroData.name);
 
-      // Create the macro object
       const newMacro: Macro = {
         ...macroData,
         id,
         type: "custom",
       };
 
-      // Validate the macro
       const validation = this.validateMacro(newMacro);
       if (!validation.success) {
         return validation;
       }
 
-      // Check for keybind conflicts
       if (newMacro.keybinding) {
         const conflicts = this.checkKeybindConflicts(newMacro.keybinding);
         if (conflicts.length > 0) {
@@ -49,7 +42,6 @@ export default class MacroStorageManager {
         }
       }
 
-      // Add to config
       const config = loadConfig();
       if (!config.user.macros.customMacros) {
         config.user.macros.customMacros = [];
@@ -71,7 +63,6 @@ export default class MacroStorageManager {
     }
   }
 
-  // Update an existing custom macro
   updateCustomMacro(id: string, updates: Partial<Omit<Macro, "id" | "type">>): MacroOperationResult {
     try {
       const config = loadConfig();
@@ -84,22 +75,19 @@ export default class MacroStorageManager {
         };
       }
 
-      // Create updated macro
       const currentMacro = config.user.macros.customMacros![macroIndex];
       const updatedMacro: Macro = {
         ...currentMacro,
         ...updates,
-        id, // Ensure ID doesn't change
-        type: "custom", // Ensure type doesn't change
+        id,
+        type: "custom",
       };
 
-      // Validate the updated macro
       const validation = this.validateMacro(updatedMacro);
       if (!validation.success) {
         return validation;
       }
 
-      // Check for keybind conflicts (excluding current macro)
       if (updatedMacro.keybinding) {
         const conflicts = this.checkKeybindConflicts(updatedMacro.keybinding, id);
         if (conflicts.length > 0) {
@@ -112,7 +100,6 @@ export default class MacroStorageManager {
         }
       }
 
-      // Update the macro
       config.user.macros.customMacros![macroIndex] = updatedMacro;
       config.user.macros.lastModified = Date.now();
 
@@ -130,7 +117,6 @@ export default class MacroStorageManager {
     }
   }
 
-  // Delete a custom macro
   deleteCustomMacro(id: string): MacroOperationResult {
     try {
       const config = loadConfig();
@@ -161,12 +147,10 @@ export default class MacroStorageManager {
     }
   }
 
-  // Enable/disable a macro (works for both default and custom)
   toggleMacroEnabled(id: string, enabled: boolean): MacroOperationResult {
     try {
       const config = loadConfig();
 
-      // Check custom macros first
       const customIndex = config.user.macros.customMacros?.findIndex((macro) => macro.id === id) ?? -1;
       if (customIndex !== -1) {
         config.user.macros.customMacros![customIndex].enabled = enabled;
@@ -175,7 +159,6 @@ export default class MacroStorageManager {
         return { success: true, data: config.user.macros.customMacros![customIndex] };
       }
 
-      // Check default macros
       const defaultIndex = config.user.macros.defaultMacros?.findIndex((macro) => macro.id === id) ?? -1;
       if (defaultIndex !== -1) {
         config.user.macros.defaultMacros![defaultIndex].enabled = enabled;
@@ -196,7 +179,6 @@ export default class MacroStorageManager {
     }
   }
 
-  // Clone a default macro as a custom macro
   cloneDefaultMacro(defaultMacroId: string, newName?: string): MacroOperationResult {
     try {
       const config = loadConfig();
@@ -209,16 +191,14 @@ export default class MacroStorageManager {
         };
       }
 
-      // Create cloned macro
       const clonedMacro: Macro = {
         ...defaultMacro,
         id: this.generateUniqueId(newName || `${defaultMacro.name} (Copy)`),
         name: newName || `${defaultMacro.name} (Copy)`,
         type: "custom",
-        keybinding: undefined, // Remove keybinding to avoid conflicts
+        keybinding: undefined,
       };
 
-      // Add to custom macros
       if (!config.user.macros.customMacros) {
         config.user.macros.customMacros = [];
       }
@@ -239,7 +219,6 @@ export default class MacroStorageManager {
     }
   }
 
-  // Import macros from JSON
   importMacros(macrosJson: string): MacroOperationResult {
     try {
       const importedMacros = JSON.parse(macrosJson) as Macro[];
@@ -264,14 +243,12 @@ export default class MacroStorageManager {
 
       for (const macro of importedMacros) {
         try {
-          // Ensure it's marked as custom and has a unique ID
           const customMacro: Macro = {
             ...macro,
             id: this.generateUniqueId(macro.name),
             type: "custom",
           };
 
-          // Validate
           const validation = this.validateMacro(customMacro);
           if (!validation.success) {
             results.errors.push(`Macro '${macro.name}': ${validation.errors?.join(", ")}`);
@@ -279,7 +256,6 @@ export default class MacroStorageManager {
             continue;
           }
 
-          // Remove conflicting keybindings
           if (customMacro.keybinding) {
             const conflicts = this.checkKeybindConflicts(customMacro.keybinding);
             if (conflicts.length > 0) {
@@ -311,7 +287,6 @@ export default class MacroStorageManager {
     }
   }
 
-  // Export custom macros to JSON
   exportCustomMacros(): MacroOperationResult {
     try {
       const { customMacros } = this.getAllMacros();
@@ -327,7 +302,6 @@ export default class MacroStorageManager {
     }
   }
 
-  // Get macro statistics
   getStatistics(): MacroOperationResult {
     try {
       const { defaultMacros, customMacros } = this.getAllMacros();
@@ -355,7 +329,6 @@ export default class MacroStorageManager {
     }
   }
 
-  // Private helper methods
   private generateUniqueId(baseName: string): string {
     const baseId = baseName.toLowerCase().replace(/[^a-z0-9]/g, "-");
     const { defaultMacros, customMacros } = this.getAllMacros();
@@ -387,7 +360,6 @@ export default class MacroStorageManager {
       errors.push(`Invalid keybinding format: '${macro.keybinding}'`);
     }
 
-    // Validate each action
     for (let i = 0; i < (macro.actions?.length || 0); i++) {
       const step = macro.actions[i];
 

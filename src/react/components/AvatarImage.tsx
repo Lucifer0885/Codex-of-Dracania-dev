@@ -1,5 +1,5 @@
 import { useImageLoader } from "@hooks/useImageLoader";
-import dsoLogo from "@assets/general/dso.png";
+import { ImageExporter } from "@utils/ImageExporter";
 
 interface AvatarImageProps {
   path: string;
@@ -9,7 +9,7 @@ interface AvatarImageProps {
   onError?: () => void;
 }
 
-const defaultAvatarPath = dsoLogo;
+const defaultAvatarPath = ImageExporter.dracaniaCodex;
 
 const sizeClasses = {
   sm: "w-8 h-8",

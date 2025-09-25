@@ -10,13 +10,36 @@ export function isDev() {
 }
 
 export function validateEventFrame(frame: WebFrameMain) {
-  if (isDev() && new URL(frame.url).host === "localhost:3055") {
-    return;
-  }
+  try {
+    const expectedUrl = pathToFileURL(getUIPath()).toString();
+    const expected = new URL(expectedUrl);
+    const frameUrlObj = new URL(frame.url);
 
-  if (frame.url !== pathToFileURL(getUIPath()).toString()) {
-    console.error("Malicious Event Detected:", frame.url, pathToFileURL(getUIPath()).toString());
-    throw new Error("Malicious Event");
+    if (isDev() && frameUrlObj.host === "localhost:3055") {
+      return;
+    }
+
+    const normalizePath = (u: URL) =>
+      decodeURIComponent(u.pathname.replace(/\\/g, "/")).replace(/\/+/g, "/").toLowerCase();
+
+    if (frameUrlObj.protocol === "file:" && expected.protocol === "file:") {
+      const frameBase = normalizePath(frameUrlObj);
+      const expectedBase = normalizePath(expected);
+
+      if (frameBase !== expectedBase) {
+        console.error("Malicious Event Detected (file mismatch):", frame.url, "!=", expectedUrl);
+        throw new Error("Malicious Event");
+      }
+      return;
+    }
+
+    if (frame.url.split("#")[0].split("?")[0] !== expectedUrl) {
+      console.error("Malicious Event Detected (strict mismatch):", frame.url, "!=", expectedUrl);
+      throw new Error("Malicious Event");
+    }
+  } catch (err) {
+    console.error("Failed to validate event frame:", err);
+    throw err;
   }
 }
 
@@ -69,15 +92,12 @@ export function getVirtualKeyCode(keyName: string): number {
     return VK_CODES[vkKey];
   }
 
-  // Handle single character keys
   if (keyName.length === 1) {
     const charCode = keyName.toUpperCase().charCodeAt(0);
     if (charCode >= 65 && charCode <= 90) {
-      // A-Z
       return charCode;
     }
     if (charCode >= 48 && charCode <= 57) {
-      // 0-9
       return charCode;
     }
   }

@@ -71,7 +71,6 @@ export default class MacroManager {
     this.maxConcurrentMacros = Math.max(1, limit);
   }
 
-  // Validate a macro before execution
   validateMacro(macro: Macro): { valid: boolean; errors: string[] } {
     const errors: string[] = [];
 

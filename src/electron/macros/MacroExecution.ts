@@ -13,7 +13,7 @@ import {
 import { Macro, MacroStep } from "../interfaces/Imacro.js";
 import { getVirtualKeyCode, makeLParam } from "../utils/util.js";
 import { findWindow, getTargetWindowSize } from "../utils/targetWindow.js";
-import { generateSellInventoryActions } from "../utils/inventoryCalculations.js";
+import { generateSellInventoryActions, generateMeltInventoryActions } from "../utils/inventoryCalculations.js";
 import { loadConfig } from "../utils/config.js";
 
 export default class MacroExecution {
@@ -31,9 +31,11 @@ export default class MacroExecution {
     try {
       this.gameWindowHandle = await this.getGameWindowHandle();
 
-      // Special handling for sell-inventory macro - generate dynamic actions
+      // Special handling for inventory macros - generate dynamic actions
       if (this.macro.id === "sell-inventory") {
         this.actualMacro = await this.generateDynamicSellInventoryMacro();
+      } else if (this.macro.id === "melt-inventory") {
+        this.actualMacro = await this.generateDynamicMeltInventoryMacro();
       }
 
       for (let i = 0; i < this.actualMacro.repeat; i++) {
@@ -56,7 +58,6 @@ export default class MacroExecution {
   private async generateDynamicSellInventoryMacro(): Promise<Macro> {
     const config = loadConfig();
 
-    // Get current window size
     let windowWidth = config.targetWindow.size.width;
     let windowHeight = config.targetWindow.size.height;
 
@@ -70,13 +71,6 @@ export default class MacroExecution {
 
     const { layout, lockedSlots } = config.user.inventory;
 
-    console.log(`[WINDOW] Detected window size: ${windowWidth}x${windowHeight}`);
-    console.log(
-      `[INVENTORY] Layout: ${layout.totalTabs} tabs, ${layout.rowsPerTab} rows, ${layout.columnsPerRow} columns`
-    );
-    console.log(`[INVENTORY] Locked slots: ${lockedSlots.length}`);
-
-    // Generate dynamic sell actions (without open/close inventory)
     const sellActions = generateSellInventoryActions(
       windowWidth,
       windowHeight,
@@ -86,12 +80,42 @@ export default class MacroExecution {
       layout.columnsPerRow
     );
 
-    console.log(`[MACRO] Generated ${sellActions.length} sell actions for window ${windowWidth}x${windowHeight}`);
-
     return {
       ...this.macro,
       description: `Automates selling items in inventory by right-clicking each slot, skipping locked slots. Generated for ${windowWidth}x${windowHeight} window with ${sellActions.length} actions.`,
       actions: sellActions,
+    };
+  }
+
+  private async generateDynamicMeltInventoryMacro(): Promise<Macro> {
+    const config = loadConfig();
+
+    let windowWidth = config.targetWindow.size.width;
+    let windowHeight = config.targetWindow.size.height;
+
+    try {
+      const windowSize = await getTargetWindowSize();
+      windowWidth = windowSize.width;
+      windowHeight = windowSize.height;
+    } catch (error) {
+      console.warn("Could not get current window size, using config defaults:", error);
+    }
+
+    const { layout, lockedSlots } = config.user.inventory;
+
+    const meltActions = generateMeltInventoryActions(
+      windowWidth,
+      windowHeight,
+      lockedSlots,
+      layout.totalTabs,
+      layout.rowsPerTab,
+      layout.columnsPerRow
+    );
+
+    return {
+      ...this.macro,
+      description: `Automates melting items in inventory by right-clicking each slot (batched every 9) and clicking melt. Generated for ${windowWidth}x${windowHeight} window with ${meltActions.length} actions.`,
+      actions: meltActions,
     };
   }
 
@@ -132,8 +156,6 @@ export default class MacroExecution {
   private async executeKeyboardAction(step: MacroStep): Promise<void> {
     const vkCode = getVirtualKeyCode(step.value);
 
-    console.log(`[KEYBOARD] Executing ${step.action} with key '${step.value}' (VK: ${vkCode}) | Step ID: ${step.id}`);
-
     switch (step.action) {
       case "key-press":
         this.user32.SendMessageW(this.gameWindowHandle, WM_KEYDOWN, vkCode, 0);
@@ -157,8 +179,6 @@ export default class MacroExecution {
 
     const [x, y] = coords;
     const lParam = makeLParam(x, y);
-
-    console.log(`[MOUSE] Executing ${step.action} at (${x}, ${y}) | Step ID: ${step.id} | lParam: ${lParam}`);
 
     switch (step.action) {
       case "click":

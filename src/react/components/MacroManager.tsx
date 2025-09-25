@@ -266,7 +266,7 @@ const MacroManager: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    {macro.id === "sell-inventory" && (
+                    {(macro.id === "sell-inventory" || macro.id === "melt-inventory") && (
                       <button
                         onClick={() => setShowSellInventorySettings(true)}
                         className="btn btn-outline btn-sm btn-warning"
@@ -393,7 +393,7 @@ const MacroManager: React.FC = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold">Sell Inventory Settings</h3>
+              <h3 className="text-lg font-bold">Target Window Settings</h3>
               <button onClick={() => setShowSellInventorySettings(false)} className="btn btn-sm btn-circle btn-ghost">
                 ✕
               </button>

@@ -90,7 +90,7 @@ const SellInventorySettings: React.FC<SellInventorySettingsProps> = ({ onPresetC
       {!selectedPreset && (
         <div className="alert alert-warning mb-4">
           <AlertCircle className="w-4 h-4" />
-          <span>Please select a window size preset before using the sell-inventory macro.</span>
+          <span>Please select a window size preset before using the sell-inventory/melt-inventory macros.</span>
         </div>
       )}
 
@@ -137,7 +137,7 @@ const SellInventorySettings: React.FC<SellInventorySettingsProps> = ({ onPresetC
             <span className="font-medium">Selected: {selectedPreset}</span>
           </div>
           <p className="text-sm text-base-content/70 mt-1">
-            The sell-inventory macro will use this preset for positioning.
+            The sell-inventory/melt-inventory macros will use this preset for positioning.
           </p>
         </div>
       )}
