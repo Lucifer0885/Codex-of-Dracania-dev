@@ -230,6 +230,15 @@ export default class MacroExecution {
         await this.delay(10);
         this.user32.PostMessageW(targetHwnd, WM_RBUTTONUP, 0, lParam);
         break;
+      case "double-click":
+        this.user32.PostMessageW(targetHwnd, WM_LBUTTONDOWN, 0, lParam);
+        await this.delay(10);
+        this.user32.PostMessageW(targetHwnd, WM_LBUTTONUP, 0, lParam);
+        await this.delay(100);
+        this.user32.PostMessageW(targetHwnd, WM_LBUTTONDOWN, 0, lParam);
+        await this.delay(10);
+        this.user32.PostMessageW(targetHwnd, WM_LBUTTONUP, 0, lParam);
+        break;
       case "middle-click":
         this.user32.PostMessageW(targetHwnd, WM_MBUTTONDOWN, 0, lParam);
         await this.delay(10);

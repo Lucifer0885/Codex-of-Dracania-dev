@@ -759,6 +759,7 @@ const StepEditor: React.FC<StepEditorProps> = ({
                 <option value="">Select action...</option>
                 <option value="click">Left Click</option>
                 <option value="right-click">Right Click</option>
+                <option value="double-click">Double Click</option>
                 <option value="middle-click">Middle Click</option>
                 <option value="move">Move Mouse</option>
               </select>
@@ -832,6 +833,9 @@ const StepEditor: React.FC<StepEditorProps> = ({
                     </li>
                     <li>
                       <code>right-click</code> - Right mouse button click
+                    </li>
+                    <li>
+                      <code>double-click</code> - Double left mouse button click
                     </li>
                     <li>
                       <code>middle-click</code> - Middle mouse button click
