@@ -4,12 +4,14 @@ import {
   WM_KEYUP,
   WM_LBUTTONDOWN,
   WM_LBUTTONUP,
+  WM_LBUTTONDBLCLK,
   WM_MBUTTONDOWN,
   WM_MBUTTONUP,
   WM_MOUSEMOVE,
   WM_RBUTTONDOWN,
   WM_RBUTTONUP,
 } from "../constants/windows-message.js";
+import { MK_LBUTTON, MK_MBUTTON, MK_RBUTTON } from "../constants/windows-message.js";
 import { Macro, MacroStep } from "../interfaces/Imacro.js";
 import { getVirtualKeyCode, makeLParam } from "../utils/util.js";
 import { findWindow, getTargetWindowSize } from "../utils/targetWindow.js";
@@ -221,26 +223,26 @@ export default class MacroExecution {
 
     switch (step.action) {
       case "click":
-        this.user32.PostMessageW(targetHwnd, WM_LBUTTONDOWN, 0, lParam);
+        this.user32.PostMessageW(targetHwnd, WM_LBUTTONDOWN, MK_LBUTTON, lParam);
         await this.delay(10);
         this.user32.PostMessageW(targetHwnd, WM_LBUTTONUP, 0, lParam);
         break;
       case "right-click":
-        this.user32.PostMessageW(targetHwnd, WM_RBUTTONDOWN, 0, lParam);
+        this.user32.PostMessageW(targetHwnd, WM_RBUTTONDOWN, MK_RBUTTON, lParam);
         await this.delay(10);
         this.user32.PostMessageW(targetHwnd, WM_RBUTTONUP, 0, lParam);
         break;
       case "double-click":
-        this.user32.PostMessageW(targetHwnd, WM_LBUTTONDOWN, 0, lParam);
+        this.user32.PostMessageW(targetHwnd, WM_LBUTTONDOWN, MK_LBUTTON, lParam);
         await this.delay(10);
         this.user32.PostMessageW(targetHwnd, WM_LBUTTONUP, 0, lParam);
-        await this.delay(100);
-        this.user32.PostMessageW(targetHwnd, WM_LBUTTONDOWN, 0, lParam);
+        await this.delay(80);
+        this.user32.PostMessageW(targetHwnd, WM_LBUTTONDBLCLK, MK_LBUTTON, lParam);
         await this.delay(10);
         this.user32.PostMessageW(targetHwnd, WM_LBUTTONUP, 0, lParam);
         break;
       case "middle-click":
-        this.user32.PostMessageW(targetHwnd, WM_MBUTTONDOWN, 0, lParam);
+        this.user32.PostMessageW(targetHwnd, WM_MBUTTONDOWN, MK_MBUTTON, lParam);
         await this.delay(10);
         this.user32.PostMessageW(targetHwnd, WM_MBUTTONUP, 0, lParam);
         break;

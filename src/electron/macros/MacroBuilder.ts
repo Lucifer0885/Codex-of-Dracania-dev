@@ -191,7 +191,7 @@ export default class MacroBuilder {
         {
           id: "template-health",
           type: "keyboard-action",
-          action: "key",
+          action: "key-press",
           value: "H",
           wait: 0,
           isValid: true,
@@ -254,8 +254,18 @@ export default class MacroBuilder {
     if (step.type === "keyboard-action") {
       if (!step.value?.trim()) {
         errors.push("Key value is required");
-      } else if (!/^[A-Za-z0-9]$/.test(step.value) && !["Space", "Enter", "Tab", "Escape"].includes(step.value)) {
-        errors.push("Invalid key value");
+      } else {
+        const raw = step.value.trim();
+        const normalized = raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
+
+        const isAlphanumeric = /^[A-Za-z0-9]$/.test(raw);
+        const isFunctionKey = /^F([1-9]|1[0-2])$/i.test(raw); // F1..F12
+        const allowedSpecials = ["Space", "Enter", "Tab", "Escape", "Up", "Down", "Left", "Right"];
+        const isAllowedSpecial = allowedSpecials.includes(normalized);
+
+        if (!isAlphanumeric && !isFunctionKey && !isAllowedSpecial) {
+          errors.push("Invalid key value");
+        }
       }
     }
 
