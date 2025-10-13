@@ -16,7 +16,7 @@ import { InitMenu } from "./menu.js";
 
 let mainWindow: BrowserWindow;
 const autoUpdater = getAppUpdater();
-autoUpdater.autoDownload = false;
+autoUpdater.autoDownload = true; // Enable auto-download
 autoUpdater.autoInstallOnAppQuit = true;
 
 container.registerSingleton(SERVICE_KEYS.MACRO_MANAGER, () => new MacroManager());
@@ -53,6 +53,39 @@ app.whenReady().then(() => {
   InitMenu();
 
   handleCloseEvents(mainWindow);
+
+  // Setup auto-updater event listeners BEFORE checking for updates
+  autoUpdater.on("checking-for-update", () => {
+    console.log("Checking for updates...");
+  });
+
+  autoUpdater.on("update-available", (info) => {
+    console.log("Update available:", info);
+    ipcWebContentsSend("update-message", mainWindow.webContents, "Update available. Downloading...");
+  });
+
+  autoUpdater.on("update-not-available", (info) => {
+    console.log("Update not available:", info);
+  });
+
+  autoUpdater.on("error", (err) => {
+    if (err) ipcWebContentsSend("update-message", mainWindow.webContents, `Update error: ${err.message}`);
+  });
+
+  autoUpdater.on("download-progress", (progressObj) => {
+    const logMessage = `Download speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.percent}% (${progressObj.transferred}/${progressObj.total})`;
+    console.log(logMessage);
+    ipcWebContentsSend(
+      "update-message",
+      mainWindow.webContents,
+      `Downloading update: ${Math.round(progressObj.percent)}%`
+    );
+  });
+
+  autoUpdater.on("update-downloaded", (info) => {
+    console.log("Update downloaded:", info);
+    ipcWebContentsSend("update-message", mainWindow.webContents, "Update downloaded. It will be installed on restart.");
+  });
 
   autoUpdater.checkForUpdates().catch((err) => {
     console.error("Failed to check for updates:", err);
@@ -192,12 +225,4 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
-});
-
-autoUpdater.on("update-available", () => {
-  ipcWebContentsSend("update-message", mainWindow.webContents, "Update available. Downloading...");
-});
-
-autoUpdater.on("update-downloaded", () => {
-  ipcWebContentsSend("update-message", mainWindow.webContents, "Update downloaded. It will be installed on restart.");
 });
