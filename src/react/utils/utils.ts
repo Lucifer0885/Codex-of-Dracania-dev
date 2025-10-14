@@ -30,3 +30,7 @@ export function getItemsPerPage(progress: ProgressBarItem[], page: number): Prog
   const items = progress.filter((item) => item.page === page);
   return items;
 }
+
+export function formatName(string: string) {
+  return string.replace(/\b\w/g, (char) => char.toUpperCase());
+}

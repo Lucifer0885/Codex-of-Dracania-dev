@@ -1,10 +1,10 @@
 import EventResultCard from "@components/EventResultCard";
 import type { BaseDifficulty } from "@interfaces/Ievent";
 import { getFullMoonRuns } from "@utils/calculators";
-import { eventDifficulties, fullMoonTable } from "@utils/events/event";
+import { eventDifficulties } from "@utils/events/event";
 import React, { useState } from "react";
-import EventTips from "@components/EventTips";
 import { ImageExporter } from "@utils/ImageExporter";
+import { formatName } from "@utils/utils";
 
 function FullMoonCalculator() {
   const [difficulty, setDifficulty] = useState<BaseDifficulty | null>(null);
@@ -14,10 +14,6 @@ function FullMoonCalculator() {
   const [dropsPerRun, setDropsPerRun] = useState<null | number>(null);
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState<boolean>(false);
-
-  function formatName(string: string) {
-    return string.replace(/\b\w/g, (char) => char.toUpperCase());
-  }
 
   function handleReset() {
     setDifficulty(null);
@@ -135,7 +131,6 @@ function FullMoonCalculator() {
           loading={loading}
         />
       </div>
-      <EventTips title="Full Moon Event Tips" tips={fullMoonTable.eventTips} />
     </div>
   );
 }

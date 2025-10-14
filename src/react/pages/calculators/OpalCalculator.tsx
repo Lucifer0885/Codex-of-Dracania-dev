@@ -4,9 +4,10 @@ import { getOpalCreateCost, getOpalUpgradeCost } from "@utils/calculators";
 import { OpalTiersCreate, OpalTiersUpgrade } from "@utils/gem";
 import React, { useState } from "react";
 import { ImageExporter } from "@utils/ImageExporter";
+import { formatName } from "@utils/utils";
 
 function OpalCalculator() {
-  const [uiState, setUIState] = useState<"create" | "upgrade">("create");
+  const [uiState, setUiState] = useState<"create" | "upgrade">("create");
   const [opalTier, setOpalTier] = useState<null | OpalTier>(null);
   const [startingTier, setStartingTier] = useState<null | OpalTier>(null);
   const [targetTier, setTargetTier] = useState<null | OpalTier>(null);
@@ -14,10 +15,6 @@ function OpalCalculator() {
   const [amount, setAmount] = useState<string | number>("");
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState<boolean>(false);
-
-  function formatName(string: string) {
-    return string.replace(/\b\w/g, (char) => char.toUpperCase());
-  }
 
   function handleReset() {
     setOpalTier(null);
@@ -77,10 +74,16 @@ function OpalCalculator() {
         </h1>
       </div>
       <div className="flex gap-15">
-        <button className="btn btn-outline btn-info w-[200px]" onClick={() => setUIState("create")}>
+        <button
+          className={`btn btn-outline btn-info w-[200px] ${uiState === "create" ? "btn-active" : ""}`}
+          onClick={() => setUiState("create")}
+        >
           Create
         </button>
-        <button className="btn btn-outline btn-info w-[200px]" onClick={() => setUIState("upgrade")}>
+        <button
+          className={`btn btn-outline btn-info w-[200px] ${uiState === "upgrade" ? "btn-active" : ""}`}
+          onClick={() => setUiState("upgrade")}
+        >
           Upgrade
         </button>
       </div>

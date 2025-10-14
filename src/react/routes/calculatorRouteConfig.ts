@@ -6,6 +6,7 @@ import NewMoonCalculator from "@pages/calculators/NewMoonCalculator";
 import SargonCalculator from "@pages/calculators/SargonCalculator";
 import FullMoonCalculator from "@pages/calculators/FullMoonCalculator";
 import DesertOfEssencesCalculator from "@pages/calculators/DesertOfEssencesCalculator";
+import GhostFestivalCalculator from "@pages/calculators/GhostFestivalCalculator";
 
 export const calculatorRouteConfig = [
   {
@@ -47,5 +48,10 @@ export const calculatorRouteConfig = [
     path: "/calculators/event-desert-of-essences",
     element: DesertOfEssencesCalculator,
     key: "event-desert-of-essences-calculator",
+  },
+  {
+    path: "/calculators/event-ghost-festival",
+    element: GhostFestivalCalculator,
+    key: "event-ghost-festival-calculator",
   },
 ];

@@ -4,6 +4,7 @@ import { getRuneCost } from "@utils/calculators";
 import { OffensiveRuneTier } from "@utils/gem";
 import React, { useState } from "react";
 import { ImageExporter } from "@utils/ImageExporter";
+import { formatName } from "@utils/utils";
 
 function RuneCalculator() {
   const [startingTier, setStartingTier] = useState<null | RuneTier>(null);
@@ -13,10 +14,6 @@ function RuneCalculator() {
   const [amount, setAmount] = useState<string | number>("");
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState<boolean>(false);
-
-  function formatName(string: string) {
-    return string.replace(/\b\w/g, (char) => char.toUpperCase());
-  }
 
   function handleReset() {
     setStartingTier(null);

@@ -112,4 +112,54 @@ export const desertOfEssencesTable: Event = {
   items: [DesertOfEssencesEventItems],
 };
 
-export const EventsList: Event[] = [newMoonTable, sargonTable, fullMoonTable, desertOfEssencesTable];
+// Ghost Festival Event
+export const ghostFestivalTable: Event = {
+  id: "ghost-festival",
+  name: "Ghost Festival",
+  image: ImageExporter.tabIconGhostFestival,
+  description:
+    "Once upon a time, there was a wicked, yet beautiful queen. When she died, the people rejoiced. When she returns... begging for mercy won't save you.",
+  progressBar: [{ progress: 167500 }],
+  attirePercentBonus: 0.5,
+  dropRates: {
+    normal: 50,
+    painful: 75,
+    excruciating: 100,
+    fatal: 125,
+    infernal: 200,
+    merciless: 300,
+    bloodshed: 400,
+  },
+  eventTips: [],
+  items: [],
+};
+
+// Ghost Festival Mini Event - Return of the Dead
+export const ghostFestivalMiniTable: Event = {
+  id: "ghost-festival-mini",
+  name: "Return of the Dead",
+  image: ImageExporter.tabIconGhostFestival,
+  description: "Beware the beast, it eats your flesh. Beware the beast, it brings the dead...",
+  progressBar: [{ progress: 234500 }],
+  attirePercentBonus: 0.5,
+  dropRates: {
+    normal: 95,
+    painful: 125,
+    excruciating: 250,
+    fatal: 400,
+    infernal: 550,
+    merciless: 1115,
+    bloodshed: 1500,
+  },
+  eventTips: [],
+  items: [],
+};
+
+export const EventsList: Event[] = [
+  newMoonTable,
+  sargonTable,
+  fullMoonTable,
+  desertOfEssencesTable,
+  ghostFestivalTable,
+  ghostFestivalMiniTable,
+];

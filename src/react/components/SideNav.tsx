@@ -1,7 +1,7 @@
 import { NavLinks } from "@utils/links";
 import * as Icons from "lucide-react";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { useUser } from "@hooks/useUser";
 import { AvatarImage } from "@components/AvatarImage";
 import AppVersion from "@components/AppVersion";
@@ -85,13 +85,13 @@ function SideNav({ isExpanded, setIsExpanded }: SideNavProps) {
           <UpdateAvailable isExpanded={isExpanded} />
           <div className="flex items-center gap-3 mb-3 hover:cursor-pointer">
             <div className="flex items-center justify-center w-8 h-8">
-              <div className="rounded-full ring-primary ring-offset-base-100 ring-2 ring-offset-2">
+              <Link to="/settings" className="rounded-full ring-primary ring-offset-base-100 ring-2 ring-offset-2">
                 <AvatarImage
                   path={userInfo?.avatars.find((avatar) => avatar.selected)?.path || "default"}
                   alt="Profile"
                   size="sm"
                 />
-              </div>
+              </Link>
             </div>
             {isExpanded && (
               <div className="flex flex-col overflow-hidden">

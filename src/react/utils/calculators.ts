@@ -11,7 +11,14 @@ import {
   OpalTiersUpgrade,
   UtilityRuneTier,
 } from "@utils/gem";
-import { desertOfEssencesTable, fullMoonTable, newMoonTable, sargonTable } from "@utils/events/event";
+import {
+  desertOfEssencesTable,
+  fullMoonTable,
+  ghostFestivalMiniTable,
+  ghostFestivalTable,
+  newMoonTable,
+  sargonTable,
+} from "@utils/events/event";
 import { ImageExporter } from "@utils/ImageExporter";
 
 export const calculators: Calculator[] = [
@@ -62,6 +69,13 @@ export const calculators: Calculator[] = [
     name: "Desert of Essences Event Calculator",
     description: "Calculate the runs needed to finish for the Desert of Essences event",
     image: ImageExporter.tabIconDoe,
+  },
+  {
+    id: "event-ghost-festival",
+    name: "Ghost Festival Event Calculator",
+    description:
+      "Calculate the runs needed to finish for the Ghost Festival event or the mini event Return of the Dead",
+    image: ImageExporter.tabIconGhostFestival,
   },
 ];
 
@@ -255,6 +269,83 @@ export function getDesertOfEssencesRuns(difficulty: BaseDifficulty, haveAttire: 
   }
 
   const runs = Math.ceil(desertOfEssencesTable.progressBar[0].progress / drop);
+
+  return { runs, drop: Math.floor(drop) };
+}
+
+export function getGhostFestivalRuns(
+  difficulty: BaseDifficulty,
+  haveAttire: boolean,
+  haveBuff: boolean,
+  uiState: "main" | "mini"
+): EventCalculatorResult {
+  if (uiState === "main") {
+    return getGhostFestivalMainRuns(difficulty, haveAttire, haveBuff);
+  } else {
+    return getGhostFestivalMiniRuns(difficulty, haveAttire, haveBuff);
+  }
+}
+
+function getGhostFestivalMainRuns(
+  difficulty: BaseDifficulty,
+  haveAttire: boolean,
+  haveBuff: boolean
+): EventCalculatorResult {
+  const dropPerDiff = ghostFestivalTable["dropRates"][difficulty];
+  if (!dropPerDiff) throw new Error("Invalid difficulty");
+  if (Array.isArray(dropPerDiff)) throw new Error("Internal error, please report this");
+
+  let drop = 0;
+
+  if (haveAttire) {
+    if (ghostFestivalTable.attirePercentBonus) {
+      if (haveBuff) {
+        drop = dropPerDiff + dropPerDiff * ghostFestivalTable.attirePercentBonus + dropPerDiff * 0.1;
+      } else {
+        drop = dropPerDiff + dropPerDiff * ghostFestivalTable.attirePercentBonus;
+      }
+    }
+  } else {
+    if (haveBuff) {
+      drop = dropPerDiff + dropPerDiff * 0.1;
+    } else {
+      drop = dropPerDiff;
+    }
+  }
+
+  const runs = Math.ceil(ghostFestivalTable.progressBar[0].progress / drop);
+
+  return { runs, drop: Math.floor(drop) };
+}
+
+function getGhostFestivalMiniRuns(
+  difficulty: BaseDifficulty,
+  haveAttire: boolean,
+  haveBuff: boolean
+): EventCalculatorResult {
+  const dropPerDiff = ghostFestivalMiniTable["dropRates"][difficulty];
+  if (!dropPerDiff) throw new Error("Invalid difficulty");
+  if (Array.isArray(dropPerDiff)) throw new Error("Internal error, please report this");
+
+  let drop = 0;
+
+  if (haveAttire) {
+    if (ghostFestivalMiniTable.attirePercentBonus) {
+      if (haveBuff) {
+        drop = dropPerDiff + dropPerDiff * ghostFestivalMiniTable.attirePercentBonus + dropPerDiff * 0.1;
+      } else {
+        drop = dropPerDiff + dropPerDiff * ghostFestivalMiniTable.attirePercentBonus;
+      }
+    }
+  } else {
+    if (haveBuff) {
+      drop = dropPerDiff + dropPerDiff * 0.1;
+    } else {
+      drop = dropPerDiff;
+    }
+  }
+
+  const runs = Math.ceil(ghostFestivalMiniTable.progressBar[0].progress / drop);
 
   return { runs, drop: Math.floor(drop) };
 }

@@ -24,6 +24,11 @@ import wood from "@assets/events/newmoon/wood.png";
 import newmoonChestSmall from "@assets/events/newmoon/surprise-chest-small.png";
 import newmoonChestBig from "@assets/events/newmoon/surprise-chest-big.png";
 
+// Ghost Festival Event
+import tabIconGhostFestival from "@assets/events/ghostfestival/tabicon_ghostfestival.png";
+import ghostFestivalProg from "@assets/events/ghostfestival/ghostfestival-prog.png";
+import ghostFestivalMiniProg from "@assets/events/ghostfestival/ghostfestivalmini-prog.png";
+
 //Currency
 import draken from "@assets/coins/draken.png";
 import communityCoin from "@assets/coins/community-coin.png";
@@ -85,6 +90,9 @@ export const ImageExporter = {
   wood,
   newmoonChestSmall,
   newmoonChestBig,
+  tabIconGhostFestival,
+  ghostFestivalProg,
+  ghostFestivalMiniProg,
   event,
   draken,
   communityCoin,

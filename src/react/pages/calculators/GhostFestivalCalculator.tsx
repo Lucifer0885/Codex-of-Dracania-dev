@@ -1,14 +1,16 @@
 import EventResultCard from "@components/EventResultCard";
 import type { BaseDifficulty } from "@interfaces/Ievent";
-import { getSargonRuns } from "@utils/calculators";
 import { eventDifficulties } from "@utils/events/event";
-import React, { useState } from "react";
 import { ImageExporter } from "@utils/ImageExporter";
+import React, { useState } from "react";
 import { formatName } from "@utils/utils";
+import { getGhostFestivalRuns } from "@utils/calculators";
 
-function SargonCalculator() {
+function GhostFestivalCalculator() {
+  const [uiState, setUiState] = useState<"main" | "mini">("main");
   const [difficulty, setDifficulty] = useState<BaseDifficulty | null>(null);
   const [haveAttire, setHaveAttire] = useState<boolean>(false);
+  const [haveBuff, setHaveBuff] = useState<boolean>(false);
   const [runs, setRuns] = useState<null | number>(null);
   const [dropsPerRun, setDropsPerRun] = useState<null | number>(null);
   const [error, setError] = useState<null | string>(null);
@@ -17,9 +19,10 @@ function SargonCalculator() {
   function handleReset() {
     setDifficulty(null);
     setHaveAttire(false);
+    setHaveBuff(false);
   }
 
-  function handleCalculate() {
+  function handleCalculate(uiState: "main" | "mini") {
     if (!difficulty) {
       setError("Please select a difficulty");
       setRuns(null);
@@ -34,7 +37,7 @@ function SargonCalculator() {
     }, 1000);
 
     try {
-      const runs = getSargonRuns(difficulty, haveAttire);
+      const runs = getGhostFestivalRuns(difficulty, haveAttire, haveBuff, uiState);
       setRuns(runs.runs);
       setDropsPerRun(runs.drop);
     } catch (error) {
@@ -47,8 +50,28 @@ function SargonCalculator() {
   return (
     <div className="flex flex-col gap-16 p-4 items-center">
       <div className=" flex justify-center items-center gap-4">
-        <img src={ImageExporter.tabIconSargon} alt="Sargon Event Calculator" width={100} height={100} />
-        <h1 className="text-4xl text-primary">Sargon Event Calculator</h1>
+        <img src={ImageExporter.tabIconGhostFestival} alt="Ghost Festival  Calculator" width={64} height={64} />
+        <h1 className="text-4xl text-primary ">{uiState === "main" ? "Ghost Festival" : "Return of the Dead"}</h1>
+      </div>
+      <div className="flex gap-15">
+        <button
+          className={`btn btn-outline btn-info w-[200px] ${uiState === "main" ? "btn-active" : ""}`}
+          onClick={() => {
+            setUiState("main");
+            handleReset();
+          }}
+        >
+          Ghost Festival
+        </button>
+        <button
+          className={`btn btn-outline btn-info w-[200px] ${uiState === "mini" ? "btn-active" : ""}`}
+          onClick={() => {
+            setUiState("mini");
+            handleReset();
+          }}
+        >
+          Return of the Dead
+        </button>
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="card card-border bg-base-300 text-neutral-content w-96 border-gray-400">
@@ -99,12 +122,25 @@ function SargonCalculator() {
                 />
                 <p className="text-gray-300 text-md">Have you purchased the attire (50% more progress drop)</p>
               </div>
+              <div className="flex items-center gap-2 mt-2">
+                <input
+                  type="checkbox"
+                  checked={haveBuff}
+                  className="checkbox border-indigo-600 bg-indigo-500 checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
+                  onChange={(e) => {
+                    setHaveBuff(e.target.checked);
+                  }}
+                />
+                <p className="text-gray-300 text-md">
+                  Buff Active - {uiState === "main" ? "Pumpkin Candy" : "Jalapeno Cookie"} (10%)
+                </p>
+              </div>
             </div>
             <div className="flex mt-4 gap-4 justify-between">
               <button className="btn btn-soft btn-error" onClick={handleReset}>
                 Reset
               </button>
-              <button className="btn btn-soft btn-primary" onClick={handleCalculate}>
+              <button className="btn btn-soft btn-primary" onClick={() => handleCalculate(uiState)}>
                 Calculate
               </button>
             </div>
@@ -114,10 +150,10 @@ function SargonCalculator() {
           runs={runs}
           dropsPerRun={dropsPerRun}
           error={error}
-          title="Sargon Event Calculator"
-          titleImage={ImageExporter.tabIconSargon}
-          desc="Select the difficulty and if you have the attire to see how many runs you need to complete the Sargon event (assuming you will get the drop from all 3 books in first map)"
-          dropImage={ImageExporter.sargonProg}
+          title={uiState === "main" ? "Ghost Festival Event Calculator" : "Return of the Dead Event Calculator"}
+          titleImage={ImageExporter.tabIconGhostFestival}
+          desc="Select the difficulty,if you have the attire and if you have the buff active to see how many runs you need to complete the Ghost Festival or Return of the Dead(mini) event"
+          dropImage={uiState === "main" ? ImageExporter.ghostFestivalProg : ImageExporter.ghostFestivalMiniProg}
           loading={loading}
         />
       </div>
@@ -125,4 +161,4 @@ function SargonCalculator() {
   );
 }
 
-export default SargonCalculator;
+export default GhostFestivalCalculator;

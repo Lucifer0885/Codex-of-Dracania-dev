@@ -4,6 +4,7 @@ import { getGemCost } from "@utils/calculators";
 import { OffensiveGemTiers } from "@utils/gem";
 import React, { useState } from "react";
 import { ImageExporter } from "@utils/ImageExporter";
+import { formatName } from "@utils/utils";
 
 function GemCalculator() {
   const [startingTier, setStartingTier] = useState<null | GemTier>(null);
@@ -13,10 +14,6 @@ function GemCalculator() {
   const [amount, setAmount] = useState<string | number>("");
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState<boolean>(false);
-
-  function formatName(string: string) {
-    return string.replace(/\b\w/g, (char) => char.toUpperCase());
-  }
 
   function handleReset() {
     setStartingTier(null);

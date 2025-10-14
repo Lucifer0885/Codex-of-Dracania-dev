@@ -1,10 +1,10 @@
 import EventResultCard from "@components/EventResultCard";
 import type { BaseDifficulty } from "@interfaces/Ievent";
 import { getDesertOfEssencesRuns } from "@utils/calculators";
-import { eventDifficulties, desertOfEssencesTable } from "@utils/events/event";
+import { eventDifficulties } from "@utils/events/event";
 import React, { useState } from "react";
-import EventTips from "@components/EventTips";
 import { ImageExporter } from "@utils/ImageExporter";
+import { formatName } from "@utils/utils";
 
 function DesertOfEssencesCalculator() {
   const [difficulty, setDifficulty] = useState<BaseDifficulty | null>(null);
@@ -13,10 +13,6 @@ function DesertOfEssencesCalculator() {
   const [dropsPerRun, setDropsPerRun] = useState<null | number>(null);
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState<boolean>(false);
-
-  function formatName(string: string) {
-    return string.replace(/\b\w/g, (char) => char.toUpperCase());
-  }
 
   function handleReset() {
     setDifficulty(null);
@@ -125,7 +121,6 @@ function DesertOfEssencesCalculator() {
           loading={loading}
         />
       </div>
-      <EventTips title="Desert of Essences Event Tips" tips={desertOfEssencesTable.eventTips} />
     </div>
   );
 }
