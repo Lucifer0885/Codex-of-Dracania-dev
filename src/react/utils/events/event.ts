@@ -11,6 +11,12 @@ import {
   SargonTips,
 } from "@utils/events/SargonItems";
 import { ImageExporter } from "@utils/ImageExporter";
+import {
+  GhostFestivalEventItems,
+  GhostFestivalMiniEventItems,
+  GhostFestivalMiniTips,
+  GhostFestivalTips,
+} from "./GhostFestivalItems";
 
 export const eventDifficulties: BaseDifficulty[] = [
   "normal",
@@ -130,8 +136,8 @@ export const ghostFestivalTable: Event = {
     merciless: 300,
     bloodshed: 400,
   },
-  eventTips: [],
-  items: [],
+  eventTips: GhostFestivalTips,
+  items: [GhostFestivalEventItems],
 };
 
 // Ghost Festival Mini Event - Return of the Dead
@@ -151,8 +157,8 @@ export const ghostFestivalMiniTable: Event = {
     merciless: 1115,
     bloodshed: 1500,
   },
-  eventTips: [],
-  items: [],
+  eventTips: GhostFestivalMiniTips,
+  items: [GhostFestivalMiniEventItems],
 };
 
 export const EventsList: Event[] = [

@@ -28,6 +28,17 @@ import newmoonChestBig from "@assets/events/newmoon/surprise-chest-big.png";
 import tabIconGhostFestival from "@assets/events/ghostfestival/tabicon_ghostfestival.png";
 import ghostFestivalProg from "@assets/events/ghostfestival/ghostfestival-prog.png";
 import ghostFestivalMiniProg from "@assets/events/ghostfestival/ghostfestivalmini-prog.png";
+import ghostFestivalAttireTemp from "@assets/events/ghostfestival/ghostfestival-attire-temp.png";
+import soulSeltzer from "@assets/events/ghostfestival/soul-seltzer.png";
+import halloweenGiftVoucher from "@assets/events/ghostfestival/halloween-gift-voucher.png";
+import sophiasRemedy from "@assets/events/ghostfestival/sophias-remedy.png";
+import lifeForce from "@assets/events/ghostfestival/life-force.png";
+import ghostFire from "@assets/events/ghostfestival/ghost-fire.png";
+import pumpkinCandy from "@assets/events/ghostfestival/pumpkin-candy.png";
+import jalapenoCookie from "@assets/events/ghostfestival/jalapeno-cookie.png";
+import heartAndSoul1 from "@assets/events/ghostfestival/heart-and-soul-1.png";
+import heartAndSoul2 from "@assets/events/ghostfestival/heart-and-soul-2.png";
+import heartAndSoul3 from "@assets/events/ghostfestival/heart-and-soul-3.png";
 
 //Currency
 import draken from "@assets/coins/draken.png";
@@ -38,7 +49,11 @@ import clover from "@assets/coins/clover.png";
 
 //Essences
 import epicLightEssence from "@assets/ess/epic-light.png";
+import magicLightEssence from "@assets/ess/magic-light.png";
 import shinySilverEssence from "@assets/ess/shiny-silver-ess.png";
+
+//Cooking
+import spellboundRaspberries from "@assets/cooking/spellbound-raspberry.png";
 
 //Keys
 import amphoraKey from "@assets/keys/amphora-key.png";
@@ -55,8 +70,16 @@ import jewel from "@assets/gem/jewel.png";
 import opal from "@assets/gem/opal.png";
 import runeDust from "@assets/gem/rune-dust.png";
 import rune from "@assets/gem/rune.png";
+import runeJoker from "@assets/gem/rune-joker.png";
 import shinyDust from "@assets/gem/shiny-dust.png";
 import jewelChest from "@assets/gem/jewel-chest.png";
+import jewelFrozenHeart from "@assets/gem/jewel-frozen-heart.png";
+import jewelGhostPower from "@assets/gem/jewel-ghost-power.png";
+
+//Costumes
+import carnivalPace from "@assets/costumes/carnival-pace.png";
+import basicAlchemyCirclePurple from "@assets/costumes/basic-alchemy-circle-purple.png";
+import eerieJackOLanternHelmet from "@assets/costumes/eerie-jack-o-lantern-helmet.png";
 
 //General
 import logoBigpoint from "@assets/general/logo-bigpoint.svg";
@@ -70,6 +93,12 @@ import dragonFlying from "@assets/general/dragon-flying.png";
 import dragonBones from "@assets/general/dragon-bones.png";
 import dracaniaCodex from "@assets/general/dracania-codex.png";
 import brokenMultitool from "@assets/general/broken-multitool.png";
+import perforatedDragonTooth from "@assets/general/dragon-tooth.png";
+import goldenGoose from "@assets/general/golden-goose.png";
+import epicAnxietyShard from "@assets/general/epic-anxiety-shard.png";
+import dragonBloodBox from "@assets/general/dragon-blood-box.png";
+import dragonBoneElixir from "@assets/general/dragon-bone-elixir.png";
+import ruinedAmphora from "@assets/general/ruined-amphora.png";
 
 export const ImageExporter = {
   tabIconSargon,
@@ -93,6 +122,17 @@ export const ImageExporter = {
   tabIconGhostFestival,
   ghostFestivalProg,
   ghostFestivalMiniProg,
+  ghostFestivalAttireTemp,
+  soulSeltzer,
+  halloweenGiftVoucher,
+  sophiasRemedy,
+  lifeForce,
+  ghostFire,
+  pumpkinCandy,
+  jalapenoCookie,
+  heartAndSoul1,
+  heartAndSoul2,
+  heartAndSoul3,
   event,
   draken,
   communityCoin,
@@ -100,7 +140,9 @@ export const ImageExporter = {
   realmFragment,
   clover,
   epicLightEssence,
+  magicLightEssence,
   shinySilverEssence,
+  spellboundRaspberries,
   amphoraKey,
   infernalPassage,
   kitchenKey,
@@ -114,7 +156,13 @@ export const ImageExporter = {
   opal,
   runeDust,
   rune,
+  runeJoker,
   shinyDust,
+  jewelFrozenHeart,
+  jewelGhostPower,
+  carnivalPace,
+  basicAlchemyCirclePurple,
+  eerieJackOLanternHelmet,
   logoBigpoint,
   reviveStone,
   soulGuardian,
@@ -126,4 +174,10 @@ export const ImageExporter = {
   dragonBones,
   dracaniaCodex,
   brokenMultitool,
+  perforatedDragonTooth,
+  goldenGoose,
+  epicAnxietyShard,
+  dragonBloodBox,
+  dragonBoneElixir,
+  ruinedAmphora,
 };

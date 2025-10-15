@@ -24,7 +24,7 @@ export const defaultMacros: Macro[] = [
     id: "sell-inventory",
     name: "Sell Inventory",
     description:
-      "Automates selling items in inventory by right-clicking each slot, skipping locked slots. DO NOT MOVE THE MOUSE DURING THE PROCESS",
+      "Automates selling items in inventory by right-clicking each slot, skipping locked slots. DO NOT MOVE THE MOUSE INSIDE THE GAME WINDOW DURING THE PROCESS",
     enabled: true,
     onRepeat: false,
     repeat: 1,
@@ -36,7 +36,7 @@ export const defaultMacros: Macro[] = [
     id: "melt-inventory",
     name: "Melt Inventory",
     description:
-      "Automates melting items in inventory by dragging each slot to the melt area, skipping locked slots. DO NOT MOVE THE MOUSE DURING THE PROCESS",
+      "Automates melting items in inventory by dragging each slot to the melt area, skipping locked slots. DO NOT MOVE THE MOUSE INSIDE THE GAME WINDOW DURING THE PROCESS",
     enabled: true,
     onRepeat: false,
     repeat: 1,

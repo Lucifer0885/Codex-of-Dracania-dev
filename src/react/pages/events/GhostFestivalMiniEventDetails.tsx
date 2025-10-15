@@ -1,32 +1,31 @@
 import EventTips from "@components/EventTips";
-import { ghostFestivalTable } from "@utils/events/event";
-import { GhostFestivalDraken, GhostFestivalTips } from "@utils/events/GhostFestivalItems";
+import { ghostFestivalMiniTable } from "@utils/events/event";
+import { GhostFestivalMiniDraken, GhostFestivalMiniTips } from "@utils/events/GhostFestivalItems";
 import { ImageExporter } from "@utils/ImageExporter";
-import { ScrollText } from "lucide-react";
 import { useState } from "react";
 
-function GhostFestivalEventDetails() {
+function GhostFestivalMiniEventDetails() {
   const [tablePage, setTablePage] = useState(1);
 
-  const currentPageItems = ghostFestivalTable.items[0].filter((item) => item.page === tablePage);
+  const currentPageItems = ghostFestivalMiniTable.items[0].filter((item) => item.page === tablePage);
 
-  const totalPages = [...new Set(ghostFestivalTable.items[0].map((item) => item.page))].sort((a, b) => a - b);
+  const totalPages = [...new Set(ghostFestivalMiniTable.items[0].map((item) => item.page))].sort((a, b) => a - b);
 
   return (
     <div className="flex flex-col gap-6 min-h-screen items-center mt-20 mb-10">
       <div className="flex items-center gap-4">
         <img src={ImageExporter.tabIconGhostFestival} alt="Ghost Festival" />
-        <h1 className="text-3xl font-bold text-primary">Ghost Festival Event Details</h1>
+        <h1 className="text-3xl font-bold text-primary">Return of the Dead Event Details</h1>
       </div>
 
       <div>
-        <p className="text-center max-w-2xl">{ghostFestivalTable.description}</p>
+        <p className="text-center max-w-2xl">{ghostFestivalMiniTable.description}</p>
       </div>
 
       <div className="overflow-x-auto rounded-box w-full border border-base-content/5 bg-base-100">
         <div className="flex items-center justify-center py-3">
           <img src={ImageExporter.draken} alt="Draken" className="w-10 h-10" />
-          {GhostFestivalDraken} total
+          {GhostFestivalMiniDraken} total
         </div>
         <div className="flex justify-center items-center gap-2 p-4 border-b border-base-content/10">
           <span className="text-sm text-base-content/70">Page:</span>
@@ -75,27 +74,9 @@ function GhostFestivalEventDetails() {
           ))}
         </div>
       </div>
-      <EventTips tips={GhostFestivalTips} title="Ghost Festival Event Tips" />
-      <div className="flex items-center gap-4">
-        <ScrollText />
-        <h2 className="text-3xl font-bold text-primary">New Quests</h2>
-      </div>
-      <div className="flex flex-col gap-4">
-        <div>
-          <h3 className="text-2xl font-bold text-primary">Heart and Soul 1/3</h3>
-          <img src={ImageExporter.heartAndSoul1} alt="heart and soul 1" />
-        </div>
-        <div>
-          <h3 className="text-2xl font-bold text-primary">Heart and Soul 2/3</h3>
-          <img src={ImageExporter.heartAndSoul2} alt="heart and soul 2" />
-        </div>
-        <div>
-          <h3 className="text-2xl font-bold text-primary">Heart and Soul 3/3</h3>
-          <img src={ImageExporter.heartAndSoul3} alt="heart and soul 3" />
-        </div>
-      </div>
+      <EventTips tips={GhostFestivalMiniTips} title="Ghost Festival Event Tips" />
     </div>
   );
 }
 
-export default GhostFestivalEventDetails;
+export default GhostFestivalMiniEventDetails;
