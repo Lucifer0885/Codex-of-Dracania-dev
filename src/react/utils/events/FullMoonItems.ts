@@ -5,7 +5,12 @@ export const FullMoonDraken1 = 2500;
 
 export const FullMoonDraken2 = 7000;
 
-export const fullMoonTips: string[] = [];
+export const fullMoonTips: string[] = [
+  "It is not worth to kill all mobs, just do mini bosses and bosses, on both Varholm and Bloodmoon over Varholm.",
+  "The attire is not worth to purchase",
+  "It's a decent place to farm Realm Fragments. Find a group of 5 people and open amphoras, while all have the group talent for Realm Fragments at +10. (Can also be done when the event is not active)",
+  "Only the first progress bar has some kind of value, I would advice against doing the others, unless you really need something from them or just want to complete the event.",
+];
 
 export const FullMoonEventItems1: ProgressBarItem[] = [
   {
