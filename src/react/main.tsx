@@ -12,6 +12,7 @@ import ThankYou from "@pages/ThankYou";
 import { calculatorRouteConfig } from "@routes/calculatorRouteConfig";
 import { UserProvider } from "@context/UserContext";
 import { eventRouteConfig } from "@routes/eventRouteConfig";
+import BonusCode from "@pages/BonusCode";
 
 createRoot(document.getElementById("root")!).render(
   <HashRouter>
@@ -19,11 +20,12 @@ createRoot(document.getElementById("root")!).render(
       <MainLayout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/calculators" element={<Calculators />} />
           <Route path="/events" element={<Events />} />
           <Route path="/inventory" element={<Inventory />} />
-          <Route path="/calculators" element={<Calculators />} />
-          <Route path="/settings" element={<Settings />} />
           <Route path="/macros" element={<Macros />} />
+          <Route path="/bonus-code" element={<BonusCode />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/thank-you" element={<ThankYou />} />
           {calculatorRouteConfig.map((route) => (
             <Route key={route.key} path={route.path} element={<route.element />} />

@@ -13,6 +13,7 @@ import { registerMacroIpcHandlers } from "./macros/macroIpc.js";
 import { getAppUpdater } from "./installer/updater.js";
 import { initTray } from "./tray.js";
 import { InitMenu } from "./menu.js";
+import { getActiveBonusCodes, getBonusCodeById, getBonusCodes } from "./api/bonusCodes.js";
 
 let mainWindow: BrowserWindow;
 const autoUpdater = getAppUpdater();
@@ -211,6 +212,23 @@ app.whenReady().then(() => {
 
   ipcMainHandle("get-registered-keybinds", async () => {
     return keybindingManager.getRegisteredKeybinds();
+  });
+
+  ipcMainHandle("get-all-bonus-codes", async () => {
+    const bonuscodes = await getBonusCodes();
+    return bonuscodes.data;
+  });
+
+  ipcMainHandle("get-active-bonus-codes", async () => {
+    const bonuscodes = await getActiveBonusCodes();
+    const activeCodes = bonuscodes.data;
+    return activeCodes;
+  });
+
+  ipcMainHandleWithData<string, "get-bonus-code">("get-bonus-code", async (codeId) => {
+    const bonuscode = await getBonusCodeById(codeId);
+    const code = bonuscode.data;
+    return code;
   });
 
   windowSizeListener();

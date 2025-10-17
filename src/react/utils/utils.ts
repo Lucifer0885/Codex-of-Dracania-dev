@@ -34,3 +34,11 @@ export function getItemsPerPage(progress: ProgressBarItem[], page: number): Prog
 export function formatName(string: string) {
   return string.replace(/\b\w/g, (char) => char.toUpperCase());
 }
+
+export function formatDate(date: Date): string {
+  const d = date.toLocaleString().split("T")[0];
+  const day = d.split("-")[2];
+  const month = d.split("-")[1];
+  const year = d.split("-")[0];
+  return `${day}-${month}-${year}`;
+}

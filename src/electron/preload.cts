@@ -50,6 +50,10 @@ electron.contextBridge.exposeInMainWorld("electron", {
   macroBuilderGetTemplates: () => ipcRendererInvoke("macro-builder-get-templates"),
   macroBuilderAddTemplate: (builderData: any, templateName: string) =>
     ipcRendererInvokeWithData("macro-builder-add-template", { builderData, templateName }),
+  // Bonus Codes
+  getAllBonusCodes: () => ipcRendererInvoke("get-all-bonus-codes"),
+  getActiveBonusCodes: () => ipcRendererInvoke("get-active-bonus-codes"),
+  getBonusCode: (codeId: string) => ipcRendererInvokeWithData("get-bonus-code", codeId),
 } satisfies Window["electron"]);
 
 function ipcRendererInvoke<Key extends keyof EventPayloadMapping>(key: Key) {

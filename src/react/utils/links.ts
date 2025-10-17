@@ -27,6 +27,11 @@ export const NavLinks: NavLink[] = [
     icon: "Play",
   },
   {
+    to: "/bonus-code",
+    label: "Bonus Codes",
+    icon: "Gift",
+  },
+  {
     to: "/settings",
     label: "Settings",
     icon: "Settings",

@@ -39,21 +39,18 @@ type InventoryLayoutPreset = {
   windowWidth: number;
   windowHeight: number;
   name: string;
-  // First slot position (row 1, column 1)
   firstSlot: {
     x: number;
     y: number;
   };
-  // First tab position
   firstTab: {
     x: number;
     y: number;
   };
-  // Gaps between elements
   gaps: {
-    tabX: number; // Gap between tabs (X only)
-    columnX: number; // Gap between item slots in columns (X only)
-    rowY: number; // Gap between rows (Y only)
+    tabX: number;
+    columnX: number;
+    rowY: number;
   };
 
   meltButton: {
@@ -71,8 +68,7 @@ type InventoryConfig = {
 
   lockedSlots: InventorySlotConfig[];
 
-  // Simple preset selection - users choose from predefined presets
-  selectedPresetName?: string; // Name of selected preset from DEFAULT_INVENTORY_PRESETS
+  selectedPresetName?: string;
 };
 
 type MacroConfig = {
@@ -80,8 +76,8 @@ type MacroConfig = {
   defaultMacros: Macro[];
   customMacros: Macro[];
   executionSettings: {
-    maxConcurrentMacros: number; // Limit simultaneous executions
-    defaultStepDelay: number; // Default delay between steps
+    maxConcurrentMacros: number;
+    defaultStepDelay: number;
   };
   lastModified: number;
 };
@@ -231,6 +227,10 @@ type EventPayloadMapping = {
   "macro-builder-save-macro": MacroOperationResult;
   "macro-builder-get-templates": Record<string, MacroBuilderStep[]>;
   "macro-builder-add-template": MacroBuilderData;
+  // Bonus Codes
+  "get-all-bonus-codes": BonusCode[];
+  "get-active-bonus-codes": BonusCode[];
+  "get-bonus-code": BonusCode;
 };
 
 type UnsubscribeFunction = () => void;
@@ -287,5 +287,9 @@ interface Window {
     macroBuilderSaveMacro: (builderData: MacroBuilderData, existingMacroId?: string) => Promise<MacroOperationResult>;
     macroBuilderGetTemplates: () => Promise<Record<string, MacroBuilderStep[]>>;
     macroBuilderAddTemplate: (builderData: MacroBuilderData, templateName: string) => Promise<MacroBuilderData>;
+    // Bonus Codes
+    getAllBonusCodes: () => Promise<BonusCode[]>;
+    getActiveBonusCodes: () => Promise<BonusCode[]>;
+    getBonusCode: (codeId: string) => Promise<BonusCode>;
   };
 }
