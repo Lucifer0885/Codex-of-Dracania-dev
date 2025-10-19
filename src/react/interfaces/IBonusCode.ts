@@ -4,7 +4,6 @@ export interface IBonusCode {
   startDate: Date;
   endDate: Date;
   additionalInfo?: string;
-  active: boolean;
   rewards: IBonusCodeRewards[];
 }
 

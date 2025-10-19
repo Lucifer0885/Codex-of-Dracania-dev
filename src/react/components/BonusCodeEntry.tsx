@@ -1,6 +1,6 @@
 import React from "react";
 import type { IBonusCode } from "@interfaces/IBonusCode";
-import { calculateProgress, getProgressColor } from "@utils/bonusCode";
+import { calculateProgress, getProgressColor, isActive } from "@utils/bonusCode";
 import { formatDate } from "@utils/utils";
 import { useNavigate } from "react-router";
 
@@ -40,7 +40,7 @@ function BonusCodeEntry({ bonusCodes }: BonusCodeEntryProps) {
                     <span className="text-sm font-semibold">{progress}%</span>
                   </div>
                 </td>
-                <td>{code.active ? "Yes" : "No"}</td>
+                <td>{isActive(code.startDate, code.endDate) ? "Yes" : "No"}</td>
               </tr>
             </React.Fragment>
           );
