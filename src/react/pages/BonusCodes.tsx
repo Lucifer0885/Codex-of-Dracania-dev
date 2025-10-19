@@ -1,13 +1,12 @@
 import { Gift, History } from "lucide-react";
 import type { IBonusCode } from "@interfaces/IBonusCode";
 import { useState, useEffect } from "react";
-import { formatDate } from "@utils/utils";
 import { useNavigate } from "react-router";
-import React from "react";
-import { calculateProgress, getProgressColor } from "@utils/bonusCode";
+import BonusCodeEntry from "@components/BonusCodeEntry";
 
 function BonusCodes() {
   const [bonusCodes, setBonusCodes] = useState<IBonusCode[]>([]);
+  const [filteredCodes, setFilteredCodes] = useState<IBonusCode[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,9 +14,21 @@ function BonusCodes() {
       const data = await window.electron.getActiveBonusCodes();
       console.log("Active Bonus Codes:", data);
       setBonusCodes(data);
+      setFilteredCodes(data);
     };
     fetchData();
   }, []);
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === "") {
+      setFilteredCodes(bonusCodes);
+      return;
+    }
+    const filtered = bonusCodes.filter((code: IBonusCode) =>
+      code.name.toLowerCase().includes(event.target.value.toLowerCase())
+    );
+    setFilteredCodes(filtered);
+  };
 
   return (
     <div className="mb-4 p-4 bg-base-200 rounded-lg gap-4 flex flex-col min-h-screen mt-20">
@@ -26,48 +37,24 @@ function BonusCodes() {
           <Gift className="h-8 w-8 text-primary" />
           <h1 className="text-4xl text-primary font-bold">Bonus Codes</h1>
         </div>
-        <History
-          className="h-6 w-6 text-secondary hover:cursor-pointer"
-          onClick={() => navigate(`/bonus-codes/history`)}
-        />
+        <div className="flex items-center gap-4">
+          <input
+            type="text"
+            placeholder="Search for bonus code..."
+            className="input border-none focus-within:outline-primary bg-base-300"
+            onChange={(event) => handleSearch(event)}
+          />
+          <History
+            className="h-6 w-6 text-secondary hover:cursor-pointer"
+            onClick={() => navigate(`/bonus-codes/history`)}
+          />
+        </div>
       </div>
-
-      <table className="table table-zebra">
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Progress</th>
-            <th>Active</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bonusCodes.map((code) => {
-            const progress = calculateProgress(code.startDate, code.endDate);
-            const progressColor = getProgressColor(progress);
-            return (
-              <React.Fragment key={code.id}>
-                <tr
-                  onClick={() => navigate(`/bonus-codes/${code.id}`)}
-                  className="cursor-pointer hover:bg-base-300 transition-colors"
-                >
-                  <td>{code.name}</td>
-                  <td>{formatDate(code.startDate)}</td>
-                  <td>{formatDate(code.endDate)}</td>
-                  <td>
-                    <div className="flex items-center gap-2">
-                      <progress className={`progress ${progressColor} w-48`} value={progress} max="100"></progress>
-                      <span className="text-sm font-semibold">{progress}%</span>
-                    </div>
-                  </td>
-                  <td>{code.active ? "Yes" : "No"}</td>
-                </tr>
-              </React.Fragment>
-            );
-          })}
-        </tbody>
-      </table>
+      {filteredCodes.length > 0 ? (
+        <BonusCodeEntry bonusCodes={filteredCodes} />
+      ) : (
+        <p className="text-center text-gray-500">No active bonus codes available.</p>
+      )}
     </div>
   );
 }

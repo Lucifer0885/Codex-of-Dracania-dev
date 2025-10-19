@@ -18,3 +18,10 @@ export const getProgressColor = (progress: number): string => {
   if (progress < 100) return "progress-error";
   return "progress-accent";
 };
+
+export const isActive = (startDate: Date, endDate: Date): boolean => {
+  const now = Date.now();
+  const start = new Date(startDate).getTime();
+  const end = new Date(endDate).getTime();
+  return now >= start && now <= end;
+};
