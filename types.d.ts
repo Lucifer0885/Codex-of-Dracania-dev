@@ -228,7 +228,17 @@ type EventPayloadMapping = {
   "macro-builder-get-templates": Record<string, MacroBuilderStep[]>;
   "macro-builder-add-template": MacroBuilderData;
   // Bonus Codes
-  "get-all-bonus-codes": BonusCode[];
+  "get-all-bonus-codes": {
+    data: BonusCode[];
+    pagination: {
+      currentPage: number;
+      totalPages: number;
+      totalItems: number;
+      itemsPerPage: number;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+    };
+  };
   "get-active-bonus-codes": BonusCode[];
   "get-bonus-code": BonusCode;
 };
@@ -288,7 +298,22 @@ interface Window {
     macroBuilderGetTemplates: () => Promise<Record<string, MacroBuilderStep[]>>;
     macroBuilderAddTemplate: (builderData: MacroBuilderData, templateName: string) => Promise<MacroBuilderData>;
     // Bonus Codes
-    getAllBonusCodes: () => Promise<BonusCode[]>;
+    getAllBonusCodes: (params?: {
+      page?: number;
+      limit?: number;
+      sortBy?: "startDate" | "endDate" | "name" | "id";
+      order?: "asc" | "desc";
+    }) => Promise<{
+      data: BonusCode[];
+      pagination: {
+        currentPage: number;
+        totalPages: number;
+        totalItems: number;
+        itemsPerPage: number;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+      };
+    }>;
     getActiveBonusCodes: () => Promise<BonusCode[]>;
     getBonusCode: (codeId: string) => Promise<BonusCode>;
   };

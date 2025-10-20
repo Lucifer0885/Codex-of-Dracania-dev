@@ -51,7 +51,12 @@ electron.contextBridge.exposeInMainWorld("electron", {
   macroBuilderAddTemplate: (builderData: any, templateName: string) =>
     ipcRendererInvokeWithData("macro-builder-add-template", { builderData, templateName }),
   // Bonus Codes
-  getAllBonusCodes: () => ipcRendererInvoke("get-all-bonus-codes"),
+  getAllBonusCodes: (params?: {
+    page?: number;
+    limit?: number;
+    sortBy?: "startDate" | "endDate" | "name" | "id";
+    order?: "asc" | "desc";
+  }) => ipcRendererInvokeWithData("get-all-bonus-codes", params || {}),
   getActiveBonusCodes: () => ipcRendererInvoke("get-active-bonus-codes"),
   getBonusCode: (codeId: string) => ipcRendererInvokeWithData("get-bonus-code", codeId),
 } satisfies Window["electron"]);

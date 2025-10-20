@@ -214,9 +214,15 @@ app.whenReady().then(() => {
     return keybindingManager.getRegisteredKeybinds();
   });
 
-  ipcMainHandle("get-all-bonus-codes", async () => {
-    const bonuscodes = await getBonusCodes();
-    return bonuscodes.data;
+  ipcMainHandleWithData<
+    { page?: number; limit?: number; sortBy?: "startDate" | "endDate" | "name" | "id"; order?: "asc" | "desc" },
+    "get-all-bonus-codes"
+  >("get-all-bonus-codes", async (params) => {
+    const bonuscodes = await getBonusCodes(params);
+    return {
+      data: bonuscodes.data,
+      pagination: bonuscodes.pagination,
+    };
   });
 
   ipcMainHandle("get-active-bonus-codes", async () => {

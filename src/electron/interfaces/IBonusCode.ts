@@ -24,3 +24,26 @@ export interface IBonusCodesResponse {
   message: string;
   data: IBonusCode[];
 }
+
+export interface IPaginationMeta {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  itemsPerPage: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
+export interface IBonusCodesPaginatedResponse {
+  success: boolean;
+  message: string;
+  data: IBonusCode[];
+  pagination: IPaginationMeta;
+}
+
+export interface GetBonusCodesParams {
+  page?: number;
+  limit?: number;
+  sortBy?: "startDate" | "endDate" | "name" | "id";
+  order?: "asc" | "desc";
+}
