@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMacroStorage, useMacroBuilder } from "@hooks/useMacroManagement";
 import Toast from "@components/Toast";
 import Modal from "@components/Modal";
-import SellInventorySettings from "@components/SellInventorySettings";
+import { Settings2, AlertCircle } from "lucide-react";
 
 interface StepEditorProps {
   step: MacroBuilderStep;
@@ -40,7 +40,7 @@ const MacroManager: React.FC = () => {
 
   const [selectedMacroId, setSelectedMacroId] = useState<string | null>(null);
   const [showBuilder, setShowBuilder] = useState(false);
-  const [showSellInventorySettings, setShowSellInventorySettings] = useState(false);
+  const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
 
   const [confirmModal, setConfirmModal] = useState<ConfirmModalState>({
     isOpen: false,
@@ -63,6 +63,19 @@ const MacroManager: React.FC = () => {
     type: "success",
     message: "",
   });
+
+  // Load selected preset on component mount
+  useEffect(() => {
+    const loadSelectedPreset = async () => {
+      try {
+        const preset = await window.electron.getSelectedPreset();
+        setSelectedPreset(preset);
+      } catch (error) {
+        console.error("Error loading selected preset:", error);
+      }
+    };
+    loadSelectedPreset();
+  }, []);
 
   const showToast = (type: ToastState["type"], message: string) => {
     setToast({ isOpen: true, type, message });
@@ -269,6 +282,28 @@ const MacroManager: React.FC = () => {
                     {macro.description && (
                       <p className="text-base-content opacity-70 text-sm mt-1">{macro.description}</p>
                     )}
+                    {(macro.id === "sell-inventory" || macro.id === "melt-inventory") && (
+                      <div className="mt-2">
+                        {selectedPreset ? (
+                          <div className="flex items-center gap-2 text-sm">
+                            <Settings2 className="w-4 h-4 text-info" />
+                            <span className="text-base-content/70">
+                              Using preset: <span className="font-semibold text-info">{selectedPreset}</span>
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="alert alert-warning py-2 px-3">
+                            <AlertCircle className="w-4 h-4" />
+                            <span className="text-xs">
+                              No preset selected. Configure in{" "}
+                              <a href="/settings" className="link link-primary">
+                                Settings
+                              </a>
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    )}
                     <div className="flex gap-2 mt-2">
                       <span
                         className={`badge badge-outline bg-base-300 ${macro.enabled ? "badge-success" : "badge-error"}`}
@@ -281,14 +316,6 @@ const MacroManager: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    {(macro.id === "sell-inventory" || macro.id === "melt-inventory") && (
-                      <button
-                        onClick={() => setShowSellInventorySettings(true)}
-                        className="btn btn-outline btn-sm btn-warning"
-                      >
-                        Settings
-                      </button>
-                    )}
                     <button
                       onClick={() => handleToggleEnabled(macro.id, !macro.enabled)}
                       className={`btn btn-outline btn-sm ${macro.enabled ? "btn-error" : "btn-success"}`}
@@ -402,27 +429,6 @@ const MacroManager: React.FC = () => {
           message={toast.message}
           onClose={() => setToast((prev) => ({ ...prev, isOpen: false }))}
         />
-      )}
-
-      {/* Sell Inventory Settings Modal */}
-      {showSellInventorySettings && (
-        <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-          onClick={() => setShowSellInventorySettings(false)}
-        >
-          <div
-            className="bg-base-100 p-6 rounded-lg shadow-xl max-w-2xl w-full m-4 z-999"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold">Target Window Settings</h3>
-              <button onClick={() => setShowSellInventorySettings(false)} className="btn btn-sm btn-circle btn-ghost">
-                ✕
-              </button>
-            </div>
-            <SellInventorySettings />
-          </div>
-        </div>
       )}
     </div>
   );
