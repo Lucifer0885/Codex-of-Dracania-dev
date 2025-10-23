@@ -16,12 +16,10 @@ function Settings() {
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState<ToastType>("info");
 
-  // Inventory preset state
   const [availablePresets, setAvailablePresets] = useState<InventoryLayoutPreset[]>([]);
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
   const [presetsLoading, setPresetsLoading] = useState(true);
 
-  // Load presets on component mount
   useEffect(() => {
     loadPresets();
   }, []);

@@ -40,6 +40,12 @@ import jalapenoCookie from "@assets/events/ghostfestival/jalapeno-cookie.png";
 import heartAndSoul1 from "@assets/events/ghostfestival/heart-and-soul-1.png";
 import heartAndSoul2 from "@assets/events/ghostfestival/heart-and-soul-2.png";
 import heartAndSoul3 from "@assets/events/ghostfestival/heart-and-soul-3.png";
+import realmPathToTheCreepyCastle from "@assets/events/ghostfestival/realm-path-to-the-creepy-castle.png";
+import ghostFestivalChest from "@assets/events/ghostfestival/ghostfestival-chest.png";
+import ghostFestivalCookingChest from "@assets/events/ghostfestival/ghostfestival-cooking-chest.png";
+
+// Anniversary Event
+import phestosPinataTruncheon from "@assets/events/anniversary/phestos-pinata-truncheon.png";
 
 //Currency
 import draken from "@assets/coins/draken.png";
@@ -47,6 +53,7 @@ import communityCoin from "@assets/coins/community-coin.png";
 import stickerbookUpgrade from "@assets/coins/stickerbook-upgrade.png";
 import realmFragment from "@assets/coins/realm-fragment.png";
 import clover from "@assets/coins/clover.png";
+import seasonCoin from "@assets/coins/season-coin.png";
 
 //Essences
 import epicLightEssence from "@assets/ess/epic-light.png";
@@ -55,6 +62,7 @@ import shinySilverEssence from "@assets/ess/shiny-silver-ess.png";
 
 //Cooking
 import spellboundRaspberries from "@assets/cooking/spellbound-raspberry.png";
+import glitterChocolate from "@assets/cooking/glitter-chocolate.png";
 
 //Keys
 import amphoraKey from "@assets/keys/amphora-key.png";
@@ -100,6 +108,9 @@ import epicAnxietyShard from "@assets/general/epic-anxiety-shard.png";
 import dragonBloodBox from "@assets/general/dragon-blood-box.png";
 import dragonBoneElixir from "@assets/general/dragon-bone-elixir.png";
 import ruinedAmphora from "@assets/general/ruined-amphora.png";
+import premiumElixir from "@assets/general/premium-elixir.png";
+import deluxeTemp from "@assets/general/deluxe-temp.png";
+import perforatedDragonBone from "@assets/general/perforated-dragon-bone.png";
 
 export const ImageExporter = {
   tabIconSargon,
@@ -135,16 +146,22 @@ export const ImageExporter = {
   heartAndSoul1,
   heartAndSoul2,
   heartAndSoul3,
+  realmPathToTheCreepyCastle,
+  ghostFestivalChest,
+  ghostFestivalCookingChest,
+  phestosPinataTruncheon,
   event,
   draken,
   communityCoin,
   stickerbookUpgrade,
   realmFragment,
   clover,
+  seasonCoin,
   epicLightEssence,
   magicLightEssence,
   shinySilverEssence,
   spellboundRaspberries,
+  glitterChocolate,
   amphoraKey,
   infernalPassage,
   kitchenKey,
@@ -182,4 +199,7 @@ export const ImageExporter = {
   dragonBloodBox,
   dragonBoneElixir,
   ruinedAmphora,
+  premiumElixir,
+  deluxeTemp,
+  perforatedDragonBone,
 };
