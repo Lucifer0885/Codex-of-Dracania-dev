@@ -1,9 +1,8 @@
 import axios from "axios";
-import config from "dotenv";
 import { isDev } from "../utils/util.js";
-config.config();
+import { API_BASE_URL, DEV_API_BASE_URL } from "../constants/config.js";
 
-const baseURL = isDev() ? process.env.DEV_API_BASE_URL! : process.env.API_BASE_URL!;
+const baseURL = isDev() ? DEV_API_BASE_URL : API_BASE_URL;
 
 const axiosInstance = axios.create({
   baseURL: baseURL,

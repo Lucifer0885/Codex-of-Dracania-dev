@@ -2,7 +2,7 @@
   "name": "codex-of-dracania",
   "description": "A set of utilities to help with DSO gameplay",
   "private": true,
-  "version": "0.1.12",
+  "version": "0.1.13",
   "type": "module",
   "author": {
     "name": "lucifer0885",
@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "axios": "^1.12.2",
-    "dotenv": "^17.2.3",
     "electron-updater": "^6.6.2",
     "lucide-react": "^0.542.0",
     "react": "^19.1.1",

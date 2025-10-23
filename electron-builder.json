@@ -6,9 +6,6 @@
         "src/assets/**",
         "src/react/assets/**"
     ],
-    "electronLanguages": [
-        "en"
-    ],
     "productName": "Codex of Dracania",
     "files": [
         "dist-react/**/*",

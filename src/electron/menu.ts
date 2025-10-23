@@ -1,12 +1,12 @@
 import { Menu } from "electron";
-import { isDev } from "./utils/util.js";
 import type { MenuItemConstructorOptions } from "electron";
+import { isDev } from "./utils/util.js";
 
 export function InitMenu() {
   const template: MenuItemConstructorOptions[] = [
     {
       label: "App",
-      submenu: [{ label: "Quit     ", role: "quit" }],
+      submenu: [{ label: "Quit     ", role: "quit", accelerator: "CmdOrCtrl+Q" }],
     },
     {
       label: "Edit",
@@ -40,6 +40,7 @@ export function InitMenu() {
         {
           label: "Delete",
           role: "delete",
+          accelerator: "CmdOrCtrl+D",
         },
       ],
     },
