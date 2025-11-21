@@ -47,6 +47,11 @@ import ghostFestivalCookingChest from "@assets/events/ghostfestival/ghostfestiva
 // Anniversary Event
 import phestosPinataTruncheon from "@assets/events/anniversary/phestos-pinata-truncheon.png";
 
+// Dragan Event
+import draganAttireTemp from "@assets/events/dragan/dragan-attire-temp.png";
+import draganWeaponBaseRanger from "@assets/events/dragan/dragan-weapon-base-ranger.png";
+import redPearl from "@assets/events/dragan/red-pearl.png";
+
 //Currency
 import draken from "@assets/coins/draken.png";
 import communityCoin from "@assets/coins/community-coin.png";
@@ -59,6 +64,10 @@ import seasonCoin from "@assets/coins/season-coin.png";
 import epicLightEssence from "@assets/ess/epic-light.png";
 import magicLightEssence from "@assets/ess/magic-light.png";
 import shinySilverEssence from "@assets/ess/shiny-silver-ess.png";
+import rangerEssence from "@assets/ess/ranger-ess.png";
+import mageEssence from "@assets/ess/mage-ess.png";
+import warriorEssence from "@assets/ess/dk-ess.png";
+import dwarfEssence from "@assets/ess/dwarf-ess.png";
 
 //Cooking
 import spellboundRaspberries from "@assets/cooking/spellbound-raspberry.png";
@@ -111,6 +120,8 @@ import ruinedAmphora from "@assets/general/ruined-amphora.png";
 import premiumElixir from "@assets/general/premium-elixir.png";
 import deluxeTemp from "@assets/general/deluxe-temp.png";
 import perforatedDragonBone from "@assets/general/perforated-dragon-bone.png";
+import ancestorTreasureMap from "@assets/general/ancestor-treasure-map.png";
+import multitool from "@assets/general/multitool.png";
 
 export const ImageExporter = {
   tabIconSargon,
@@ -150,6 +161,9 @@ export const ImageExporter = {
   ghostFestivalChest,
   ghostFestivalCookingChest,
   phestosPinataTruncheon,
+  draganAttireTemp,
+  draganWeaponBaseRanger,
+  redPearl,
   event,
   draken,
   communityCoin,
@@ -160,6 +174,10 @@ export const ImageExporter = {
   epicLightEssence,
   magicLightEssence,
   shinySilverEssence,
+  rangerEssence,
+  mageEssence,
+  warriorEssence,
+  dwarfEssence,
   spellboundRaspberries,
   glitterChocolate,
   amphoraKey,
@@ -202,4 +220,6 @@ export const ImageExporter = {
   premiumElixir,
   deluxeTemp,
   perforatedDragonBone,
+  ancestorTreasureMap,
+  multitool,
 };

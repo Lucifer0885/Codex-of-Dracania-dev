@@ -99,7 +99,7 @@ npm run dist:win
 
 ### Project Structure
 
-```
+```text
 src/
 ├── electron/              # Electron main process
 │   ├── main.ts           # Application entry point
